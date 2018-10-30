@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* 首页 */
+.layui-nav-tree>.layui-nav-item>.layui-nav-child>.layui-nav-item{padding-left: 20px}
+.layui-nav-tree>.layui-nav-item>a{font-weight: 700}
+/* 公共 */
+.topLine{border-top: 1px solid #dcdcdc;padding: 5px ;}
+.layui-btn{margin-top: 10px}
+.layui-icon{margin-left:15px; cursor: pointer;}
+/* j角色 */
+.role_bg{background:skyblue }
+
