@@ -15,8 +15,8 @@ class Base extends Controller
     //未登录状况下跳到登录界面
     public function _initialize()
     {
+        session('adminUser','admin');
         $user=session('adminUser');
-//        var_dump($user);
         if(!$user){
             $this->redirect(url("/admin/Login/index"));
         }

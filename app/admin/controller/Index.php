@@ -13,7 +13,6 @@ class Index extends Base
 {
     public function index()
     {
-        session('adminUser','admin');
         return $this->fetch();
     }
 
