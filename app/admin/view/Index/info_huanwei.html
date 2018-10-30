@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>环卫工接收消息列表</title>
+    <link rel="stylesheet" href="__LAYUICSS__/layui.css">
+    <link rel="stylesheet" href="__ADMINCSS__/ssbase.css">
+    <!-- v-5.0.9 laydate -->
+    <link rel="stylesheet" href="layui/css/modules/laydate/laydate.css">
+    <link rel="stylesheet" href="__ADMINCSS__/style.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <span class="layui-breadcrumb" lay-separator="/" >
+        <a href="">系统管理</a>
+        <a href="">环卫工接收消息列表</a>
+    </span>
+    <div class="topLine">
+        <div class="layui-form" action="">
+            环卫工接收消息列表
+            <div class="layui-form-item flex-box flex-b">
+                <div class="layui-inline">
+                    <label class="layui-form-label">发送时间</label>
+                    <div class="layui-input-inline flex-box flex-2">
+                    <input type="text" name="startTime" lay-verify="required" readonly class="layui-input" placeholder="开始时间">
+                    <input type="text" name="endTime" lay-verify="required" readonly class="layui-input" placeholder="结束时间">
+                    </div>
+                </div>
+                <div class="layui-inline" style="cursor: pointer;">
+                    <button class="layui-btn layui-btn-primary layui-btn-small">刷新列表<i class="layui-icon">&#x1002;</i></button>
+                </div>
+                
+            </div>
+            <div class="layui-form-item flex-box flex-b" >
+                <div class="layui-inline">
+                    <label class="layui-form-label">接收人</label>
+                    <div class="layui-input-inline flex-box flex-2">
+                    <input type="text" name="startTime" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-input-inline flex-box flex-2">
+                    <input type="checkbox" name="" title="短信发送" lay-skin="primary">
+                    <input type="checkbox" name="" title="微信发送" lay-skin="primary">
+                </div>
+            </div>
+            <table class="layui-table">
+                <colgroup>
+                    <!-- 此处 width 按比例分割 -->
+                    <col width='400'>
+                    <col width='200'>
+                    <col width='200'>
+                    <col width='200'>
+                </colgroup>
+                <thead>
+                    <tr>
+                    <th>消息内容</th>
+                    <th>发送时间</th>
+                    <th>发送方式</th>
+                    <th>接收人</th>
+                    </tr> 
+                </thead>
+                <tbody class="tbody">
+                    <tr>
+                        <td>垃圾桶12213已满</td>
+                        <td>2018/10/01 20：00</td>
+                        <td>短信、微信</td>
+                        <td>吴良材</td>
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="layui-elem-quote" style="padding: 5px 0;">
+                &nbsp;&nbsp;查询到设备总数：<span class="len"></span>
+                &nbsp;&nbsp; &nbsp;&nbsp;<div id="demoTwo" style="display: inline-block;"></div>
+            </div>
+        </div>
+    </div>   
+</body>
+
+<script src="__ADMINJS__/js/jquery-2.1.4.min.js"></script>
+<!-- layui 1.0.9版本 -->
+<script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
+
+<!-- laydate v-5.0.9 -->
+<script src="layui/lay/modules/laydate/laydate.js"></script>
+<script src="__ADMINJS__/js/index.js"></script>
+
+</html>
