@@ -1,0 +1,124 @@
+{extend name="layoutextend"}
+{block name="title"}回收效率统计表(按区域明细){/block}
+{block name="css"}
+<link rel="stylesheet" href="/static/index/css/style.css">
+{/block}
+{block name="main"}
+<div id="headbar"></div>
+
+<!-- 垃圾数量统计表 -->
+<div class="pa-10" role="form" class="trashOver" style="margin-bottom: 120px;">
+    <div class="flex-box flex-b flex-col-c maLeft">
+        <h2>回收效率统计表</h2>
+        <div class="">
+            <a href="#" onclick="javascript:history.back(-1);">
+                <button type="button" class="btn btn-xs btn-info">返回查询</button>
+            </a>
+            <button type="button" class="btn btn-xs btn-danger toggleTable">切换图表</button>
+        </div>
+    </div>
+    <div class="maLeft">
+        <span>时间：</span><span>2018/10/10-2018/10/30</span>
+    </div>
+    <div class="maLeft">
+        <span>区域：</span><span>上海市-&gt;徐汇区-&gt;龙华街道</span>
+    </div>
+    <!-- 折线图 -->
+
+    <div id="re_area_zhu" class="showhide1">
+
+    </div>
+    <!-- 饼图 -->
+    <div id="re_area_bing" class="showhide2" style="visibility: hidden;">
+
+    </div>
+</div>
+
+<!-- <div id="footbar"></div> -->
+{/block}
+{block name="js"}
+<script src="/static/common/js/echarts.common.min.js"></script>
+<script>
+    // 切换图表
+    var bel = 0;
+    $(".toggleTable").click(function () {
+        bel++;
+        if(bel%2 == 0){
+            $(".showhide1").show();
+            $(".showhide2").hide();
+        }else{
+            $(".showhide1").hide();
+            $(".showhide2").css("visibility","visible").show();
+        }
+
+    });
+
+    // 柱形图
+    var trashOver = document.getElementById("re_area_zhu");
+    var overZhu = echarts.init(trashOver);
+    // 显示标题，图例和空的坐标轴
+    overZhu.setOption({
+        title: {
+            text: '按区域明细'
+        },
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [120, 200, 150, 80, 70, 110, 130]
+        }]
+    });
+
+
+    //
+    <!-- 饼图 -->
+    var trashBing = document.getElementById("re_area_bing");
+    var bingImg = echarts.init(trashBing);
+    var Bingoption = {
+        title: {
+            // text: '某站点用户访问来源',
+            // subtext: '纯属虚构',
+            // x:'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            // formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 234, name: '联盟广告'},
+                    {value: 135, name: '视频广告'},
+                    {value: 1548, name: '搜索引擎'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    bingImg.setOption(Bingoption);
+</script>
+{/block}
