@@ -18,77 +18,66 @@
         <a href=""> 区-街道-班组管理</a>
     </span>
     <div class="topLine">
-        <p>城市选择：<button class="layui-btn layui-btn-small">上海市</button></p>
+        <p><span>城市选择：</span><button class="layui-btn layui-btn-small">上海市</button></p>
         <p>区县选择：<br/>
-            <button class="layui-btn layui-btn-primary layui-btn-small">黄浦区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">虹口区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">杨浦区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">闸北区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">普陀区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">长宁区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">静安区</button>
-            <button class="layui-btn layui-btn-small">徐汇区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">浦东新区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">闵行区</button>
-            <br/>   <!-- 10 个一组-->
-            <button class="layui-btn layui-btn-primary layui-btn-small">奉贤区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">金山区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">松江区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">青浦区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">嘉定区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">宝山区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small">崇明区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">黄浦区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">虹口区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">杨浦区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">闸北区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">普陀区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">长宁区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">静安区</button>
+            <button class="layui-btn layui-btn-small maTop_10">徐汇区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">浦东新区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">闵行区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">奉贤区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">金山区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">松江区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">青浦区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">嘉定区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">宝山区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">崇明区</button>
         </p>
         <div class="flex-box flex-2">
-            <table class="layui-table">
+            <table class="layui-table" style="margin: 10px 30px">
                 <colgroup>
                     <!-- 此处 width 按比例分割 -->
                     <col width="200">
-                    <col width="150">
-                   
                 </colgroup>
                 <thead>
                     <tr>
-                    <th>徐汇区</th>
-                    <th>新增街道</th>
-                
+                        <th class="flex-box flex-b flex-col-c">
+                            <span>徐汇区</span> 
+                           <button class="layui-btn layui-btn-small layui-btn-normal layui-add1">新增街道</button>
+                        </th>
                     </tr> 
                 </thead>
                 <tbody class="tbody1">
                     <tr>
-                        <td><span>龙华街道</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
-                        <td> <i class="layui-icon layui-add1">&#xe608;</i> </td>
-                    
+                        <td class="flex-box flex-b"><span>龙华街道</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
                     </tr>
                     
                 </tbody>
             </table> 
-            <table class="layui-table">
+            <table class="layui-table" style="margin: 10px 30px">
                 <colgroup>
                     <!-- 此处 width 按比例分割 -->
                     <col width="200">
-                    <col width="150">
                     
                 </colgroup>
                 <thead>
                     <tr>
-                    <th><span>徐汇区</span> -&gt;<span>龙华街道</span></th>
-                    <th>新增班组</th>
+                    <th class="flex-box flex-b flex-col-c">
+                        <span>徐汇区-龙华街道</span>
+                        <button class="layui-btn layui-btn-small layui-btn-normal layui-add2">新增班组</button>
+                    
+                    </th>
                     
                     </tr> 
                 </thead>
                 <tbody class="tbody2">
                     <tr>
-                        <td><span>班组1</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
-                        <td> <i class="layui-icon layui-add2">&#xe608;</i> </td>
-                    </tr>
-                    <tr>
-                        <td><span>班组2</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
-                        <td> <i class="layui-icon layui-add2">&#xe608;</i> </td>
-                    </tr>
-                    <tr>
-                        <td><span>班组3</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
-                        <td> <i class="layui-icon layui-add2">&#xe608;</i> </td>
+                        <td class="flex-box flex-b"><span>班组1</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
                     </tr>
                     
                 </tbody>
