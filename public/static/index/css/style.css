@@ -48,11 +48,14 @@ footer{position: absolute;bottom: 0;left: 0;width: 100%;border-top: 1px solid #d
 /* 主页 */
 html,body{width: 100%;height:100%;overflow: hidden;}
 #con{width: 100%;height: 100%;position: relative}
-#con>.reload{position: absolute;left: 10px;bottom:120px;z-index: 10000;background: #fff}
-.roadline{position: absolute;right: 10px;bottom:120px;z-index: 10000;background: #fff}
+.reload{position: absolute;left: 10px;bottom:120px;z-index: 10000;background: #fff !important;color: #19BB9A !important}
+.roadline{position: absolute;right: 10px;bottom:120px;z-index: 10000;background: #fff !important;color: #19BB9A !important}
 html,body #con>#container{
     height:100%;
 }
+
+/*公共*/
+.toggleTable{width: 50px;height: 50px;text-align: center;line-height: 14px;border-radius: 50%;position: absolute;top: 150px;right: 10px;}
 
 /* 垃圾数量统计图表 */
 .showhide1{width: 70%;height: 400px;margin: 0 auto}

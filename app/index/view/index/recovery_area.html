@@ -9,20 +9,20 @@
 <!-- 垃圾数量统计表 -->
 <div class="pa-10" role="form" class="trashOver" style="margin-bottom: 120px;">
     <div class="flex-box flex-b flex-col-c maLeft">
-        <h2>回收效率统计表</h2>
-        <div class="">
-            <a href="#" onclick="javascript:history.back(-1);">
-                <button type="button" class="btn btn-xs btn-info">返回查询</button>
-            </a>
-            <button type="button" class="btn btn-xs btn-danger toggleTable">切换图表</button>
-        </div>
+        <h2>垃圾数量统计表</h2>
     </div>
     <div class="maLeft">
         <span>时间：</span><span>2018/10/10-2018/10/30</span>
     </div>
-    <div class="maLeft">
+    <div class="maLeft flex-box flex-b">
+        <p>
         <span>区域：</span><span>上海市-&gt;徐汇区-&gt;龙华街道</span>
+        </p>
+        <a href="#" onclick="javascript:history.back(-1);">
+            <button type="button" class="btn btn-xs btn-info">查询修改</button>
+        </a>    
     </div>
+    <button type="button" class="btn-danger toggleTable">切换<br/>图表</button>
     <!-- 折线图 -->
 
     <div id="re_area_zhu" class="showhide1">
