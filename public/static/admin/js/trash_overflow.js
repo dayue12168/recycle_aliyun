@@ -126,7 +126,7 @@ layui.use('element', function(){
   
   
   // <!-- 饼图 -->
-  var domBingNum = document.getElementById("bing_num");
+  var domBingNum = document.getElementById("bing_over");
   var myChartNum = echarts.init(domBingNum);
   var optionbingNum = {
       backgroundColor: '#2c343c',

@@ -7,12 +7,9 @@
  */
 
 namespace app\admin\controller;
-
-use think\Config;
 use think\Controller;
+use think\Request;
 use think\Session;
-use think\Db;
-
 class Login extends Controller
 {
     //登录首页
@@ -22,9 +19,14 @@ class Login extends Controller
     }
 
     //登录验证
-    public function loginIn()
+    public function loginIn(Request $request)
     {
-
+        echo '<pre>';
+        print_r(config());
+        die();
+        $data=$request->param();
+        $res=model('Login','service')->loginCheck($data);
+        return json_encode($data);
     }
 
     //退出登录
