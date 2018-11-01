@@ -11,6 +11,7 @@ return [
         '__ADMINJS__'=>'/static/admin',
         '__ADMINCSS__'=>'/static/admin/css',
         '__COMMONJS__'=>'/static/common/js',
-        '__COMMONCSS__'=>'/static/common/css'
+        '__COMMONCSS__'=>'/static/common/css',
+        '__COMMONJS__'=>'/static/common/js',
     ]
 ];
