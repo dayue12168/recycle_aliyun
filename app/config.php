@@ -142,10 +142,13 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'       => [
-        '__CSS__'=>'/public/static/common/css',
-        '__MYCSS__'=>'/public/static/index/css',
-        '__JS__'=>'/public/static/common/js',
-        '__MYJS__'=>'/public/static/index/js'
+        '__COMMONJS__'=>'/static/common/js',
+        '__COMMONCSS__'=>'/static/common/css',
+        '__MYCSS__'=>'/static/index/css',
+        '__MYJS__'=>'/static/index/js',
+        '__LAYUICSS__'=>'/static/admin/layui/css',
+        '__ADMINJS__'=>'/static/admin',
+        '__ADMINCSS__'=>'/static/admin/css'
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
