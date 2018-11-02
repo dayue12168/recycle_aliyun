@@ -33,33 +33,7 @@ a:hover{outline: none;}
 a:active{outline: none;text-decoration:none}
 html{font-size: 20px;}
 
-
 /* 主色调  #32C2B8 */
-
-/* 登录 */
-.forgot a{
-    margin-top:20px; 
-    font-size: 14px;
-    color: skyblue;
-}
-.login_btn{
-    width: 100%;
-    color: #fff;
-    padding: 4px;
-    text-align: center;
-    border-radius: 5px;
-    background: rgba(69,190,240,300);
-}
-.con_body{
-    width: 400px;
-    background: #fff;
-    margin:100px auto;
-    font-size: 20px;
-    color: #1AA8E3;
-    box-shadow:0 0 10px #999;
-    border-radius: 5px; 
-    padding: 10px
-}
 /* 头部 */
 header{background: #32C2B8;padding: 4px 0;color:#fff}
 .head{width: 80%;margin: 0 auto;}
@@ -74,11 +48,14 @@ footer{position: absolute;bottom: 0;left: 0;width: 100%;border-top: 1px solid #d
 /* 主页 */
 html,body{width: 100%;height:100%;overflow: hidden;}
 #con{width: 100%;height: 100%;position: relative}
-#con>.reload{position: absolute;left: 10px;bottom:120px;z-index: 10000;background: #fff}
-.roadline{position: absolute;right: 10px;bottom:120px;z-index: 10000;background: #fff}
+.reload{position: absolute;left: 10px;bottom:120px;z-index: 10000;background: #fff !important;color: #19BB9A !important}
+.roadline{position: absolute;right: 10px;bottom:120px;z-index: 10000;background: #fff !important;color: #19BB9A !important}
 html,body #con>#container{
     height:100%;
 }
+
+/*公共*/
+.toggleTable{width: 50px;height: 50px;text-align: center;line-height: 14px;border-radius: 50%;position: absolute;top: 150px;right: 10px;z-index: 99999}
 
 /* 垃圾数量统计图表 */
 .showhide1{width: 70%;height: 400px;margin: 0 auto}
@@ -104,14 +81,16 @@ html,body #con>#container{
     .showhide2{width: 98%;height:300px;}
 
     .maLeft{margin-left: 0;}
-    .con_body{width: 95%}
+
 }
 @media(max-width:500px)
 {   
 
+
 }
 @media(max-width: 409px)
 {
+
 
 }
 

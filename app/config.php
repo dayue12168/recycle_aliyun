@@ -144,8 +144,10 @@ return [
     'view_replace_str'       => [
         '__COMMONJS__'=>'/static/common/js',
         '__COMMONCSS__'=>'/static/common/css',
+        '__COMMONLAYER__'=>'/static/common/layer',
         '__MYCSS__'=>'/static/index/css',
         '__MYJS__'=>'/static/index/js',
+        '__MYIMAGES__'=>'/static/index/images',
         '__LAYUICSS__'=>'/static/admin/layui/css',
         '__ADMINJS__'=>'/static/admin',
         '__ADMINCSS__'=>'/static/admin/css'
