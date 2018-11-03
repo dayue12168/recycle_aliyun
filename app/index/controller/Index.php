@@ -4,7 +4,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 
-class Index extends Controller
+class Index extends Base
 {
     public function index()
     {

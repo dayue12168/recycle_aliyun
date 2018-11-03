@@ -65,6 +65,7 @@
 </div>
 </body>
 <script src="__COMMONJS__/jquery-2.1.4.min.js"></script>
+<script src="__MYJS__/jquery.md5.js"></script>
 <!-- v-3.1.1 -->
 <script src="__COMMONLAYER__/layer.js"></script>
 <script>
@@ -89,21 +90,63 @@
             tels(tel);
 //            printyzm();
             var login_type = $(".login_btn").attr('login-type');
-            if (login_type == "sms" && telnumber != '' && yzm != '') {
-                window.location.href = '/index/index/index.html';
-//                var yzmCookie = sessionStorage.getItem("yzm");
+            if (telnumber != '' && (yzm != '' || pwd != '')) {
+//                window.location.href = '/index/index/index.html';
+                var yzmCookie = sessionStorage.getItem("yzm");
 //                alert(yzmCookie);
-//                $.ajax({
-//                    url: "",
-//                    type: "POST",
-//                    data: {},
-//                    success: function () {
-//                        // do...
-//                    }
-//                })
-            } else if (login_type == "pwd" && telnumber != '' && pwd != '') {
-                alert('pwd');
-                window.location.href = '/index/index/index.html';
+                if (login_type == 'pwd') {
+                    var md_pwd = $.md5(pwd);
+                    $.ajax({
+                        url: "/index/Login/doLogin",
+                        type: "POST",
+                        data: {"login_type": login_type, "tel": telnumber, "psw": md_pwd},
+                        success: function (res) {
+                            res = JSON.parse(res);
+//                            //提示
+                            if (res.code != 1) {
+                                layer.open({
+                                    content: res.msg
+                                    , skin: 'msg'
+                                    , time: 2 //2秒后自动关闭
+                                });
+                                $("input[name='password1']").val('');
+                            } else {
+                                window.location.href = res.url;
+                            }
+                        }
+                    })
+                } else if (login_type == 'sms') {
+                    alert(yzm);
+                    alert(yzmCookie);
+
+                    if (yzmCookie != yzm) {
+                        //提示
+                        layer.open({
+                            content: '验证码有误！'
+                            , skin: 'msg'
+                            , time: 1 //2秒后自动关闭
+                        });
+                    } else {
+                        $.ajax({
+                            url: "/index/Login/doLogin",
+                            type: "POST",
+                            data: {"login_type": login_type, "tel": telnumber},
+                            success: function (res) {
+                                res = JSON.parse(res);
+//                            //提示
+                                if (res.code != 1) {
+                                    layer.open({
+                                        content: res.msg
+                                        , skin: 'msg'
+                                        , time: 2 //2秒后自动关闭
+                                    });
+                                } else {
+                                    window.location.href = res.url;
+                                }
+                            }
+                        })
+                    }
+                }
             }
         })
     });
@@ -112,14 +155,14 @@
 
     function tels(obj) {
         var tel = obj.val();
-        if(tel == ''){
+        if (tel == '') {
             layer.open({
                 content: '手机号不能为空！'
                 , btn: '确定'
             });
             obj.val("");
             return false;
-        } else if(!mobile.test(tel)) {
+        } else if (!mobile.test(tel)) {
             layer.open({
                 content: '手机号格式有误！'
                 , btn: '确定'
@@ -155,14 +198,12 @@
     function printyzm() {
         var yzm = $("input[name='yzm']").val();
         var tel = $("input[name='tel']").val();
-        var url = '/index/login/smsValidate?yzm=' + yzm + '&tel=' + tel;
+        var url = '/index/Login/smsValidate?yzm=' + yzm + '&tel=' + tel;
         $.ajax({
             url: url,
             type: "GET",
             success: function (res) {
                 // 验证码输入验证：不对则清空验证码输入框
-                console.log(res);
-//                成功则存入cookie
                 if (res) {
                     sessionStorage.setItem("yzm", res);
                 } else {
