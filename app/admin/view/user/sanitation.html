@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>管理员管理</title>
+    <title>环卫工管理</title>
     <link rel="stylesheet" href="__LAYUICSS__/layui.css">
     <link rel="stylesheet" href="__ADMINCSS__/ssbase.css">
     <link rel="stylesheet" href="__ADMINCSS__/style.css">
@@ -15,90 +15,67 @@
 <body>
     <span class="layui-breadcrumb" lay-separator="/" >
         <a href="">人员信息</a>
-        <a href="">管理员管理</a>
+        <a href="">环卫工管理</a>
     </span>
     <div class="topLine">
         <div class="layui-form" action="">
-            管理员列表
+            环卫工列表
             <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
-                <select name="" id="" lay-verify="required">
-                    <option value="0">上海市</option>
-                    <option value="1">苏州市</option>
-                    <option value="2">池州市</option>
-                </select>
-                <select name="" id="" lay-verify="required" >
-                    <option value="0">徐汇区</option>
-                    <option value="1">嘉定区</option>
-                    <option value="2">浦东新区</option>
-                </select>
-                <select name="" id="" lay-verify="required" >
-                    <option value="0">龙华街道</option>
-                    <option value="1">长风街道</option>
-                    <option value="2">白银路</option>
-                </select>
-                <input type="checkbox" name="" title="系统管理员" lay-skin="primary">
-                <input type="checkbox" name="" title="商户管理员" lay-skin="primary">
-                <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small">查询管理员</button>
-                <button style="margin-top: 0;" class="layui-btn layui-btn-small add_manager">添加管理员</button>
+                {include file='common/address'/}
+                <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small">查询环卫工</button>
+                <button style="margin-top: 0;" class="layui-btn layui-btn-small add_manager">新增环卫工</button>
             </div>
             <table class="layui-table">
                 <colgroup>
                     <!-- 此处 width 按比例分割 -->
-                    <col width="100">
-                    <col width="120">
-                    <col width="120">
-                    <col width="150">
-                    <col width="100">
-                    <col width="150">
-                    <col width="50">
-                    <col width="250">
-                    <col width='50'>
+                    <col width='100'>
+                    <col width='100'>
+                    <col width='250'>
+                    <col width='100'>
+                    <col width='100'>
+                    <col width='100'>
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
                     <th>姓名</th>
                     <th>手机号</th>
-                    <th>人员类别</th>
                     <th>区域</th>
-                    <th>角色</th>
-                    <th>最后登录时间</th>
-                    <th>公众号</th>
+                    <th>绑定公众号</th>
+                    <th>所属管理员</th>
+                    <th>已绑垃圾桶</th>
                     <th>操作</th>
-                    <th>环卫工列表</th>
                     </tr> 
                 </thead>
                 <tbody class="tbody">
                     <tr>
                         <td>管子见</td>
                         <td>13813131311</td>
-                        <td>商户管理员</td>
-                        <td>徐汇区-龙华街道</td>
-                        <td>角色1，4</td>
-                        <td>2017/10/24</td>
+                        <td>徐汇区-龙华街道-班组1</td>
                         <td>√</td>
+                        <td>ASDER</td>
+                        <td>3</td>
                         <td>
-                            <button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_manager">修改</button>
+                            <button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_sani">修改</button>
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑微信</button>
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small">垃圾桶绑定</button>
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>
                         </td>
-                        <td>
-                            <button type="button" class="layui-btn layui-btn-normal layui-btn-small">环卫工列表</button>
-
-                        </td>
+                        
                     </tr>
                    
                 </tbody>
             </table> 
             <div class="layui-elem-quote" style="padding: 5px 0;">
                 &nbsp;&nbsp;查询到设备总数：<span class="len"></span>
-                &nbsp;&nbsp; &nbsp;&nbsp;<div id="demo5" style="display: inline-block;"></div>
+                &nbsp;&nbsp; &nbsp;&nbsp;<div id="demo8" style="display: inline-block;"></div>
             </div>
         </div>
     </div>   
 </body>
 <!-- 添加设备 -->
-<div id="addManager" style="display: none;">
-    <form class="layui-form" id="ManaForm" action=""> 
+<div id="addManager_sa" style="display: none;">
+    <form class="layui-form" id="addForm_sa" action=""> 
         <div class="layui-form-item">
             <label class="layui-form-label">
                 姓名
@@ -196,8 +173,8 @@
     </form>
 </div>
 <!-- 管理员信息修改 -->
-<div id="resetManager" style="display: none;">
-    <form class="layui-form" id="re_manaForm" action=""> 
+<div id="resetManager_sa" style="display: none;">
+    <form class="layui-form" id="addForm_sa" action=""> 
         <div class="layui-form-item">
             <label class="layui-form-label">
                 姓名
@@ -298,5 +275,5 @@
 <!-- layui 1.0.9版本 -->
 <script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
 
-<script src="__ADMINJS__/js/manager_mana.js"></script>
+<script src="__ADMINJS__/js/sanitation.js"></script>
 </html>

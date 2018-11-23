@@ -8,11 +8,16 @@
 
 namespace app\admin\controller;
 use app\admin\controller\Base;
+use think\Session;
 
 class Index extends Base
 {
+    //首页
     public function index()
     {
+        //获取其角色以及对应的权限列表
+        $role=model('User','service')->getRole(session('adminUser'));
+        session('adminRole',$role['role_name']);
         return $this->fetch();
     }
 
@@ -24,64 +29,59 @@ class Index extends Base
     //区-街道-班组管理
     public function qu_street()
     {
+        $citys=model('Address','service')->getCitys();
+        $city=$citys[0]['area_id'];
+        $regions=model('Address','service')->getChildAddr($city);
+        $region=$regions[0]['area_id'];
+        $roads=model('Address','service')->getChildAddr($region);
+        $road=$roads[0]['area_id'];
+        $groups=model('Address','service')->getChildAddr($road);
+        $this->assign('citys',$citys);
+        $this->assign('regions',$regions);
+        $this->assign('roads',$roads);
+        $this->assign('groups',$groups);
         return $this->fetch();
     }
 
     //设备管理
     public function device_mana()
     {
+        $citys=model('Address','service')->getCitys();
+        $city=$citys[0]['area_id'];
+        $regions=model('Address','service')->getChildAddr($city);
+        $region=$regions[0]['area_id'];
+        $roads=model('Address','service')->getChildAddr($region);
+        $this->assign('citys',$citys);
+        $this->assign('regions',$regions);
+        $this->assign('roads',$roads);
+        $caps=model('Index','service')->device_mana();
+        $types=model('Index','service')->getTypes();
+        $this->assign('types',$types);
+        $this->assign('caps',$caps);
         return $this->fetch();
     }
 
     //垃圾桶管理
     public function trash_mana()
     {
-        return $this->fetch();
-    }
-    //角色管理
-    public function role_mana()
-    {
-        return $this->fetch();
-    }
-    //系统管理员管理
-    public function manager_mana()
-    {
-        return $this->fetch();
-    }
-    //环卫工管理
-    public function sanitation()
-    {
-        return $this->fetch();
-    }
-    //短信提醒设置
-    public function info_manager()
-    {
-        return $this->fetch();
-    }
-    //日志管理
-    public function log_manage()
-    {
-        return $this->fetch();
-    }
-    //垃圾数量统计表
-    public function trash_number()
-    {
-        return $this->fetch();
-    }
-    //垃圾溢出情况统计表
-    public function trash_overflow()
-    {
+        $citys=model('Address','service')->getCitys();
+        $city=$citys[0]['area_id'];
+        $regions=model('Address','service')->getChildAddr($city);
+        $region=$regions[0]['area_id'];
+        $roads=model('Address','service')->getChildAddr($region);
+        $road=$roads[0]['area_id'];
+        $groups=model('Address','service')->getChildAddr($road);
+        $this->assign('citys',$citys);
+        $this->assign('regions',$regions);
+        $this->assign('roads',$roads);
+        $this->assign('groups',$groups);
         return $this->fetch();
     }
 
-    //回收效率统计表
-    public function recovery()
-    {
-        return $this->fetch();
-    }
-    //环卫工接收消息列表
-    public function info_huanwei()
-    {
-        return $this->fetch();
-    }
+
+
+
+
+
+
 }

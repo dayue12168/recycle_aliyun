@@ -18,7 +18,13 @@
                 async:false,
                 data:data.field,
                 success:function(res){
-                    console.log(res);
+                    // console.log(res);
+                    if(!res){
+                        layer.msg('请检查您的用户名和密码');
+                    }else{
+                        window.location.href="/admin/Index/index";
+                        // window.location.href="http://www.baidu.com";
+                    }
                 }
             });
             return false;

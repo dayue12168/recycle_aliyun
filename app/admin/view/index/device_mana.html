@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="__ADMINCSS__/ssbase.css">
     <link rel="stylesheet" href="__ADMINCSS__/style.css">
     <style>
-    
     </style>
 </head>
 <body>
@@ -28,29 +27,16 @@
                 <div class="flex-box flex-2 flex-col-c">
                     <select name="" id="" lay-verify="required" >
                         <option value="">选择设备类型</option>
-                        <option value="1">type1</option>
-                        <option value="2">type2</option>
+                        {foreach $types as $val}
+                        <option value="{$val.cap_type}">{$val.cap_type}</option>
+                        {/foreach}
                     </select>
                     <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small">查询设备</button>
                     <button style="margin-top: 0;" class="layui-btn layui-btn-small add_SB">添加设备</button>
                 </div>
             </div>
             <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
-                <select name="" id="" lay-verify="required">
-                    <option value="0">上海市</option>
-                    <option value="1">苏州市</option>
-                    <option value="2">池州市</option>
-                </select>
-                <select name="" id="" lay-verify="required" >
-                    <option value="0">徐汇区</option>
-                    <option value="1">嘉定区</option>
-                    <option value="2">浦东新区</option>
-                </select>
-                <select name="" id="" lay-verify="required" >
-                    <option value="0">龙华街道</option>
-                    <option value="1">长风街道</option>
-                    <option value="2">白银路</option>
-                </select>
+                {include file='common/address'/}
             </div>
             <table class="layui-table">
                 <colgroup>
@@ -78,13 +64,14 @@
                     </tr> 
                 </thead>
                 <tbody class="tbody">
+                    {foreach $caps as $val}
                     <tr>
-                        <td>IMEI1111</td>
-                        <td>IMSI1111</td>
-                        <td>SB1111</td>
-                        <td>TYPE1111</td>
-                        <td>SIM1111</td>
-                        <td>123,456</td>
+                        <td>{$val.cap_imei}</td>
+                        <td>{$val.cap_imsi}</td>
+                        <td>{$val.cap_serial}</td>
+                        <td>{$val.cap_type}</td>
+                        <td>{$val.cap_sim}</td>
+                        <td>{$val.cap_position}</td>
                         <td>上海市-徐汇区-龙华街道</td>
                         <td>
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>
@@ -92,7 +79,7 @@
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>
                         </td>
                     </tr>
-                   
+                   {/foreach}
                 </tbody>
             </table> 
             <div class="layui-elem-quote" style="padding: 5px 0;">
@@ -112,8 +99,9 @@
             <div class="layui-input-inline">
                 <select name="" id="" lay-verify="required" >
                     <option value="">选择设备类型</option>
-                    <option value="1">type1</option>
-                    <option value="2">type2</option>
+                    {foreach $types as $val}
+                    <option value="{$val.cap_type}">{$val.cap_type}</option>
+                    {/foreach}
                 </select>
             </div>
         </div>
@@ -169,8 +157,9 @@
             <div class="layui-input-inline">
                 <select name="" id="" class="reset_type">
                     <option value="0">选择设备类型</option>
-                    <option value="1">type1</option>
-                    <option value="2">type2</option>
+                    {foreach $types as $val}
+                    <option value="{$val.cap_type}">{$val.cap_type}</option>
+                    {/foreach}
                 </select>
             </div>
         </div>

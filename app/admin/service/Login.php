@@ -13,13 +13,25 @@ class Login
 {
     protected $key='recycleTest';
 
+    //登录校验
     public function loginCheck($data)
     {
-//        print_r();
-        $res=Db::table('jh_user')->where([
-            'tel'=>$data['username'],
-            'pwd'=>md5($data['password'])
-        ])->column('user_id')->fetchSql(false)->find();
-        return $res;
+        $pwd=$this->getPwd($data['password']);
+        $sql="update jh_user set last_login_time=now() where state=0 and tel='".$data['username']."'";
+        $sql.=" and psw='".$pwd."'";
+        return Db::execute($sql);
     }
+
+    //默认密码为123456
+    public function getPwd($pwd='123456')
+    {
+        return md5($pwd);
+    }
+
+    //修改密码
+    public function updatePwd()
+    {
+
+    }
+
 }

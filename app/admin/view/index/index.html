@@ -29,17 +29,11 @@
                     
                     <li class="layui-nav-item">
                         <a href="javascript:;">
-                            欢迎！<span>管理员</span>
+                            欢迎！<span>{$Think.session.adminRole}(<span class="reo">{$Think.session.adminUser}</span>)</span>
                         </a>
                         <dl class="layui-nav-child">
-                            
                             <dd>
-                                <a href="javascript:;">
-                                    修改密码
-                                </a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;">
+                                <a href="/admin/Login/loginOut">
                                     退出登录
                                 </a>
                             </dd>
@@ -50,7 +44,6 @@
                             上海市
                         </a>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -63,6 +56,7 @@
             </div>
         </div>
 
+
         <!-- 主体 -->
         <div class="layui-body">
             <!-- 顶部切换卡 -->
@@ -74,11 +68,12 @@
 
         <!--底部 -->
         <div class="layui-footer" style="text-align: center; line-height: 44px;">
-            Copyright © 2018 <a href="http://www.kiscms.com" target="_blank">
+            Copyright © 2018
         </div>
     </div>
 
     <script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
+    <script src="__COMMONJS__/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
         /**
          * 对layui进行全局配置
@@ -90,34 +85,23 @@
         /**
          * 初始化整个cms骨架
          */
+
         layui.use(['cms'], function() {
             var cms = layui.cms('left-nav', 'top-tab');
-
-            cms.addNav([
-                {id: 0, pid: 0, node: '首页', url: 'index2.html'},
-                {id: 1, pid: 0, node: '基本信息', url: ''},
-                {id: 2, pid: 1, node: '区-街道-班组管理', url: 'qu_street.html'},
-                {id: 3, pid: 1, node: '设备管理', url: 'device_mana.html'},
-                {id: 4, pid: 1, node: '垃圾桶管理', url: 'trash_mana.html'},
-                {id: 5, pid: 0, node: '人员信息', url: ''},
-                {id: 6, pid: 5, node: '角色管理', url: 'role_mana.html'},
-                {id: 7, pid: 5, node: '系统管理员管理', url: 'manager_mana.html'},
-                {id: 8, pid: 5, node: '商户管理员管理', url: ''},
-                {id: 9, pid: 5, node: '环卫工管理', url: 'sanitation.html'},
-                {id: 10, pid: 0, node: '系统管理', url: ''},
-                {id: 11, pid: 10, node: '短信提醒设置', url: 'info_manager.html'},
-                {id: 12, pid: 10, node: '微信公众号提醒设置', url: ''},
-                {id: 13, pid: 10, node: '日志管理', url: 'log_manage.html'},
-                {id: 14, pid: 0, node: '统计报表', url: ''},
-                {id: 15, pid: 14, node: '垃圾数量统计表', url: 'trash_number.html'},
-                {id: 16, pid: 14, node: '垃圾溢出情况统计表', url: 'trash_overflow.html'},
-                {id: 17, pid: 14, node: '回收效率统计表', url: 'recovery.html'},
-                {id: 18, pid: 10, node: '环卫工接收消息列表', url: 'info_huanwei.html'},
-                
-            ], 0, 'id', 'pid', 'node', 'url');
+            $(document).ready(function(){
+                var user = $(".reo").html();
+                $.ajax({
+                    url:"{:url('admin/user/getAuthList')}",
+                    type:"POST",
+                    data:{"user":user},
+                    cache:false,
+                    success:function(data){
+                        cms.addNav(data,0,'id', 'pid', 'node', 'url')
+                    }
+                })
+            })
 
             cms.bind(60 + 41 + 20 + 44); //头部高度 + 顶部切换卡标题高度 + 顶部切换卡内容padding + 底部高度
-
             cms.clickLI(0);
         });
     </script>

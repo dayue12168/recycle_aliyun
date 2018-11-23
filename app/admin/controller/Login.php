@@ -21,16 +21,26 @@ class Login extends Controller
     //登录验证
     public function loginIn(Request $request)
     {
-        echo '<pre>';
-        print_r(config());
-        die();
         $data=$request->param();
         $res=model('Login','service')->loginCheck($data);
-        return json_encode($data);
+        if($res){
+            session('adminUser',$data['username']);
+            return true;
+        }
+        return false;
+
+
     }
 
     //退出登录
     public function loginOut()
+    {
+        Session::delete('adminUser');
+        $this->redirect(url("/admin/Login/index"));
+    }
+
+    //修改密码
+    public function loginUpdate()
     {
 
     }

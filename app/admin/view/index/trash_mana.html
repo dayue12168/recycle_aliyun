@@ -33,25 +33,11 @@
                 </div>
             </div>
             <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
-                <select name="" id="" lay-verify="required">
-                    <option value="0">上海市</option>
-                    <option value="1">苏州市</option>
-                    <option value="2">池州市</option>
-                </select>
+                {include file='common/address'/}
                 <select name="" id="" lay-verify="required" >
-                    <option value="0">徐汇区</option>
-                    <option value="1">嘉定区</option>
-                    <option value="2">浦东新区</option>
-                </select>
-                <select name="" id="" lay-verify="required" >
-                    <option value="0">龙华街道</option>
-                    <option value="1">长风街道</option>
-                    <option value="2">白银路</option>
-                </select>
-                <select name="" id="" lay-verify="required" >
-                    <option value="0">班组1</option>
-                    <option value="1">班组2</option>
-                    <option value="2">班组3</option>
+                    {foreach $groups as $val}
+                    <option value="{$val.area_id}">{$val.area_name}</option>
+                    {/foreach}
                 </select>
             </div>
             <table class="layui-table">
