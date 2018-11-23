@@ -91,7 +91,7 @@
             $(document).ready(function(){
                 var user = $(".reo").html();
                 $.ajax({
-                    url:"{:url('admin/user/getAuthList')}",
+                    url:"/admin/user/getAuthList",
                     type:"POST",
                     data:{"user":user},
                     cache:false,
