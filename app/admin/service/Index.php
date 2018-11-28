@@ -15,7 +15,8 @@ class Index
 {
     public function device_mana()
     {
-        $res=Db::table('jh_cap')->limit(2)->select();
+//        $res=Db::table('jh_cap')->limit(2)->select();
+        $res=Db::table('jh_cap')->order('cap_imei')->select();
         return $res;
     }
 

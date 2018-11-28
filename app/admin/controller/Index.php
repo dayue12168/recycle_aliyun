@@ -9,6 +9,8 @@
 namespace app\admin\controller;
 use app\admin\controller\Base;
 use think\Session;
+use think\Request;
+use app\admin\model\JhCap;
 
 class Index extends Base
 {
@@ -76,6 +78,50 @@ class Index extends Base
         $this->assign('roads',$roads);
         $this->assign('groups',$groups);
         return $this->fetch();
+    }
+
+
+    //修改设备信息
+    public function updateDevice(Request $request)
+    {
+        $where['cap_id']=$request->param('id');
+        $param['cap_imsi']=$request->param('imsi');
+        $param['cap_imei']=$request->param('imei');
+        $param['cap_type']=$request->param('type');
+        $param['cap_serial']=$request->param('serial');
+        $param['cap_sim']=$request->param('sim');
+        $param['cap_position']=$request->param('position');
+        $jhCap=new JhCap();
+        $jhCap->save($param,$where);
+        return json($param);
+    }
+
+    //添加设备
+    public function addDevice(Request $request)
+    {
+        $param['cap_imei']=$request->param('imei');
+        $param['cap_imsi']=$request->param('imsi');
+        $param['cap_position']=$request->param('position');
+        $param['cap_serial']=$request->param('serial');
+        $param['cap_sim']=$request->param('sim');
+        $param['cap_type']=intval($request->param('type'));
+//        return json($param);
+        $jhCap=new JhCap($param);
+        $jhCap->save();
+        $param['cap_id']=$jhCap->cap_id;
+        return json($param);
+    }
+
+    //禁用/启用设备
+    public function setToggle(Request $request)
+    {
+        $where['cap_id']=$request->param('id');
+        $data['cap_status']=$request->param('status');
+        $jhCap=new JhCap();
+        $jhCap->save($data,$where);
+        $data['id']=$where['cap_id'];
+        return json($data);
+
     }
 
 

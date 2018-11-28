@@ -27,6 +27,7 @@ class Address
         if(key_exists(0,$res)){
             for($i=$res[0]['area_level'];$i<=3;$i++){
                 $list[$res[0]['area_level']]=$res;
+//                $list[$res[0][$i]]=$res;
                 $temp=model('Address','service')->getChildAddr($res[0]['area_id']);
                 if(!$temp && $i<3){
                     array_push($list,[['area_id'=>-1,'area_name'=>'请选择']]);
@@ -34,8 +35,15 @@ class Address
                     $res=$temp;
                 }
             }
+        }else{
+            array_push($list,[['area_id'=>-1,'area_name'=>'请选择']]);
         }
-        return json($list);
+        //将数组重新遍历一遍
+        $res=array();
+        foreach($list as $val){
+            $res[]=$val;
+        }
+        return json($res);
     }
 
     //添加某一区域下的子区域

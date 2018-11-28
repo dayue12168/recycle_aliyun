@@ -23,7 +23,6 @@ class Address
     public function getChildAddr($addr)
     {
         $sql='select area_id,area_level,area_parent_id,area_name from jh_area where area_parent_id='.$addr;
-//        echo $sql.'<br/>';
         $res=Db::query($sql);
         return $res;
     }

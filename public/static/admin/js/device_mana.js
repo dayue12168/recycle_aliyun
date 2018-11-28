@@ -11,9 +11,8 @@
   })
   layui.use("form",function(){
       var form = layui.form();
-  
       // 添加设备
-      $(".add_SB").click(function(){
+      $("button.add_SB").click(function(){
           layer.open({
               type:1,
               title:"添加设备",
@@ -21,34 +20,47 @@
               area:["400px","450px"],
               content:$("#addSB"), 
               yes:function(index){
+                  var data=$('#addForm').serialize();
                   $.ajax({
-                      url:"",
+                      url:"/admin/index/addDevice",
                       type:"POST",
-                      data:"",
+                      data:data,
                       cache:false,
                       success:function(res){
-  
+                          var tbody=$('tbody.tbody');
+                          var str='<td>'+res.cap_imei+'</td><td>' + res.cap_imsi+'</td><td>';
+                          str+=res.cap_serial+'</td><td>'+res.cap_type+'</td><td>'+res.cap_sim+'</td>';
+                          str+='<td>'+res.cap_position+'</td><td></td><td>';
+                          str+='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
+                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>';
+                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>';
+                          str+='</td><td style="display: none">'+res.cap_id+'</td></tr>';
+                          tbody.append(str);
+                          layer.msg('添加设备成功');
+                      },error:function(){
+                          layer.msg('添加设备失败，请检查信息填写');
                       }
                   })
-  
                   layer.close(index);
               }
           })
-      })
+      });
+
       // 修改
-      $(".reSet").click(function(){
+      $("button.reSet").click(function(){
           // 类型  编号 IMEI IMSI SIM 位置
-          $(".reset_type").find("option[value='0']").remove();
+          $("select.reset_type").find("option[value='0']").remove();
           var oNum = $(".reset_number"),
-              oImei = $(".reset_IMEI"),
-              oImsi = $(".reset_IMSI"),
+              oImei =$(".reset_IMEI"),
+              oImsi =$(".reset_IMSI"),
               oSim = $(".reset_SIM"),
               oPos = $(".reset_position");
+              oid = $(".Jid");
           var _html = [];
           $(this).parent().siblings().each(function(){
               var SBinfo = $(this).html();
               _html.push(SBinfo);        
-          })
+          });
           var option = "<option value='0' selected>"+_html[3]+"</option>";
           $(".reset_type").prepend(option);
           form.render('select'); 
@@ -58,6 +70,8 @@
           oImsi.val(_html[1]);
           oSim.val(_html[4]);
           oPos.val(_html[5]);
+          oid.val(_html[7]);
+          var that=$(this);
           layer.open({
               type:1,
               title:"设备信息修改",
@@ -65,19 +79,62 @@
               area:["400px","450px"],
               content:$("#resetSB"),
               yes:function(index){
+                  var data=$('#resetForm').serialize();
+                  // console.log(data);
                   $.ajax({
-                      url:"",
+                      url:"/admin/index/updateDevice",
                       type:"POST",
-                      data:"",
+                      data:data,
                       cache:false,
                       success:function(res){
-  
+                          // console.log(that);
+                          // console.log(res);
+                          that.parent().prevAll().eq(6).text(res.cap_imei);
+                          that.parent().prevAll().eq(5).text(res.cap_imsi);
+                          that.parent().prevAll().eq(4).text(res.cap_serial);
+                          that.parent().prevAll().eq(3).text(res.cap_type);
+                          that.parent().prevAll().eq(2).text(res.cap_sim);
+                          that.parent().prevAll().eq(1).text(res.cap_position);
+                            layer.msg('信息修改成功');
+                      },error:function(){
+                          layer.msg('信息修改失败，请检查信息是否正确');
                       }
-                  })
+                  });
                   layer.close(index);
               }
+          })
+      });
+
+      //禁用设备
+      $('button.Jforbid').click(function(){
+          var temp=$(this).text();
+          var forbid='禁用';
+          var use='启用';
+          var id=$(this).parent().next().text();
+          if(temp==forbid){
+              var status=1;
+              temp=use;
+          }else{
+              var status=0;
+              temp=forbid;
+          }
+          var that=$(this);
+          $.ajax({
+              url:'/admin/index/setToggle',
+              type:'post',
+              data:{'id':id,'status':status},
+              cache:false,
+              success:function(res){
+                  that.text(temp);
+              },
+              error:function(){
+                  layer.msg('修改失败');
+              }
+
           })
       })
   })
   var len = $(".tbody>tr").length;     
   $(".len").html(len);
+
+

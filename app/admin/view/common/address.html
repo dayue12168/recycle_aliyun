@@ -1,14 +1,14 @@
-<select name="city_g" lay-verify="required" onchange="Chang($(this))">
+<select name="city_g" lay-verify="required"  class="Jchange">
     {foreach $citys as $val}
     <option value="{$val.area_id}">{$val.area_name}</option>
     {/foreach}
 </select>
-<select name="area_g" lay-verify="required" onchange="Chang($(this))">
+<select name="area_g" lay-verify="required" class="Jchange">
     {foreach $regions as $val}
     <option value="{$val.area_id}">{$val.area_name}</option>
     {/foreach}
 </select>
-<select name="street_g" lay-verify="required" onchange="Chang($(this))">
+<select name="street_g" lay-verify="required" class="Jchange">
     {foreach $roads as $val}
     <option value="{$val.area_id}">{$val.area_name}</option>
     {/foreach}

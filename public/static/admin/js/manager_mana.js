@@ -29,7 +29,7 @@ layui.use('element', function(){
                       data:data,
                       cache:false,
                       success:function(res){
-                          console.log(res);
+                          // console.log(res);
                           var tbody=$('.tbody');
                           var str='<td style="display: none">'+res.user_id+'</td><td>'+res.user_name+'</td><td>' + res.tel+'</td><td>';
                           str+=res.user_type+'</td><td>'+res.area_id0+'-'+res.area_id1;
@@ -99,7 +99,7 @@ layui.use('element', function(){
               var forbid="禁用";
               var use='启用';
               var user=$(this).parent().prevAll().last().text();
-              alert(user);
+              // alert(user);
               if(temp==forbid){
                   $(this).text(use);
                   var state=1;

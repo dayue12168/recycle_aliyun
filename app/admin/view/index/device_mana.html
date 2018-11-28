@@ -31,12 +31,13 @@
                         <option value="{$val.cap_type}">{$val.cap_type}</option>
                         {/foreach}
                     </select>
-                    <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small">查询设备</button>
-                    <button style="margin-top: 0;" class="layui-btn layui-btn-small add_SB">添加设备</button>
+                    <button style="margin-top: 0;margin-left: 20px;display: none" class="layui-btn layui-btn-small query_SB">查询设备</button>
                 </div>
             </div>
             <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
+            <!--<div style="margin:10px 0;padding: 0;">-->
                 {include file='common/address'/}
+                <button style="margin-top: 0;" class="layui-btn layui-btn-small add_SB">添加设备</button>
             </div>
             <table class="layui-table">
                 <colgroup>
@@ -76,8 +77,9 @@
                         <td>
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">{if $val.cap_status}启用{else}禁用{/if}</button>
                         </td>
+                        <td style="display: none">{$val.cap_id}</td>
                     </tr>
                    {/foreach}
                 </tbody>
@@ -97,7 +99,7 @@
                 设备类型
             </label>
             <div class="layui-input-inline">
-                <select name="" id="" lay-verify="required" >
+                <select name="type" lay-verify="required" >
                     <option value="">选择设备类型</option>
                     {foreach $types as $val}
                     <option value="{$val.cap_type}">{$val.cap_type}</option>
@@ -110,7 +112,7 @@
                 设备编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="serial" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -118,7 +120,7 @@
                 设备IMEI号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="imei" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -126,7 +128,7 @@
                 设备IMSI号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="imsi" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -134,7 +136,7 @@
                 SIM卡编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="sim" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -142,20 +144,21 @@
                 位置
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="position" class="layui-input" required lay-verify="required">
             </div>
         </div>
     </form>
 </div>
 <!-- 设备信息修改 -->
 <div id="resetSB" style="display: none;">
-    <form class="layui-form" id="resetForm" action=""> 
+    <form class="layui-form" id="resetForm" action="">
+        <input type="text" class="Jid" name='id' value="" style="display: none">
         <div class="layui-form-item" style="margin-top: 20px;">
             <label class="layui-form-label">
                 设备类型
             </label>
             <div class="layui-input-inline">
-                <select name="" id="" class="reset_type">
+                <select name="type" class="reset_type">
                     <option value="0">选择设备类型</option>
                     {foreach $types as $val}
                     <option value="{$val.cap_type}">{$val.cap_type}</option>
@@ -168,7 +171,7 @@
                 设备编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input reset_number" required lay-verify="required">
+                <input type="index" name="serial" class="layui-input reset_number" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -176,7 +179,7 @@
                 设备IMEI号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input reset_IMEI" required lay-verify="required">
+                <input type="index" name="imei" class="layui-input reset_IMEI" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -184,7 +187,7 @@
                 设备IMSI号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input reset_IMSI" required lay-verify="required">
+                <input type="index" name="imsi" class="layui-input reset_IMSI" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -192,7 +195,7 @@
                 SIM卡编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input reset_SIM" required lay-verify="required">
+                <input type="index" name="sim" class="layui-input reset_SIM" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -200,7 +203,7 @@
                 位置
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input reset_position" required lay-verify="required">
+                <input type="index" name="position" class="layui-input reset_position" required lay-verify="required">
             </div>
         </div>
     </form>
@@ -208,6 +211,6 @@
 <script src="__COMMONJS__/jquery-2.1.4.min.js"></script>
 <!-- layui 1.0.9版本 -->
 <script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
-
 <script type="text/javascript" src="__ADMINJS__/js/device_mana.js"></script>
+<script src="__ADMINJS__/js/change_addr.js"></script>
 </html>
