@@ -1,7 +1,5 @@
 //   区-街道-班组管理 ---------------------------------------------------------------------------------
-layui.use('form', function() {
-    var form = layui.form;
-});
+
 layui.use('element', function(){
     var element = layui.element;  //依赖
   });

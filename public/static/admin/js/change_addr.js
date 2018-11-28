@@ -21,6 +21,14 @@ $(".Jchange").change(function(){
             });
         }
     });
+
+
+// ====================================
+$(this).next().click(function(){
+    alert("xxx");
+})
+
+
 });
 
 
