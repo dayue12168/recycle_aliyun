@@ -1,6 +1,7 @@
 layui.use('form', function() {
     var form = layui.form();
     form.on("select(address)",function(data){
+        console.log($(".layui-form input.layui-unselect").eq(1).val())
         var _val = data.value;
         var child=$(this).parent().parent().nextAll('select');
         $.ajax({
