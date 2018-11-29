@@ -8,7 +8,7 @@
               ,pages: 100 //总页数
               ,groups: 5 //连续显示分页数
           });
-  })
+  });
   layui.use("form",function(){
       var form = layui.form();
       // 添加设备
