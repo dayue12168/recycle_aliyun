@@ -1,9 +1,7 @@
 //   区-街道-班组管理 ---------------------------------------------------------------------------------
-<<<<<<< Updated upstream
-=======
 layui.use('form', function() {
     var form = layui.form();
-    form.on("select(add1)",function(data){
+    form.on("select(address | add1)",function(data){
         console.log(data.value);
         console.log(data.elem.attr('name'));
         return false;
@@ -35,7 +33,6 @@ layui.use('form', function() {
         })
     });
 
->>>>>>> Stashed changes
 
 layui.use('element', function(){
     var element = layui.element;  //依赖

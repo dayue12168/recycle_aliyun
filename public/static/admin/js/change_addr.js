@@ -24,7 +24,8 @@ layui.use('form', function() {
                 });
             }
         });
-    })
+    });
+
 });
 
 
