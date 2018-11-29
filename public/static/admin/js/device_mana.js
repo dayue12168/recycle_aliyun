@@ -11,6 +11,17 @@
   });
   layui.use("form",function(){
       var form = layui.form();
+      
+      // 
+      // 查询设备
+      form.on("checkbox(sb)",function(data){
+        var len = $(".set_sb>input:checked").length
+          if(len>0){
+            $(".query_SB").show();
+          }else{
+            $(".query_SB").hide();
+          }
+      })
       // 添加设备
       $("button.add_SB").click(function(){
           layer.open({
