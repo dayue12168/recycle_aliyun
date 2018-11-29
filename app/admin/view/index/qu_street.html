@@ -19,46 +19,6 @@
     </span>
     <div class="topLine">
         <div class="layui-form">
-<<<<<<< Updated upstream
-            <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
-                {include file='common/address'/}
-                <select name="s_group" id="" lay-verify="required" >
-                    {foreach $groups as $val}
-                    <option value="{$val.area_id}">{$val.area_name}</option>
-                    {/foreach}
-                </select>
-            </div>
-            <div class="flex-box flex-2">
-                <table class="layui-table" style="margin: 10px 30px">
-                    <colgroup>
-                        <!-- 此处 width 按比例分割 -->
-                        <col width="200">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th class="flex-box flex-b flex-col-c " >
-                                <span id="Jregion" Jdata="">请选择地区</span>
-                                <button class="layui-btn layui-btn-small layui-btn-normal layui-add1">新增街道</button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="tbody1">
-                        <tr>
-                            <td class="flex-box flex-b" ><span id="JJroad">未选择街道</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
-                        </tr>
-                    </tbody>
-                </table> 
-                <table class="layui-table" style="margin: 10px 30px">
-                    <colgroup>
-                        <!-- 此处 width 按比例分割 -->
-                        <col width="200">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                        <th class="flex-box flex-b flex-col-c">
-                            <span id="Jroad">请选择街道</span>
-                            <button class="layui-btn layui-btn-small layui-btn-normal layui-add2">新增班组</button>
-=======
         <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
             {include file='common/address'/}
             <select name="s_group" id="" lay-verify="required" >
@@ -78,22 +38,36 @@
                         <th class="flex-box flex-b flex-col-c " >
                             <span id="Jregion" Jdata="">请选择地区</span>
                             <button class="layui-btn layui-btn-small layui-btn-normal layui-add1">新增街道</button>
->>>>>>> Stashed changes
                         </th>
-                        </tr> 
-                    </thead>
-                    <tbody class="tbody2">
-                        <tr>
-                            <td class="flex-box flex-b" Jdata=""><span id="JJgroup">未选择班组</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
-                        </tr>
-                    </tbody>
-                </table> 
-            </div>
+                    </tr>
+                </thead>
+                <tbody class="tbody1">
+                    <tr>
+                        <td class="flex-box flex-b" ><span id="JJroad">未选择街道</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" style="margin: 10px 30px">
+                <colgroup>
+                    <!-- 此处 width 按比例分割 -->
+                    <col width="200">
+                </colgroup>
+                <thead>
+                    <tr>
+                    <th class="flex-box flex-b flex-col-c">
+                        <span id="Jroad">请选择街道</span>
+                        <button class="layui-btn layui-btn-small layui-btn-normal layui-add2">新增班组</button>
+                    </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody2">
+                    <tr>
+                        <td class="flex-box flex-b" Jdata=""><span id="JJgroup">未选择班组</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-<<<<<<< Updated upstream
-=======
         </div>
->>>>>>> Stashed changes
     </div>
 </body>
 <script src="__COMMONJS__/jquery-2.1.4.min.js"></script>
@@ -101,9 +75,4 @@
 
 <script src="__ADMINJS__/js/qu_street.js"></script>
 <script src="__ADMINJS__/js/change_addr.js"></script>
-<script>
-    layui.use('form',function(){
-        form = layui.form;
-    })
-</script>
 </html>
