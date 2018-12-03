@@ -38,13 +38,15 @@ class Index
     public function queryDevice($type,$state)
     {
         $sql='select * from jh_cap where cap_type='.$type.' and (';
+        $where1='';
         foreach($state as $val)
         {
-            $sql.='cap_status='.$val.' or ';
+            $where1.='cap_status='.$val.' or ';
         }
-        $sql.='1 )';
+        $where1=substr($where1,0,-3);
+        $sql.=$where1.')';
+//        return $sql;
         return Db::query($sql);
-
     }
 
 
