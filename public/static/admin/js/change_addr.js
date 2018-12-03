@@ -19,6 +19,15 @@ layui.use('form', function() {
                             if(index==i){
                                 $(this).append(options);
                                 form.render();
+                                var city=$(".layui-form input.layui-unselect").eq(0).val();
+                                var area=$(".layui-form input.layui-unselect").eq(1).val();
+                                var areaId=$("dd.layui-this").eq(1).attr('lay-value');
+                                var street=$(".layui-form input.layui-unselect").eq(2).val();
+                                var streetId=$("dd.layui-this").eq(2).attr('lay-value');
+                                // console.log($(".layui-form input.layui-unselect").eq(i).val());
+                                $('#Jregion').text(city+'---'+area).attr('Jdata',areaId);
+                                $('#Jroad').text(area+'---'+street).attr('Jdata',streetId);
+                                $('#JJroad').text(street).attr('Jdata',streetId);
                             }
                         }
                     }

@@ -83,7 +83,7 @@ class User
     //查询所有管理员:默认全部管理员,0代表系统管理员，1代表商户管理员
     public function getAdmin($type=-1)
     {
-        $sql='select ju.user_id,ju.tel,ju.user_name,ju.user_type,ju.last_login_time,ju.wx_band,jur.role_name,ja1.area_name city,ja2.area_name area,';
+        $sql='select ju.user_id,ju.tel,ju.user_name,ju.user_type,ju.last_login_time,ju.wx_band,ju.state,jur.role_name,ja1.area_name city,ja2.area_name area,';
         $sql.='ja3.area_name street,ja4.area_name `group` from jh_user ju join jh_user_role jur on ju.role_id=jur.role_id left join ';
         $sql.='jh_area ja1 on ju.area_id0 = ja1.area_id left join jh_area ';
         $sql.='ja2 on ju.area_id1 = ja2.area_id left join jh_area ja3 ';

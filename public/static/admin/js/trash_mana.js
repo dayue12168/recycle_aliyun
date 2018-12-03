@@ -25,13 +25,25 @@ layui.use('element', function(){
               area:["500px","480px"],
               content:$("#addTrash"), 
               yes:function(index){
+                  var data=$('#JaddTrash').serialize();
+                  console.log(data);
+                  // return false;
                   $.ajax({
-                      url:"",
+                      url:"/admin/index/addTrash",
                       type:"POST",
-                      data:"",
+                      data:data,
                       cache:false,
                       success:function(res){
-  
+                            // console.log(res);
+                            var tbody=$('tbody.tbody');
+                            var list='<tr><td style="display: none">'+res.dustbinId+'</td><td>'+res.dust_serial
+                                +'</td><td><span class="city">'+res.city+'</span>-<span class="area">'+res.area+'</span>-'
+                                +'<span class="street">'+res.street+'</span></td><td>'+res.dust_length+'*'+res.dust_width
+                                +'*'+res.dust_height+'</td><td>'+res.longitude+','+res.latitude+'</td><td></td>' +
+                                '<td><button type="button" class="layui-btn layui-btn-danger layui-btn-small">绑定</button>' +
+                                '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑</button></td><td></td>' +
+                                '<td><button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_trash">修改</button></td></tr>';
+                            tbody.append(list);
                       }
                   })
   
@@ -40,10 +52,9 @@ layui.use('element', function(){
           })
       })
       // 修改
-      $(".reset_trash").click(function(){
-  
+      $("button.reset_trash").click(function(){
           // 向后台发送垃圾桶编号获取信息，渲染
-          $.ajax({
+          /*$.ajax({
               url:"",
               type:"POST",
               data:"",
@@ -54,9 +65,10 @@ layui.use('element', function(){
                   // layui刷新表单
                   form.render(); 
               }
-          })
-          
-  
+          })*/
+          form.render();
+
+
           layer.open({
               type:1,
               title:"设备信息修改",

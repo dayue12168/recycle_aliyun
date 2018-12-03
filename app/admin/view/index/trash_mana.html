@@ -66,16 +66,18 @@
                     </tr> 
                 </thead>
                 <tbody class="tbody">
+                {foreach $info as $val}
                     <tr>
-                        <td>123456</td>
+                        <td style="display: none">{$val.dustbin_id}</td>
+                        <td>{$val.dust_serial}</td>
                         <td>
-                            <span class='city'>上海市</span>-
-                            <span class='area'>徐汇区</span>-
-                            <span class="street">龙华街道</span>
+                            <span class='city'>{$val.city}</span>-
+                            <span class='area'>{$val.area}</span>-
+                            <span class="street">{$val.street}</span>
                         </td>
-                        <td>14*5*3</td>
-                        <td>123,456</td>
-                        <td>IEMI23/未绑定</td>
+                        <td>{$val.dust_length}*{$val.dust_width}*{$val.dust_height}</td>
+                        <td>{$val.longitude},{$val.latitude}</td>
+                        <td>{$val.cap_imei}</td>
                         <td>
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">绑定</button>
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑</button>
@@ -88,7 +90,7 @@
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_trash">修改</button>
                         </td>
                     </tr>
-                   
+                {/foreach}
                 </tbody>
             </table> 
             <div class="layui-elem-quote" style="padding: 5px 0;">
@@ -100,27 +102,13 @@
 </body>
 <!-- 添加设备 -->
 <div id="addTrash" style="display: none;">
-    <form class="layui-form" id="" action=""> 
+    <form class="layui-form" id="JaddTrash" action="">
         <div class="layui-form-item" style="margin-top: 20px;">
             <label class="layui-form-label">
                 区域
             </label>
             <div class=" flex-box flex-b">
-                <select name="" id="" lay-verify="required">
-                    <option value="">上海市</option>
-                    <option value="1">苏州市</option>
-                    <option value="2">天津市</option>
-                </select>
-                <select name="" id="" lay-verify="required">
-                    <option value="">区县选择</option>
-                    <option value="1">徐汇区</option>
-                    <option value="2">普陀区</option>
-                </select>
-                <select name="" id="" lay-verify="required">
-                    <option value="">街道选择</option>
-                    <option value="1">龙华街道</option>
-                    <option value="2">长风街道</option>
-                </select>
+                {include file='common/address'/}
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -128,7 +116,7 @@
                 垃圾桶编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jserial" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -136,7 +124,7 @@
                 地址
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jaddress" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -144,7 +132,7 @@
                 经度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlongitude" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -152,7 +140,7 @@
                 维度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlatitude" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -160,15 +148,31 @@
                 高德坐标
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jgps_gd" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
             <label class="layui-form-label">
-                长宽高
+                长
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlength" class="layui-input" required lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 20px;">
+            <label class="layui-form-label">
+                宽
+            </label>
+            <div class="layui-input-inline">
+                <input type="index" name="Jwidth" class="layui-input" required lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 20px;">
+            <label class="layui-form-label">
+                高
+            </label>
+            <div class="layui-input-inline">
+                <input type="index" name="Jheight" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -176,7 +180,7 @@
                 设备安装高度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="install_height" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -184,34 +188,21 @@
                 联通编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="union_serial" class="layui-input" required lay-verify="required">
             </div>
         </div>
     </form>
 </div>
 <!-- 设备信息修改 -->
 <div id="resetTrash" style="display: none;">
-    <form class="layui-form" id="" action=""> 
+    <form class="layui-form" id="JresetTrash" action="">
+        <input type="index" name="id" style="display: none" value="">
         <div class="layui-form-item" style="margin-top: 20px;">
             <label class="layui-form-label">
                 区域
             </label>
             <div class=" flex-box flex-b">
-                <select name="T_city" id="" lay-verify="required">
-                    <option value="">市选择</option>
-                    <option value="1">上海市</option>
-                    <option value="2">天津市</option>
-                </select>
-                <select name="T_area" id="" lay-verify="required">
-                    <option value="">区县选择</option>
-                    <option value="1">徐汇区</option>
-                    <option value="2">普陀区</option>
-                </select>
-                <select name="T_street" id="" lay-verify="required">
-                    <option value="">街道选择</option>
-                    <option value="1">龙华街道</option>
-                    <option value="2">长风街道</option>
-                </select>
+                {include file='common/address'/}
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -219,7 +210,7 @@
                 垃圾桶编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jserial" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -227,7 +218,7 @@
                 地址
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jaddress" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -235,7 +226,7 @@
                 经度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlongitude" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -243,7 +234,7 @@
                 维度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlatitude" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -251,15 +242,31 @@
                 高德坐标
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jgps_gd" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
             <label class="layui-form-label">
-                长宽高
+                长
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlength" class="layui-input" required lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 20px;">
+            <label class="layui-form-label">
+                宽
+            </label>
+            <div class="layui-input-inline">
+                <input type="index" name="Jwidth" class="layui-input" required lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 20px;">
+            <label class="layui-form-label">
+                高
+            </label>
+            <div class="layui-input-inline">
+                <input type="index" name="Jheight" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -267,7 +274,7 @@
                 设备安装高度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="install_height" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -275,7 +282,7 @@
                 联通编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="union_serial" class="layui-input" required lay-verify="required">
             </div>
         </div>
     </form>
@@ -285,4 +292,5 @@
 <script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
 
 <script src="__ADMINJS__/js/trash_mana.js"></script>
+<script src="__ADMINJS__/js/change_addr.js"></script>
 </html>

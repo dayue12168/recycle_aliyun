@@ -11,6 +11,8 @@ use app\admin\controller\Base;
 use think\Session;
 use think\Request;
 use app\admin\model\JhCap;
+use app\admin\model\JhDustbinInfo;
+use app\admin\model\JhArea;
 
 class Index extends Base
 {
@@ -22,7 +24,7 @@ class Index extends Base
         session('adminRole',$role['role_name']);
         return $this->fetch();
     }
-
+    //欢迎页
     public function index2()
     {
         return $this->fetch();
@@ -77,6 +79,9 @@ class Index extends Base
         $this->assign('regions',$regions);
         $this->assign('roads',$roads);
         $this->assign('groups',$groups);
+        //垃圾桶信息
+        $info=model('Index','service')->getDustbinInfo();
+        $this->assign('info',$info);
         return $this->fetch();
     }
 
@@ -124,6 +129,43 @@ class Index extends Base
 
     }
 
+    //添加垃圾桶
+    public function addTrash(Request $request)
+    {
+        $data['area_id0']=$request->param('city_g');
+        $data['area_id1']=$request->param('area_g');
+        $data['area_id2']=$request->param('street_g');
+        $data['dust_serial']=$request->param('Jserial');
+        $data['dust_address']=$request->param('Jaddress');
+        $data['longitude']=$request->param('Jlongitude');
+        $data['latitude']=$request->param('Jlatitude');
+        $data['gps_gd']=$request->param('Jgps_gd');
+        $data['dust_length']=$request->param('Jlength');
+        $data['dust_width']=$request->param('Jwidth');
+        $data['dust_height']=$request->param('Jheight');
+        $data['install_height']=$request->param('install_height');
+        $data['union_serial']=$request->param('union_serial');
+        $jhDustbinInfo=new JhDustbinInfo();
+        $jhDustbinInfo->save($data);
+        $data['dustbinId']=$jhDustbinInfo->dustbin_id;
+        //查询出对应的市，区，街道
+        $jhArea=new JhArea();
+        $data['city']=$jhArea->where('area_id',$data['area_id0'])->value('area_name');
+        $data['area']=$jhArea->where('area_id',$data['area_id1'])->value('area_name');
+        $data['street']=$jhArea->where('area_id',$data['area_id2'])->value('area_name');
+        return json($data);
+    }
+
+
+    //查询符合条件的设备
+    public function queryDevice(Request $request)
+    {
+        $type=$request->param('type');
+        $str=$request->param('state');
+        $state=explode(',',$str);
+        $res=model('Index','service')->queryDevice($type,$state);
+        return json($res);
+    }
 
 
 

@@ -67,7 +67,7 @@
                         <td>
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_manager">修改</button>
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑微信</button>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small reset_forbid">禁用</button>
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small reset_forbid">{if $val.state}启用{else}禁用{/if}</button>
                         </td>
                         <td>
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small check_huan">环卫工列表</button>
@@ -210,4 +210,5 @@
 <!-- layui 1.0.9版本 -->
 <script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
 <script src="__ADMINJS__/js/manager_mana.js"></script>
+<script src="__ADMINJS__/js/change_addr.js"></script>
 </html>

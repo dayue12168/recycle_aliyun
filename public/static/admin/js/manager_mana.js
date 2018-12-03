@@ -98,15 +98,28 @@ layui.use('element', function(){
               var temp=$(this).text();
               var forbid="禁用";
               var use='启用';
-              var user=$(this).parent().prevAll().last().text();
-              // alert(user);
+              var id=$(this).parent().prevAll().last().text();
+              var that=$(this);
               if(temp==forbid){
-                  $(this).text(use);
+                  temp=use;
                   var state=1;
               }else{
-                  $(this).text(forbid);
+                  temp=forbid;
                   var state=0;
               }
+              $.ajax({
+                  url:'/admin/user/setToggle',
+                  type:'post',
+                  data:{'id':id,'state':state},
+                  cache:false,
+                  success:function(res){
+                      console.log(res);
+                      that.text(temp);
+                  },
+                  error:function(){
+                      layer.msg('修改失败');
+                  }
+              });
           });
 
   });

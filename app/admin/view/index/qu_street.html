@@ -21,7 +21,7 @@
         <div class="layui-form">
         <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
             {include file='common/address'/}
-            <select name="s_group" id="" lay-verify="required" >
+            <select name="s_group" lay-filter="group" lay-verify="required" >
                 {foreach $groups as $val}
                 <option value="{$val.area_id}">{$val.area_name}</option>
                 {/foreach}

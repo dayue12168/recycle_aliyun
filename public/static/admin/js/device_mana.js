@@ -10,6 +10,7 @@
           });
   });
   layui.use("form",function(){
+
       var form = layui.form();
       
       // 
@@ -22,6 +23,55 @@
             $(".query_SB").hide();
           }
       })
+
+      $("button.query_SB").click(function(){
+          var type=$(this).prev().find('.layui-this').attr('lay-value');
+          var stateArr=$(this).parent().prev().find('.layui-form-checked').prev();
+          var arr='';
+          $.each(stateArr,function(index,ele){
+              arr+=','+ele.value;
+          });
+          var state=arr.substring(1);
+          $.ajax({
+              url:"/admin/index/queryDevice",
+              type:"post",
+              data:{'type':type,'state':state},
+              cache:false,
+              success:function(res){
+                  var tb=$('tbody.tbody');
+                  // console.log(res);
+                  var str='';
+                  for(var i in res){
+                      if(res[i].status){
+                          var status='启用'
+                      }else{
+                          var status='禁用'
+                      }
+                      str+='<tr><td>'+res[i].cap_imei+'</td><td>'
+                          +res[i].cap_imsi+'</td><td>'
+                          +res[i].cap_serial+'</td><td>'
+                            +res[i].cap_type+'</td><td>'+res[i].cap_sim+'</td><td>'
+                            +res[i].cap_position+'</td><td>上海市-徐汇区-龙华街道</td><td>' +
+                          '<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>' +
+                          '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>' +
+                          '<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">'+status+'</button>' +
+                          '</td><td style="display: none">'+res[i].cap_id+'</td></tr>';
+                      // console.log(str);
+
+                  }
+                  str.substring(1);
+                  tb.html(str);
+
+              },error:function(){
+                  layer.msg('请确保查询条件完整');
+              }
+
+
+          });
+      });
+
+
+
       // 添加设备
       $("button.add_SB").click(function(){
           layer.open({

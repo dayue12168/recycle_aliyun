@@ -19,10 +19,12 @@
     <div class="topLine">
         <div class="layui-form" action="">
             <div class="layui-input-block flex-box flex-b" style="margin: 0;padding: 0;">
+
                 <div class="set_sb">
                     <input type="checkbox" lay-filter='sb' name="sb" title="已绑定设备" lay-skin="primary">
                     <input type="checkbox" lay-filter='sb' name="sb" title="未绑定设备" lay-skin="primary">
                     <input type="checkbox" lay-filter='sb' name="sb" title="已禁用设备" lay-skin="primary">
+
                 </div>
                 <div class="flex-box flex-2 flex-col-c">
                     <select name="" id="" lay-verify="required" >
@@ -31,7 +33,8 @@
                         <option value="{$val.cap_type}">{$val.cap_type}</option>
                         {/foreach}
                     </select>
-                    <button style="margin-top: 0;margin-left: 20px;display: none" class="layui-btn layui-btn-small query_SB">查询设备</button>
+                    <!--<button style="margin-top: 0;margin-left: 20px;display: none" class="layui-btn layui-btn-small query_SB">查询设备</button>-->
+                    <button style="margin-top: 0;margin-left: 20px;" class="layui-btn layui-btn-small query_SB">查询设备</button>
                 </div>
             </div>
             <div class="layui-input-block flex-box flex-3 flex-col-c" style="margin:10px 0;padding: 0;">

@@ -194,6 +194,18 @@ class User extends Base
         return json($post);
     }
 
+    //禁用/启用管理员
+    public function setToggle(Request $request)
+    {
+        $where['user_id']=$request->param('id');
+        $data['state']=$request->param('state');
+        $jhUser=new JhUser();
+        $jhUser->save($data,$where);
+        return true;
+//        $data['user_id']=$where['user_id'];
+//        return json($data);
+    }
+
     public function test()
     {
         $jhUserRole=new JhUserRole();
