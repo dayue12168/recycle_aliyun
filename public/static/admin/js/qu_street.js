@@ -70,7 +70,7 @@ layui.use('form', function() {
       $(".str_team").click(function(){
         var name = $(this).html();
         var id=$(this).attr('value');
-        $("#Jroad").html(name);
+        $("#Jroad").html(name).attr('value',id);
         $.ajax({
             url:"/admin/Address/getOneChild",
             type:"POST",
