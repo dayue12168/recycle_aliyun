@@ -19,7 +19,7 @@
     </span>
     <div class="topLine">
         <div class="layui-form">
-        <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
+        <div class="layui-input-block flex-box flex-3 layui-hide" style="margin:10px 0;padding: 0;">
             {include file='common/address'/}
             <select name="s_group" lay-filter="group" lay-verify="required" >
                 {foreach $groups as $val}
@@ -27,6 +27,26 @@
                 {/foreach}
             </select>
         </div>
+         <p><span>城市选择：</span><button class="layui-btn layui-btn-small">上海市</button></p>
+        <p>区县选择：<br/>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">黄浦区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">虹口区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">杨浦区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">闸北区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">普陀区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">长宁区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">静安区</button>
+            <button class="layui-btn layui-btn-small maTop_10">徐汇区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">浦东新区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">闵行区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">奉贤区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">金山区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">松江区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">青浦区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">嘉定区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">宝山区</button>
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">崇明区</button>
+        </p> 
         <div class="flex-box flex-2">
             <div style="min-width:400px;max-width: 550px;margin: 10px 30px">
                 <table class="layui-table" style="">
