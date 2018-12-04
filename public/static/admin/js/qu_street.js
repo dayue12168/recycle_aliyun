@@ -12,6 +12,7 @@ layui.use('form', function() {
 
 
     //选择市---区
+    $("button.cityChose").eq(0).removeClass("layui-btn-primary");
     $("button.cityChose").click(function(){
         var id=$(this).val();
         $(this).removeClass("layui-btn-primary").siblings("button").addClass("layui-btn-primary");
@@ -29,7 +30,6 @@ layui.use('form', function() {
                     str+='<button class="layui-btn layui-btn-primary layui-btn-small maTop_10 areaChose" ' +
                         'value="'+res[i].area_id+'">'+res[i].area_name+'</button>';
                 }
-                str.substring(1);
                 // area.html(str);
                 $(".areaCho").html(str);
                 choses.quchose();
@@ -44,12 +44,12 @@ layui.use('form', function() {
     quchose:function(){
         $("button.areaChose").click(function(){
           $(this).removeClass("layui-btn-primary").siblings().not("span").addClass("layui-btn-primary");
-          var $id=$(this).val();
+          var id=$(this).val();
           var name=$(this).text();
           $.ajax({
               url:"/admin/Address/getOneChild",
               type:"POST",
-              data:{'id':$id},
+              data:{'id':id},
               cache:false,
               success:function(res){
                   var area=$('tbody.tbody1');
@@ -61,7 +61,7 @@ layui.use('form', function() {
                   str+='</tr>';
                   area.html(str);
                   choses.streetchose();
-                  $('#Jregion').attr('value',$id).text(name);
+                  $('#Jregion').attr('value',id).text(name);
               }
           })
       })
@@ -69,13 +69,31 @@ layui.use('form', function() {
     streetchose:function(){
       $(".str_team").click(function(){
         var name = $(this).html();
-        $("#Jroad").html(name); 
+        var id=$(this).attr('value');
+        $("#Jroad").html(name);
+        $.ajax({
+            url:"/admin/Address/getOneChild",
+            type:"POST",
+            data:{'id':id},
+            cache:false,
+            success:function(res){
+                var area=$('tbody.tbody2');
+                area.find('td').remove();
+                var str='<tr>';
+                for(var i in res){
+                    str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <i class="layui-icon layui-edit">&#xe642;</i></td>';
+                }
+                str+='</tr>';
+                area.html(str);
+            }
+        })
       })
     }
   };
   choses.quchose();
   choses.streetchose();
 
+  //
 
 
 
