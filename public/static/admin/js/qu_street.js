@@ -14,7 +14,7 @@ layui.use('form', function() {
     //选择市---区
     $("button.cityChose").click(function(){
         var id=$(this).val();
-
+        $(this).removeClass("layui-btn-primary").siblings("button").addClass("layui-btn-primary");
         $.ajax({
             url:"/admin/Address/getOneChild",
             type:"POST",
@@ -22,14 +22,16 @@ layui.use('form', function() {
             cache:false,
             success:function(res){
                 var area=$('#Jarea');
-                area.nextAll('button').remove();
+                // area.nextAll('button').remove();
+                $(".areaCho").html("");
                 var str='';
                 for(var i in res){ 
                     str+='<button class="layui-btn layui-btn-primary layui-btn-small maTop_10 areaChose" ' +
                         'value="'+res[i].area_id+'">'+res[i].area_name+'</button>';
                 }
                 str.substring(1);
-                area.html(str);
+                // area.html(str);
+                $(".areaCho").html(str);
                 choses.quchose();
                 choses.streetchose();
             }
