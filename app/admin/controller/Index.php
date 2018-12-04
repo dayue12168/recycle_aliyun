@@ -165,6 +165,7 @@ class Index extends Base
         $state=explode(',',$str);
         $res=model('Index','service')->queryDevice($type,$state);
         return json($res);
+//        return $res;
     }
 
 

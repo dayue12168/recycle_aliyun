@@ -44,6 +44,7 @@ layui.use('element', function(){
                                 '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑</button></td><td></td>' +
                                 '<td><button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_trash">修改</button></td></tr>';
                             tbody.append(list);
+                            layer.msg('垃圾桶'+res.dust_serial+'添加成功');
                       }
                   })
   

@@ -9,16 +9,20 @@
 namespace app\admin\controller;
 
 use think\Request;
-
+use app\admin\model\JhArea;
 class Address
 {
-    //获取城市下面的区路组列表
-    public function getCitys(Request $request)
+    //获取某地区下的子地区列表
+    public function getOneChild(Request $request)
     {
-
+        $id=$request->param('id');
+        $jhArea=new JhArea();
+//        $res=$jhArea::where('area_parent_id',$id)->column('area_id,area_name');
+        $res=$jhArea::all(['area_parent_id'=>$id]);
+        return json($res);
     }
 
-    //获取某一区域下面的子地区列表
+    //获取某一区域下面的所有子地区列表
     public function getChildAddr(Request $request)
     {
         $addr=$request->param('addr');

@@ -19,52 +19,35 @@
     </span>
     <div class="topLine">
         <div class="layui-form">
-        <div class="layui-input-block flex-box flex-3 layui-hide" style="margin:10px 0;padding: 0;">
-            {include file='common/address'/}
-            <select name="s_group" lay-filter="group" lay-verify="required" >
-                {foreach $groups as $val}
-                <option value="{$val.area_id}">{$val.area_name}</option>
-                {/foreach}
-            </select>
-        </div>
-         <p><span>城市选择：</span><button class="layui-btn layui-btn-small">上海市</button></p>
-        <p>区县选择：<br/>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">黄浦区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">虹口区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">杨浦区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">闸北区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">普陀区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">长宁区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">静安区</button>
-            <button class="layui-btn layui-btn-small maTop_10">徐汇区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">浦东新区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">闵行区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">奉贤区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">金山区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">松江区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">青浦区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">嘉定区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">宝山区</button>
-            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10">崇明区</button>
-        </p> 
+         <p><span>城市选择：</span>
+             {foreach $citys as $val}
+             <button class="layui-btn layui-btn-small cityChose" value="{$val.area_id}" >{$val.area_name}</button>
+             {/foreach}
+         </p>
+        <p><span id="Jarea">区县选择：</span>
+            {foreach $regions as $val}
+            <button class="layui-btn layui-btn-primary layui-btn-small maTop_10 areaChose" value="{$val.area_id}">{$val.area_name}</button>
+            {/foreach}
+        </p>
         <div class="flex-box flex-2">
             <div style="min-width:400px;max-width: 550px;margin: 10px 30px">
                 <table class="layui-table" style="">
                     <colgroup>
-                        <!-- 此处 width 按比例分割 -->
                         <col width="200">
                     </colgroup>
                     <thead>
                         <tr>
                             <th class="flex-box flex-b flex-col-c " >
-                                <span id="Jregion" Jdata="">请选择地区</span>
+                                <span id="Jregion" value="">请选择地区</span>
                                 <button class="layui-btn layui-btn-small layui-btn-normal layui-add1">新增街道</button>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="tbody1">
                         <tr>
-                            <td class="flex-box flex-b" ><span id="JJroad">未选择街道</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                            {foreach $roads as $val}
+                            <td class="flex-box flex-b" ><span value="{$val.area_id}">{$val.area_name}</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                            {/foreach}
                         </tr>
                     </tbody>
                 </table>
@@ -78,14 +61,16 @@
                     <thead>
                         <tr>
                         <th class="flex-box flex-b flex-col-c">
-                            <span id="Jroad">请选择街道</span>
+                            <span id="Jroad" value="">请选择街道</span>
                             <button class="layui-btn layui-btn-small layui-btn-normal layui-add2">新增班组</button>
                         </th>
                         </tr>
                     </thead>
                     <tbody class="tbody2">
                         <tr>
-                            <td class="flex-box flex-b" Jdata=""><span id="JJgroup">未选择班组</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                            {foreach $groups as $val}
+                            <td class="flex-box flex-b" Jdata=""><span value="{$val.area_id}">{$val.area_name}</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                            {/foreach}
                         </tr>
                     </tbody>
                 </table>
@@ -100,5 +85,4 @@
 <script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
 
 <script src="__ADMINJS__/js/qu_street.js"></script>
-<script src="__ADMINJS__/js/change_addr.js"></script>
 </html>

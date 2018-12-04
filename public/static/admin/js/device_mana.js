@@ -38,8 +38,9 @@
               data:{'type':type,'state':state},
               cache:false,
               success:function(res){
-                  var tb=$('tbody.tbody');
                   // console.log(res);
+                  // return false;
+                  var tb=$('tbody.tbody');
                   var str='';
                   for(var i in res){
                       if(res[i].status){
