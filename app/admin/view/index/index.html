@@ -40,11 +40,18 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <select>
+                        <a href="javascript:;">
+                            上海市
+                        </a>
+                        <dl class="layui-nav-child">
                             {foreach $citys as $val}
-                            <option>{$val.area_name}</option>
+                            <dd>
+                                <a href="javascript:;">
+                                    {$val.area_name}
+                                </a>
+                            </dd>
                             {/foreach}
-                        </select>
+                        </dl>
                     </li>
                 </ul>
             </div>
