@@ -24,7 +24,7 @@
              <button class="layui-btn layui-btn-small cityChose" value="{$val.area_id}" >{$val.area_name}</button>
              {/foreach}
          </p>
-        <p><span id="Jarea">区县选择：</span>
+        <p class="flex-box flex-col-c"><span id="Jarea">区县选择：</span>
             {foreach $regions as $val}
             <button class="layui-btn layui-btn-primary layui-btn-small maTop_10 areaChose" value="{$val.area_id}">{$val.area_name}</button>
             {/foreach}
@@ -46,7 +46,7 @@
                     <tbody class="tbody1">
                         <tr>
                             {foreach $roads as $val}
-                            <td class="flex-box flex-b" ><span value="{$val.area_id}">{$val.area_name}</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                            <td class="flex-box flex-b" ><a  class="str_team"  value="{$val.area_id}">{$val.area_name}</a> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
                             {/foreach}
                         </tr>
                     </tbody>

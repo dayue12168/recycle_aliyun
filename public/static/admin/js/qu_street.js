@@ -41,6 +41,7 @@ layui.use('form', function() {
   var choses = {
     quchose:function(){
         $("button.areaChose").click(function(){
+          $(this).removeClass("layui-btn-primary").siblings().not("span").addClass("layui-btn-primary");
           var $id=$(this).val();
           var name=$(this).text();
           $.ajax({
@@ -71,6 +72,7 @@ layui.use('form', function() {
     }
   };
   choses.quchose();
+  choses.streetchose();
 
 
 
