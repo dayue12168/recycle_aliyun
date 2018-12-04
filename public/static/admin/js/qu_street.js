@@ -14,6 +14,7 @@ layui.use('form', function() {
     //选择市---区
     $("button.cityChose").click(function(){
         var id=$(this).val();
+
         $.ajax({
             url:"/admin/Address/getOneChild",
             type:"POST",
@@ -23,40 +24,54 @@ layui.use('form', function() {
                 var area=$('#Jarea');
                 area.nextAll('button').remove();
                 var str='';
-                for(var i in res){
+                for(var i in res){ 
                     str+='<button class="layui-btn layui-btn-primary layui-btn-small maTop_10 areaChose" ' +
                         'value="'+res[i].area_id+'">'+res[i].area_name+'</button>';
                 }
                 str.substring(1);
                 area.html(str);
+                choses.quchose();
+                choses.streetchose();
             }
         })
     });
 
 
   //选择区--路
-    $("button.areaChose").click(function(){
-        var id=$(this).val();
-        var name=$(this).text();
+  var choses = {
+    quchose:function(){
+        $("button.areaChose").click(function(){
+          var $id=$(this).val();
+          var name=$(this).text();
+          $.ajax({
+              url:"/admin/Address/getOneChild",
+              type:"POST",
+              data:{'id':$id},
+              cache:false,
+              success:function(res){
+                  var area=$('tbody.tbody1');
+                  area.find('td').remove();
+                  var str='<tr>';
+                  for(var i in res){
+                      str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <i class="layui-icon layui-edit">&#xe642;</i></td>';
+                  }
+                  str+='</tr>';
+                  area.html(str);
+                  choses.streetchose();
+                  $('#Jregion').attr('value',$id).text(name);
+              }
+          })
+      })
+    },
+    streetchose:function(){
+      $(".str_team").click(function(){
+        var name = $(this).html();
+        $("#Jroad").html(name); 
+      })
+    }
+  };
+  choses.quchose();
 
-        $.ajax({
-            url:"/admin/Address/getOneChild",
-            type:"POST",
-            data:{'id':id},
-            cache:false,
-            success:function(res){
-                var area=$('tbody.tbody1');
-                area.find('td').remove();
-                var str='<tr>';
-                for(var i in res){
-                    str+='<td class="flex-box flex-b" ><span value="'+res[i].area_id+'">'+res[i].area_name+'</span> <i class="layui-icon layui-edit">&#xe642;</i></td>';
-                }
-                str+='</tr>';
-                area.html(str);
-                $('#Jregion').attr('value',id).text(name);
-            }
-        })
-    });
 
 
 
