@@ -22,6 +22,8 @@ class Index extends Base
         //获取其角色以及对应的权限列表
         $role=model('User','service')->getRole(session('adminUser'));
         session('adminRole',$role['role_name']);
+        $citys=model('Address','service')->getCitys();
+        $this->assign('citys',$citys);
         return $this->fetch();
     }
     //欢迎页
