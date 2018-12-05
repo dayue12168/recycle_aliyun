@@ -26,16 +26,24 @@ class Address
     public function getChildAddr(Request $request)
     {
         $addr=$request->param('addr');
-        $res=model('Address','service')->getChildAddr($addr);
+        $cat=$res=model('Address','service')->getChildAddr($addr);
         $list=array();
         if(key_exists(0,$res)){
             for($i=$res[0]['area_level'];$i<=3;$i++){
+//                if($cat[0]['area_level']<2){
+//                    $list[$res[0]['area_level']]=$res;
+//                }
                 $list[$res[0]['area_level']]=$res;
 //                $list[$res[0][$i]]=$res;
                 $temp=model('Address','service')->getChildAddr($res[0]['area_id']);
                 if(!$temp && $i<3){
                     array_push($list,[['area_id'=>-1,'area_name'=>'请选择']]);
                 }else{
+                    if($res[0]['area_level']==2){
+                        array_unshift($list[$res[0]['area_level']],['area_id'=>-1,'area_parent_id'=>$res[0]['area_parent_id'],'area_name'=>'全部街道']);
+                    }elseif($res[0]['area_level']==3){
+                        array_unshift($list[$res[0]['area_level']],['area_id'=>-1,'area_parent_id'=>$res[0]['area_parent_id'],'area_name'=>'全部班组']);
+                    }
                     $res=$temp;
                 }
             }
@@ -47,6 +55,9 @@ class Address
         foreach($list as $val){
             $res[]=$val;
         }
+//        echo '<pre/>';
+//        print_r($res);
+//        die('===');
         return json($res);
     }
 
