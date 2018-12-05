@@ -42,8 +42,8 @@ layui.use('form', function() {
   //选择区--路
   var choses = {
     quchose:function(){
-        $("button.areaChose").click(function(){
-          $(this).removeClass("layui-btn-primary").siblings().not("span").addClass("layui-btn-primary");
+      $("button.areaChose").click(function(){
+        $(this).removeClass("layui-btn-primary").siblings().not("span").addClass("layui-btn-primary");
           var id=$(this).val();
           var name=$(this).text();
           $.ajax({
@@ -95,7 +95,31 @@ layui.use('form', function() {
 
   //
 
-
+  //新增街道
+  $(".layui-add1").click(function(){
+      var _html = $(".tbody1");
+      var id=$(this).prev().attr('value');
+      layer.prompt({
+          formType:0,
+          value:"街道名",
+          title:"新增街道",
+          },function(value,index,elem){
+          // console.log(value);
+          $.ajax({
+              url:"/admin/address/addChild",
+              type:"POST",
+              data:{'id':id,'name':value},
+              success:function(res){
+                console.log(res);   //state   1 为成功  0 为失败
+                if(res.state == 1){
+                  _html.append('<tr><td class="flex-box flex-b" Jdata=""><a>'+value+'</a><i class="layui-icon layui-edit">&#xe642;</i></td></tr>')
+                }
+                layer.msg(res.info);
+                layer.close(index);
+              }
+          })
+      });
+  });
 
 
     //改名
@@ -123,6 +147,7 @@ layui.use('form', function() {
       });
   });
 
+
   //新增街道
   $(".layui-add1").click(function(){
       var _html = $(".tbody1");
@@ -145,6 +170,7 @@ layui.use('form', function() {
           })
       });
   });
+
 
   //新增班组
   $(".layui-add2").click(function(){
