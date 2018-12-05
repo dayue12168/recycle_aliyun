@@ -138,6 +138,7 @@ layui.use('form', function() {
               type:"POST",
               data:{'id':id,'name':value},
               success:function(res){
+                  console.log(res);
                 layer.msg(res.info);
                 layer.close(index);
               }
