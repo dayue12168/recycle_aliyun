@@ -32,11 +32,12 @@ class Address
         $level=Db::table('jh_area')->where('area_id',$id)->fetchSql(false)->value('area_level');
         $res=0;
         if($level) {
-            $res = Db::table('jh_area')->fetchSql(false)->insert([
+            Db::name('jh_area')->fetchSql(false)->insert([
                 'area_level' => $level+1,
                 'area_parent_id' => $id,
                 'area_name' => $name
             ]);
+            $res=Db::name('jh_area')->getLastInsID();
         }
         return $res;
     }

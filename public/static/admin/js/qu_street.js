@@ -148,6 +148,29 @@ layui.use('form', function() {
   });
 
 
+  //新增街道
+  $(".layui-add1").click(function(){
+      var _html = $(".tbody1");
+      var id=$(this).prev().attr('value');
+      layer.prompt({
+          formType:0,
+          value:"街道名",
+          title:"新增街道",
+          },function(value,index,elem){
+          // console.log(value);
+          $.ajax({
+              url:"/admin/address/addChild",
+              type:"POST",
+              data:{'id':id,'name':value},
+              success:function(res){
+                  console.log(res);
+                layer.msg(res.info);
+                layer.close(index);
+              }
+          })
+      });
+  });
+
 
   //新增班组
   $(".layui-add2").click(function(){
