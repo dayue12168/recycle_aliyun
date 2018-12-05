@@ -13,10 +13,10 @@ use think\Db;
 
 class Index
 {
-    public function device_mana()
+    public function device_mana($road)
     {
-//        $res=Db::table('jh_cap')->limit(2)->select();
-        $res=Db::table('jh_cap')->order('cap_imei')->select();
+        $sql='select jh.*,concat(ja1.area_name,"-",ja2.area_name,"-",ja3.area_name) address from jh_cap jh join jh_dustbin_info jdi on jh.cap_id=jdi.cap_id join jh_area ja1 on jdi.area_id0=ja1.area_id join jh_area ja2 on jdi.area_id1=ja2.area_id join jh_area ja3 on jdi.area_id2=ja3.area_id where cap_status=0 and jdi.area_id2='.$road;
+        $res=Db::query($sql);
         return $res;
     }
 
@@ -35,22 +35,18 @@ class Index
         return $res;
     }
 
-    public function queryDevice($type,$state,$addr)
+    public function queryDevice($type,$status,$addr)
     {
-        $sql='select jh.*,ja1.area_name city,ja2.area_name area,ja3.area_name street from jh_cap jh join jh_area ja1 on jh.cap_city=ja1.area_id join jh_area ja2 on jh.cap_area=ja2.area_id join jh_area ja3 on jh.cap_street=ja3.area_id where cap_type='.$type.' and (';
-        $where1='';
-        foreach($state as $val)
-        {
-            $where1.='cap_status='.$val.' or ';
-        }
-        $where1=substr($where1,0,-3);
-        $sql.=$where1.')';
+        //查询有绑定垃圾桶信息的
         if(is_array($addr)){
+            $sql='select jh.*,concat(ja1.area_name,"-",ja2.area_name,"-",ja3.area_name) address from jh_cap jh join jh_dustbin_info jdi on jh.cap_id=jdi.cap_id join jh_area ja1 on jdi.area_id0=ja1.area_id join jh_area ja2 on jdi.area_id1=ja2.area_id join jh_area ja3 on jdi.area_id2=ja3.area_id where cap_type='.$type.' and cap_status='.$status;
             if($addr[2]<0){//表明查询全部区域
-                $sql.=' and cap_area='.$addr[1];
+                $sql.=' and jdi.area_id1='.$addr[1];
             }else{
-                $sql.=' and cap_street='.$addr[2];
+                $sql.=' and jdi.area_id2='.$addr[2];
             }
+        }else{
+            $sql='select *,case cap_status when 1 then "已禁用" when 2 then "未绑定" end address from jh_cap where cap_type='.$type.' and cap_status='.$status;
         }
         $sql.=' order by cap_imei limit 500';
 //        return $sql;

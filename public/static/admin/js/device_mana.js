@@ -15,14 +15,17 @@
       
       // 
       // 查询设备
-      form.on("checkbox(sb)",function(data){
-        var len = $(".set_sb>input:checked").length
-          if(len>0){
-            $(".query_SB").show();
-          }else{
-            $(".query_SB").hide();
-          }
-      })
+      // form.on("checkbox(sb)",function(data){
+      //   var len = $(".set_sb>input:checked").length
+      //     if(len>0){
+      //       $(".query_SB").show();
+      //     }else{
+      //       $(".query_SB").hide();
+      //     }
+      // })
+      // form.on("radio(sb)",function(data){
+      //     $(".query_SB").show();
+      // });
 
       $("button.query_SB").click(function(){
           var type=$(this).prev().find('.layui-this').attr('lay-value');
@@ -30,25 +33,18 @@
               layer.msg('请选择设备类型！');
               return false;
           }
-          var stateArr=$(this).parent().prev().find('.layui-form-checked').prev();
-          var arr='';
+          var status=$('input[name="sb"]:checked').val();
           var addr='';
-          $.each(stateArr,function(index,ele){
-              if(ele.value==0){//选择绑定设备时，需要判断是否选择地址
-                  var cityVal = $('select[name="city_g"] option:selected').val();
-                  var areaVal = $('select[name="area_g"] option:selected').val();
-                  var streetVal = $('select[name="street_g"] option:selected').val();
-                  addr=cityVal+','+areaVal+','+streetVal;
-              }
-              arr+=','+ele.value;
-          });
-          // console.log(arr);
-          // return false;
-          var state=arr.substring(1);
+          if(status==0){
+              var cityVal = $('select[name="city_g"] option:selected').val();
+              var areaVal = $('select[name="area_g"] option:selected').val();
+              var streetVal = $('select[name="street_g"] option:selected').val();
+              addr=cityVal+','+areaVal+','+streetVal;
+          }
           $.ajax({
               url:"/admin/index/queryDevice",
               type:"post",
-              data:{'type':type,'state':state,'addr':addr},
+              data:{'type':type,'status':status,'addr':addr},
               cache:false,
               success:function(res){
                   // console.log(res);
@@ -65,7 +61,7 @@
                           +res[i].cap_imsi+'</td><td>'
                           +res[i].cap_serial+'</td><td>'
                             +res[i].cap_type+'</td><td>'+res[i].cap_sim+'</td><td>'
-                            +res[i].cap_position+'</td><td>'+res[i].city+'-'+res[i].area+'-'+res[i].street+'</td><td>' +
+                            +res[i].cap_position+'</td><td>'+res[i].address+'</td><td>' +
                           '<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>' +
                           '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>' +
                           '<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">'+status+'</button>' +

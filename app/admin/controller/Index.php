@@ -58,12 +58,13 @@ class Index extends Base
         $regions=model('Address','service')->getChildAddr($city);
         $region=$regions[0]['area_id'];
         $roads=model('Address','service')->getChildAddr($region);
+        $road=$roads[0]['area_id'];
         $this->assign('citys',$citys);
         $this->assign('regions',$regions);
         $this->assign('roads',$roads);
-        $caps=model('Index','service')->device_mana();
         $types=model('Index','service')->getTypes();
         $this->assign('types',$types);
+        $caps=model('Index','service')->device_mana($road);
         $this->assign('caps',$caps);
         return $this->fetch();
     }
@@ -172,16 +173,14 @@ class Index extends Base
     public function queryDevice(Request $request)
     {
         $type=$request->param('type');
-        $str=$request->param('state');
+        $status=$request->param('status');
         $addr=$request->param('addr');
-        $state=explode(',',$str);
         $addr=explode(',',$addr);
         if(count($addr)==1){//表明不需要地址条件
             $addr=false;
         }
-        $res=model('Index','service')->queryDevice($type,$state,$addr);
+        $res=model('Index','service')->queryDevice($type,$status,$addr);
         return json($res);
-//        return $res;
     }
 
 
