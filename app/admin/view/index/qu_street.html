@@ -48,7 +48,7 @@
                     <tbody class="tbody1">
                         <tr>
                             {foreach $roads as $val}
-                            <td class="flex-box flex-b" ><a  class="str_team"  value="{$val.area_id}">{$val.area_name}</a> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                            <td class="flex-box flex-b" ><a  class="str_team"  value="{$val.area_id}">{$val.area_name}</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td>
                             {/foreach}
                         </tr>
                     </tbody>
@@ -71,7 +71,7 @@
                     <tbody class="tbody2">
                         <tr>
                             {foreach $groups as $val}
-                            <td class="flex-box flex-b" Jdata=""><span value="{$val.area_id}">{$val.area_name}</span> <i class="layui-icon layui-edit">&#xe642;</i>  </td>
+                            <td class="flex-box flex-b" Jdata=""><span value="{$val.area_id}">{$val.area_name}</span> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span> </td>
                             {/foreach}
                         </tr>
                     </tbody>
