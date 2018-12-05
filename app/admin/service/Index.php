@@ -35,9 +35,9 @@ class Index
         return $res;
     }
 
-    public function queryDevice($type,$state)
+    public function queryDevice($type,$state,$addr)
     {
-        $sql='select * from jh_cap where cap_type='.$type.' and (';
+        $sql='select jh.*,ja1.area_name city,ja2.area_name area,ja3.area_name street from jh_cap jh join jh_area ja1 on jh.cap_city=ja1.area_id join jh_area ja2 on jh.cap_area=ja2.area_id join jh_area ja3 on jh.cap_street=ja3.area_id where cap_type='.$type.' and (';
         $where1='';
         foreach($state as $val)
         {
@@ -45,6 +45,14 @@ class Index
         }
         $where1=substr($where1,0,-3);
         $sql.=$where1.')';
+        if(is_array($addr)){
+            if($addr[2]<0){//表明查询全部区域
+                $sql.=' and cap_area='.$addr[1];
+            }else{
+                $sql.=' and cap_street='.$addr[2];
+            }
+        }
+        $sql.=' order by cap_imei limit 500';
 //        return $sql;
         return Db::query($sql);
     }

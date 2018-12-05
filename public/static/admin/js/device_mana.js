@@ -26,16 +26,29 @@
 
       $("button.query_SB").click(function(){
           var type=$(this).prev().find('.layui-this').attr('lay-value');
+          if(!type){
+              layer.msg('请选择设备类型！');
+              return false;
+          }
           var stateArr=$(this).parent().prev().find('.layui-form-checked').prev();
           var arr='';
+          var addr='';
           $.each(stateArr,function(index,ele){
+              if(ele.value==0){//选择绑定设备时，需要判断是否选择地址
+                  var cityVal = $('select[name="city_g"] option:selected').val();
+                  var areaVal = $('select[name="area_g"] option:selected').val();
+                  var streetVal = $('select[name="street_g"] option:selected').val();
+                  addr=cityVal+','+areaVal+','+streetVal;
+              }
               arr+=','+ele.value;
           });
+          // console.log(arr);
+          // return false;
           var state=arr.substring(1);
           $.ajax({
               url:"/admin/index/queryDevice",
               type:"post",
-              data:{'type':type,'state':state},
+              data:{'type':type,'state':state,'addr':addr},
               cache:false,
               success:function(res){
                   // console.log(res);
@@ -52,7 +65,7 @@
                           +res[i].cap_imsi+'</td><td>'
                           +res[i].cap_serial+'</td><td>'
                             +res[i].cap_type+'</td><td>'+res[i].cap_sim+'</td><td>'
-                            +res[i].cap_position+'</td><td>上海市-徐汇区-龙华街道</td><td>' +
+                            +res[i].cap_position+'</td><td>'+res[i].city+'-'+res[i].area+'-'+res[i].street+'</td><td>' +
                           '<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>' +
                           '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>' +
                           '<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">'+status+'</button>' +
@@ -75,30 +88,43 @@
 
       // 添加设备
       $("button.add_SB").click(function(){
+          var streetVal = $('select[name="street_g"] option:selected').val();
+          if(streetVal<0){
+              layer.msg('请选择具体街道');
+              return false;
+          }
+          var cityVal = $('select[name="city_g"] option:selected').val();
+          var areaVal = $('select[name="area_g"] option:selected').val();
+          $("input[name='city']").attr('value',cityVal);
+          $("input[name='area']").attr('value',areaVal);
+          $("input[name='street']").attr('value',streetVal);
           layer.open({
               type:1,
               title:"添加设备",
               btn:["确定","取消"],
               area:["400px","450px"],
-              content:$("#addSB"), 
+              content:$("#addSB"),
               yes:function(index){
                   var data=$('#addForm').serialize();
                   $.ajax({
                       url:"/admin/index/addDevice",
                       type:"POST",
+                      // data:{"addr":addr,"data":data},
                       data:data,
                       cache:false,
                       success:function(res){
+                          // console.log(res);
+                          // return false;
                           var tbody=$('tbody.tbody');
                           var str='<td>'+res.cap_imei+'</td><td>' + res.cap_imsi+'</td><td>';
                           str+=res.cap_serial+'</td><td>'+res.cap_type+'</td><td>'+res.cap_sim+'</td>';
-                          str+='<td>'+res.cap_position+'</td><td></td><td>';
+                          str+='<td>'+res.cap_position+'</td><td>'+res.city+'-'+res.area+'-'+res.street+'</td><td>';
                           str+='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
                           str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>';
                           str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>';
                           str+='</td><td style="display: none">'+res.cap_id+'</td></tr>';
                           tbody.append(str);
-                          layer.msg('添加设备成功');
+                          layer.msg('添加设备'+res.cap_imei+'成功');
                       },error:function(){
                           layer.msg('添加设备失败，请检查信息填写');
                       }
