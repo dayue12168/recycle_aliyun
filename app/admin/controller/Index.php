@@ -114,17 +114,10 @@ class Index extends Base
         $param['cap_serial']=$request->param('serial');
         $param['cap_sim']=$request->param('sim');
         $param['cap_type']=intval($request->param('type'));
-        $param['cap_city']=$request->param('city');
-        $param['cap_area']=$request->param('area');
-        $param['cap_street']=$request->param('street');
 //        return json($param);
         $jhCap=new JhCap($param);
         $jhCap->save();
         $param['cap_id']=$jhCap->cap_id;
-        $jhArea=new JhArea();
-        $param['city']=$jhArea::get($param['cap_city'])->area_name;
-        $param['area']=$jhArea::get($param['cap_area'])->area_name;
-        $param['street']=$jhArea::get($param['cap_street'])->area_name;
         return json($param);
     }
 

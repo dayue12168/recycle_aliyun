@@ -79,8 +79,11 @@
                         <td>{$val.address}</td>
                         <td>
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>
+                            {if $val.cap_status eq 0}
                             <button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">{if $val.cap_status}启用{else}禁用{/if}</button>
+                            {else}
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">{if $val.cap_status eq 1}启用{else}禁用{/if}</button>
+                            {/if}
                         </td>
                         <td style="display: none">{$val.cap_id}</td>
                     </tr>
@@ -146,11 +149,6 @@
             <label class="layui-form-label">
                 位置
             </label>
-            <div class="layui-input-inline" style="display: none">
-                <input type="index" name="city" class="layui-input" required lay-verify="required">
-                <input type="index" name="area" class="layui-input" required lay-verify="required">
-                <input type="index" name="street" class="layui-input" required lay-verify="required">
-            </div>
             <div class="layui-input-inline">
                 <input type="index" name="position" class="layui-input" required lay-verify="required">
             </div>

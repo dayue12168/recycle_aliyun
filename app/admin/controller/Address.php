@@ -55,9 +55,6 @@ class Address
         foreach($list as $val){
             $res[]=$val;
         }
-//        echo '<pre/>';
-//        print_r($res);
-//        die('===');
         return json($res);
     }
 
@@ -89,4 +86,14 @@ class Address
         }
         return json($res);
     }
+
+    //删除街道/班组
+    public function delStreet(Request $request)
+    {
+        $id=$request->param('id');
+        $res=model('Address','service')->delStreet($id);
+        return json($res);
+    }
+
+
 }

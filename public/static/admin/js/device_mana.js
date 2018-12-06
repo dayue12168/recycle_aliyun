@@ -84,16 +84,6 @@
 
       // 添加设备
       $("button.add_SB").click(function(){
-          var streetVal = $('select[name="street_g"] option:selected').val();
-          if(streetVal<0){
-              layer.msg('请选择具体街道');
-              return false;
-          }
-          var cityVal = $('select[name="city_g"] option:selected').val();
-          var areaVal = $('select[name="area_g"] option:selected').val();
-          $("input[name='city']").attr('value',cityVal);
-          $("input[name='area']").attr('value',areaVal);
-          $("input[name='street']").attr('value',streetVal);
           layer.open({
               type:1,
               title:"添加设备",
@@ -114,7 +104,7 @@
                           var tbody=$('tbody.tbody');
                           var str='<td>'+res.cap_imei+'</td><td>' + res.cap_imsi+'</td><td>';
                           str+=res.cap_serial+'</td><td>'+res.cap_type+'</td><td>'+res.cap_sim+'</td>';
-                          str+='<td>'+res.cap_position+'</td><td>'+res.city+'-'+res.area+'-'+res.street+'</td><td>';
+                          str+='<td>'+res.cap_position+'</td><td>未绑定</td><td>';
                           str+='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
                           str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>';
                           str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>';
@@ -214,9 +204,12 @@
               error:function(){
                   layer.msg('修改失败');
               }
-
           })
       })
+
+
+      //绑定设备禁用
+
   })
   var len = $(".tbody>tr").length;     
   $(".len").html(len);
