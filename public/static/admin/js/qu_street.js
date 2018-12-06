@@ -141,8 +141,9 @@ function streetAjax(_id){
 // 删除 
       $(".tbody1,.tbody2").on("click",".layui-icon-delete",function(){
         var name = $(this).parent().siblings().html();
-
         var id = $(this).parent().siblings().attr('value');
+        // 显示街道-班组的id名下的value属性
+        var $id = $("#Jroad").attr("value");
         var that = $(this);
         layer.alert('确定删除'+name+'？',{icon:2}, function(index){
           $.ajax({
@@ -151,11 +152,14 @@ function streetAjax(_id){
             data:{"id":id},
             cache:false,
             success:function(res){
+              console.log(res);
               if(res.state == 0){
                 layer.msg("删除失败，请清空班组！",{time:1000});  
               }else{
                 layer.msg("删除成功！",{time:1000});
-                                
+                if(res.id == $id){
+                  $("#Jroad").html("");
+                }
                 that.parents("td").remove();
 
               }
