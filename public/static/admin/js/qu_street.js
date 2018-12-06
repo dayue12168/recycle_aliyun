@@ -3,7 +3,31 @@ layui.use(['form','element','layer'], function(){
     var form    = layui.form(),
         layer   = layui.layer,
         element = layui.element;
- 
+
+    // thead中tr固定
+    var oTop1 = $(".oTable1 thead>tr");
+    var oTop2 = $(".oTable2 thead>tr");
+    var oTop1Top = $(".oTable1 thead>tr").offset().top;
+    var oTop2Top = $(".oTable2 thead>tr").offset().top;
+    var sTop = 0;
+
+    function oScroll(a,b){
+      
+        sTop = $(window).scrollTop();
+        if(sTop > a-50){   //-50  防止抖动
+          b.addClass("Top_0");
+        }else{
+          b.removeClass("Top_0");
+        }
+      
+    };
+
+    $(window).scroll(function(){
+      oScroll(oTop1Top,oTop1);
+      oScroll(oTop2Top,oTop2);
+    });
+    
+    
     //选择市---区
     $("button.cityChose").eq(0).removeClass("layui-btn-primary");
     $(".areaCho>button").eq(0).removeClass("layui-btn-primary");
@@ -35,7 +59,7 @@ layui.use(['form','element','layer'], function(){
         })
     });
 
-// 选区 ajax封装
+// 选区 ajax
 function quchoseAjax(_id,_name){
   $.ajax({
       url:"/admin/Address/getOneChild",
@@ -58,7 +82,7 @@ function quchoseAjax(_id,_name){
       }
   })
 };
-// 选街道 Ajax封装
+// 选街道 Ajax
 function streetAjax(_id){
   $.ajax({
       url:"/admin/Address/getOneChild",
@@ -83,7 +107,7 @@ function streetAjax(_id){
     quchose:function(){
       // 自动加载第一个
       var _id = $(".areaCho>button").eq(0).val();
-      var _name=$(".areaCho>button").text();
+      var _name=$(".areaCho>button").eq(0).text();
       quchoseAjax(_id,_name);
       // 选区加载
       $("button.areaChose").click(function(){

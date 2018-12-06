@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="__ADMINCSS__/style.css">
     <style>
        a:hover{cursor: pointer;color: #1e9fff}
+       .Top_0{position: fixed;top: 0;z-index: 100}
     </style>
 </head>
 <body>
@@ -32,20 +33,20 @@
             </span>
         </p> 
         <div class="flex-box flex-2">
-            <div style="min-width:400px;max-width: 550px;margin: 10px 30px">
-                <table class="layui-table" style="">
+            <div style="min-width:400px;max-width: 550px;margin: 10px 30px;padding: 0">
+                <table class="layui-table oTable1" >
                     <colgroup>
                         <col width="200">
                     </colgroup>
-                    <thead>
-                        <tr>
+                    <thead style="">
+                        <tr style="min-width: 400px;max-width: 550px;">
                             <th class="flex-box flex-b flex-col-c " >
                                 <span id="Jregion" value="">请选择地区</span>
                                 <button class="layui-btn layui-btn-small layui-btn-normal layui-add1">新增街道</button>
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="tbody1">
+                    <tbody class="tbody1 ">
                         <tr>
                             {foreach $roads as $val}
                             <td class="flex-box flex-b" ><a  class="str_team"  value="{$val.area_id}">{$val.area_name}</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td>
@@ -53,15 +54,16 @@
                         </tr>
                     </tbody>
                 </table>
+                
             </div>
             <div style="min-width:400px;max-width: 550px;margin: 10px 30px">
-                <table class="layui-table" style="">
+                <table class="layui-table oTable2" style="">
                     <colgroup>
                         <!-- 此处 width 按比例分割 -->
                         <col width="200">
                     </colgroup>
                     <thead>
-                        <tr>
+                        <tr style="min-width: 400px;max-width: 550px;">
                         <th class="flex-box flex-b flex-col-c">
                             <span id="Jroad" value="">请选择街道</span>
                             <button class="layui-btn layui-btn-small layui-btn-normal layui-add2">新增班组</button>
