@@ -141,11 +141,27 @@ function streetAjax(_id){
 // 删除 
       $(".tbody1,.tbody2").on("click",".layui-icon-delete",function(){
         var name = $(this).parent().siblings().html();
+
         var id = $(this).parent().siblings().attr('value');
         var that = $(this);
         layer.alert('确定删除'+name+'？',{icon:2}, function(index){
-          that.parents("td").remove();
-          layer.msg("删除成功！",{time:1000});          
+          $.ajax({
+            url:"/admin/address/delStreet",
+            type:"POST",
+            data:{"id":id},
+            cache:false,
+            success:function(res){
+              if(res.state == 0){
+                layer.msg("删除失败，请清空班组！",{time:1000});  
+              }else{
+                layer.msg("删除成功！",{time:1000});
+                                
+                that.parents("td").remove();
+
+              }
+            }
+          })
+                  
           layer.close(index);
         });
       });
@@ -228,6 +244,7 @@ function streetAjax(_id){
             })
         });
       })
+
 });
 
 
