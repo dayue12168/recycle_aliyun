@@ -130,7 +130,7 @@ function streetAjax(_id){
   // 选择街道加载 
       $(".tbody1").on("click",".str_team",function(){
         var name = $(this).html();
-        console.log(name);
+        // console.log(name);
         var id=$(this).attr('value');
         $("#Jroad").html(name).attr('value',id);
         streetAjax(id);
@@ -152,13 +152,13 @@ function streetAjax(_id){
             data:{"id":id},
             cache:false,
             success:function(res){
-              console.log(res);
+              // console.log(res);
               if(res.state == 0){
                 layer.msg("删除失败，请清空班组！",{time:1000});  
               }else{
                 layer.msg("删除成功！",{time:1000});
                 if(res.id == $id){
-                  $("#Jroad").html("");
+                  $("#Jroad").html("请选择街道").removeAttr('value');
                 }
                 that.parents("td").remove();
 
@@ -227,6 +227,11 @@ function streetAjax(_id){
       $(".layui-add2").click(function(){
         var _html = $(".tbody2");
         var id=$(this).prev().attr('value');
+        // console.log(id);
+        if(!id){
+            layer.msg('请选择街道');
+            return false;
+        }
         layer.prompt({
             formType:0,
             value:"班组",

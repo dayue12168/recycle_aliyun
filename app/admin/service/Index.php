@@ -54,5 +54,19 @@ class Index
     }
 
 
+    public function freeDevice($id)
+    {
+        $data['dustbin_id']=Db::table('jh_dustbin_info')->where('cap_id',$id)->value('dustbin_id');
+        //解绑操作
+        $sql='update jh_dustbin_info jdi join jh_cap jc on jdi.cap_id=jc.cap_id set jdi.cap_id=0,jc.cap_status=2 where jc.cap_id='.$id;
+        Db::execute($sql);
+        //写入解绑表
+        $data['cap_id']=$id;
+        $data['unrelate_time']=date('Y-m-d H:i:s',time());
+        $data['unrelate_user']=session('adminUser');
+        Db::name('jh_unrelate')->insert($data);
+    }
+
+
 
 }

@@ -133,6 +133,13 @@ class Index extends Base
 
     }
 
+    //解绑设备
+    public function freeDevice(Request $request)
+    {
+        $id=$request->param('id');
+        $res=model('Index','service')->freeDevice($id);
+    }
+
     //添加垃圾桶
     public function addTrash(Request $request)
     {

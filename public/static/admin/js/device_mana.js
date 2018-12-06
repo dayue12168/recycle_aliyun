@@ -13,20 +13,12 @@
 
       var form = layui.form();
       
-      // 
-      // 查询设备
-      // form.on("checkbox(sb)",function(data){
-      //   var len = $(".set_sb>input:checked").length
-      //     if(len>0){
-      //       $(".query_SB").show();
-      //     }else{
-      //       $(".query_SB").hide();
-      //     }
-      // })
+      //
+
       // form.on("radio(sb)",function(data){
       //     $(".query_SB").show();
       // });
-
+      // 查询设备
       $("button.query_SB").click(function(){
           var type=$(this).prev().find('.layui-this').attr('lay-value');
           if(!type){
@@ -52,23 +44,25 @@
                   var tb=$('tbody.tbody');
                   var str='';
                   for(var i in res){
-                      if(res[i].status){
-                          var status='启用'
-                      }else{
-                          var status='禁用'
-                      }
                       str+='<tr><td>'+res[i].cap_imei+'</td><td>'
                           +res[i].cap_imsi+'</td><td>'
                           +res[i].cap_serial+'</td><td>'
                             +res[i].cap_type+'</td><td>'+res[i].cap_sim+'</td><td>'
                             +res[i].cap_position+'</td><td>'+res[i].address+'</td><td>' +
-                          '<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>' +
-                          '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>' +
-                          '<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">'+status+'</button>' +
-                          '</td><td style="display: none">'+res[i].cap_id+'</td></tr>';
-                      // console.log(str);
-
-                  }
+                          '<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
+                      if(res[i].cap_status==0){
+                          var status='解除绑定';
+                          str+= '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">'+status+'</button>';
+                      }else{
+                          if(res[i].cap_status==1){
+                              var status='启用';
+                          }else{
+                              var status='禁用';
+                          }
+                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">'+status+'</button>'
+                      }
+                      str+='</td><td style="display: none">'+res[i].cap_id+'</td></tr>';
+                 }
                   str.substring(1);
                   tb.html(str);
 
@@ -106,8 +100,7 @@
                           str+=res.cap_serial+'</td><td>'+res.cap_type+'</td><td>'+res.cap_sim+'</td>';
                           str+='<td>'+res.cap_position+'</td><td>未绑定</td><td>';
                           str+='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
-                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解除绑定</button>';
-                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>';
+                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">禁用</button>';
                           str+='</td><td style="display: none">'+res.cap_id+'</td></tr>';
                           tbody.append(str);
                           layer.msg('添加设备'+res.cap_imei+'成功');
@@ -161,8 +154,6 @@
                       data:data,
                       cache:false,
                       success:function(res){
-                          // console.log(that);
-                          // console.log(res);
                           that.parent().prevAll().eq(6).text(res.cap_imei);
                           that.parent().prevAll().eq(5).text(res.cap_imsi);
                           that.parent().prevAll().eq(4).text(res.cap_serial);
@@ -208,7 +199,31 @@
       })
 
 
-      //绑定设备禁用
+      //绑定设备解除绑定
+      $("button.Jjiebang").click(function(){
+          var id=$(this).parent().next().text();
+          layer.open({
+              type:1,
+              title:"解绑设备",
+              btn:["确定","取消"],
+              yes:function(index){
+                  $.ajax({
+                      url:'/admin/index/freeDevice',
+                      type:'post',
+                      data:{'id':id},
+                      cache:false,
+                      success:function(){
+                          layer.msg('解绑成功');
+                      },
+                      error:function(){
+                          layer.msg('修改失败');
+                      }
+                  })
+                  layer.close(index);
+              }
+          })
+
+      })
 
   })
   var len = $(".tbody>tr").length;     
