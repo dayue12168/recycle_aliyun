@@ -14,10 +14,12 @@ layui.use(['form','element','layer'], function(){
     function oScroll(a,b){
       
         sTop = $(window).scrollTop();
-        if(sTop > a-50){   //-50  防止抖动
+        if(sTop > a-100){   //-100  防止抖动
           b.addClass("Top_0");
+          $(".totop").show();
         }else{
           b.removeClass("Top_0");
+          $(".totop").hide();
         }
       
     };
@@ -53,9 +55,7 @@ layui.use(['form','element','layer'], function(){
                 $(".areaCho>button").eq(0).removeClass("layui-btn-primary");
 
                 choses.quchose();
-                choses.streetchose();
-
-            }
+              }
         })
     });
 
@@ -124,15 +124,17 @@ function streetAjax(_id){
       var _id=$(".tbody1 .str_team").attr('value');
       $("#Jroad").html(_name).attr('value',_id);
       streetAjax(_id);
-      // 选择街道加载 
-      $(".str_team").click(function(){
+
+    }
+  };
+  // 选择街道加载 
+      $(".tbody1").on("click",".str_team",function(){
         var name = $(this).html();
+        console.log(name);
         var id=$(this).attr('value');
         $("#Jroad").html(name).attr('value',id);
         streetAjax(id);
       })
-    }
-  };
   choses.quchose();
   choses.streetchose();
   
@@ -189,12 +191,13 @@ function streetAjax(_id){
               success:function(res){
                 //console.log(res);   //state  0 为失败    否则 都是成功  
                 if(res.state != 0){
-                  _html.append('<tr><td class="flex-box flex-b" Jdata=""><a value="'+res.state+'">'+value+'</a><span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td></tr>');
+                  _html.append('<tr><td class="flex-box flex-b" Jdata=""><a class="str_team" value="'+res.state+'">'+value+'</a><span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td></tr>');
+                  
                 }
                 layer.msg(res.info);
                 layer.close(index);
 
-                // choses.setname();
+                
               }
           })
       });

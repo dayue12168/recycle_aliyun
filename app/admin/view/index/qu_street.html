@@ -11,9 +11,12 @@
     <style>
        a:hover{cursor: pointer;color: #1e9fff}
        .Top_0{position: fixed;top: 0;z-index: 100}
+        .totop{position: fixed;right: 30px;bottom: 40px;background: #1e9fff;color: #fff;padding: 10px 15px;display: none}
+        .totop:hover{color: #fff}
     </style>
 </head>
-<body>
+<body> 
+    
     <span class="layui-breadcrumb" lay-separator="/" >
         <a href="">基本信息</a>
         <a href=""> 区-街道-班组管理</a>
@@ -84,6 +87,10 @@
         </div>
         </div>
     </div>
+    <!-- 置顶 -->
+
+    <a href="#" class="totop">置顶</a>
+    <!-- 置顶end -->
 </body>
 <script src="__COMMONJS__/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="__ADMINJS__/layui/layui.js"></script>
