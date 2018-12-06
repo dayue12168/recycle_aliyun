@@ -3,7 +3,7 @@ layui.use(['form','element','layer'], function(){
     var form    = layui.form(),
         layer   = layui.layer,
         element = layui.element;
-
+ 
     //选择市---区
     $("button.cityChose").eq(0).removeClass("layui-btn-primary");
     $(".areaCho>button").eq(0).removeClass("layui-btn-primary");
@@ -35,59 +35,62 @@ layui.use(['form','element','layer'], function(){
         })
     });
 
-
-
+// 选区 ajax封装
+function quchoseAjax(_id,_name){
+  $.ajax({
+      url:"/admin/Address/getOneChild",
+      type:"POST",
+      data:{'id':_id},
+      cache:false,
+      success:function(res){
+          var area=$('tbody.tbody1');
+          // area.find('td').remove();
+          var str='<tr>';
+          for(var i in res){
+              str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td>';
+          }
+          str+='</tr>';
+          area.html(str);
+          // 街道选择
+          choses.streetchose();
+          
+          $('#Jregion').attr('value',_id).text(_name);
+      }
+  })
+};
+// 选街道 Ajax封装
+function streetAjax(_id){
+  $.ajax({
+      url:"/admin/Address/getOneChild",
+      type:"POST",
+      data:{'id':_id},
+      cache:false,
+      success:function(res){
+          var area=$('tbody.tbody2');
+          area.find('td').remove();
+          var str='<tr>';
+          for(var i in res){
+              str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td> ';
+          }
+          str+='</tr>';
+          area.html(str);
+          
+      }
+  })
+}
   var choses = {
     // 区县选择
     quchose:function(){
       // 自动加载第一个
       var _id = $(".areaCho>button").eq(0).val();
       var _name=$(".areaCho>button").text();
-        $.ajax({
-              url:"/admin/Address/getOneChild",
-              type:"POST",
-              data:{'id':_id},
-              cache:false,
-              success:function(res){
-                  var area=$('tbody.tbody1');
-                  // area.find('td').remove();
-                  var str='<tr>';
-                  for(var i in res){
-                      str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td>';
-                  }
-                  str+='</tr>';
-                  area.html(str);
-                  // 街道选择
-                  choses.streetchose();
-                  
-                  $('#Jregion').attr('value',_id).text(_name);
-              }
-          })
-      
+      quchoseAjax(_id,_name);
+      // 选区加载
       $("button.areaChose").click(function(){
         $(this).removeClass("layui-btn-primary").siblings().not("span").addClass("layui-btn-primary");
           var id=$(this).val();
           var name=$(this).text();
-          $.ajax({
-              url:"/admin/Address/getOneChild",
-              type:"POST",
-              data:{'id':id},
-              cache:false,
-              success:function(res){
-                  var area=$('tbody.tbody1');
-                  // area.find('td').remove();
-                  var str='<tr>';
-                  for(var i in res){
-                      str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td>';
-                  }
-                  str+='</tr>';
-                  area.html(str);
-                  // 街道选择
-                  choses.streetchose();
-                  
-                  $('#Jregion').attr('value',id).text(name);
-              }
-          })
+          quchoseAjax(id,name);
       })
     },
     // 街道选择
@@ -96,45 +99,13 @@ layui.use(['form','element','layer'], function(){
       var _name = $(".tbody1 .str_team").html();
       var _id=$(".tbody1 .str_team").attr('value');
       $("#Jroad").html(_name).attr('value',_id);
-      $.ajax({
-            url:"/admin/Address/getOneChild",
-            type:"POST",
-            data:{'id':_id},
-            cache:false,
-            success:function(res){
-                var area=$('tbody.tbody2');
-                area.find('td').remove();
-                var str='<tr>';
-                for(var i in res){
-                    str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td> ';
-                }
-                str+='</tr>';
-                area.html(str);
-                
-            }
-        })
-      // 点击事件 
+      streetAjax(_id);
+      // 选择街道加载 
       $(".str_team").click(function(){
         var name = $(this).html();
         var id=$(this).attr('value');
         $("#Jroad").html(name).attr('value',id);
-        $.ajax({
-            url:"/admin/Address/getOneChild",
-            type:"POST",
-            data:{'id':id},
-            cache:false,
-            success:function(res){
-                var area=$('tbody.tbody2');
-                area.find('td').remove();
-                var str='<tr>';
-                for(var i in res){
-                    str+='<td class="flex-box flex-b" ><a class="str_team" value="'+res[i].area_id+'">'+res[i].area_name+'</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td> ';
-                }
-                str+='</tr>';
-                area.html(str);
-                
-            }
-        })
+        streetAjax(id);
       })
     }
   };
@@ -146,7 +117,7 @@ layui.use(['form','element','layer'], function(){
         var name = $(this).parent().siblings().html();
         var id = $(this).parent().siblings().attr('value');
         var that = $(this);
-        layer.alert('确定删除'+name+'？',{icon:5}, function(index){
+        layer.alert('确定删除'+name+'？',{icon:2}, function(index){
           that.parents("td").remove();
           layer.msg("删除成功！",{time:1000});          
           layer.close(index);
