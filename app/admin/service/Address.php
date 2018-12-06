@@ -68,6 +68,7 @@ class Address
         if(is_null($isDel)){
             $res['state']=Db::table('jh_area')->delete($id);
         }
+        $res['id']=$id;
         return $res;
     }
 
