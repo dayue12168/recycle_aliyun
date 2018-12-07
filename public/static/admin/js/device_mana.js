@@ -96,7 +96,7 @@
                           // console.log(res);
                           // return false;
                           var tbody=$('tbody.tbody');
-                          var str='<td>'+res.cap_imei+'</td><td>' + res.cap_imsi+'</td><td>';
+                          var str='<tr><td>'+res.cap_imei+'</td><td>' + res.cap_imsi+'</td><td>';
                           str+=res.cap_serial+'</td><td>'+res.cap_type+'</td><td>'+res.cap_sim+'</td>';
                           str+='<td>'+res.cap_position+'</td><td>未绑定</td><td>';
                           str+='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
