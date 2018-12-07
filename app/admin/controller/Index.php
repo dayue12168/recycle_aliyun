@@ -93,6 +93,17 @@ class Index extends Base
     //垃圾桶-环卫工绑定
     public function trash_huanwei()
     {
+        $citys=model('Address','service')->getCitys();
+        $city=$citys[0]['area_id'];
+        $regions=model('Address','service')->getChildAddr($city);
+        $region=$regions[0]['area_id'];
+        $roads=model('Address','service')->getChildAddr($region);
+        $road=$roads[0]['area_id'];
+        $groups=model('Address','service')->getChildAddr($road);
+        $this->assign('citys',$citys);
+        $this->assign('regions',$regions);
+        $this->assign('roads',$roads);
+        $this->assign('groups',$groups);
         return $this->fetch();
     }
 
