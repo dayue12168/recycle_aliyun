@@ -114,30 +114,31 @@
       });
 
       // 修改
-      $("button.reSet").click(function(){
+      $(".layui-table").on("click",".reSet",function(){
           // 类型  编号 IMEI IMSI SIM 位置
           $("select.reset_type").find("option[value='0']").remove();
           var oNum = $(".reset_number"),
               oImei =$(".reset_IMEI"),
               oImsi =$(".reset_IMSI"),
               oSim = $(".reset_SIM"),
-              oPos = $(".reset_position");
+              oPos = $(".reset_position"),
               oid = $(".Jid");
           var _html = [];
           $(this).parent().siblings().each(function(){
               var SBinfo = $(this).html();
               _html.push(SBinfo);        
           });
+          console.log(_html);
           var option = "<option value='0' selected>"+_html[3]+"</option>";
           $(".reset_type").prepend(option);
           form.render('select'); 
           // oType.text(_html[3]);
-          oNum.val(_html[2]);
-          oImei.val(_html[0]);
-          oImsi.val(_html[1]);
-          oSim.val(_html[4]);
-          oPos.val(_html[5]);
-          oid.val(_html[7]);
+          oNum.val(_html[2].trim());
+          oImei.val(_html[0].trim());
+          oImsi.val(_html[1].trim());
+          oSim.val(_html[4].trim());
+          oPos.val(_html[5].trim());
+          oid.val(_html[7].trim());
           var that=$(this);
           layer.open({
               type:1,
@@ -171,7 +172,7 @@
       });
 
       //禁用设备
-      $('button.Jforbid').click(function(){
+      $(".layui-table").on('click','.Jforbid',(function(){
           var temp=$(this).text();
           var forbid='禁用';
           var use='启用';
@@ -196,12 +197,13 @@
                   layer.msg('修改失败');
               }
           })
-      })
+      }))
 
 
       //绑定设备解除绑定
-      $("button.Jjiebang").click(function(){
+      $(".layui-table").on('click','.Jjiebang',function(){
           var id=$(this).parent().next().text();
+          var that=$(this);
           layer.open({
               type:1,
               title:"解绑设备",
@@ -213,6 +215,10 @@
                       data:{'id':id},
                       cache:false,
                       success:function(){
+                          // var _html='<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jforbid">禁用</button>';
+
+                          that.removeClass('Jjiebang').addClass("Jforbid").text('禁用');
+                          // that.html(_html);
                           layer.msg('解绑成功');
                       },
                       error:function(){
