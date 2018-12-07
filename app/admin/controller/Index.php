@@ -90,6 +90,13 @@ class Index extends Base
     }
 
 
+    //垃圾桶-环卫工绑定
+    public function trash_huanwei()
+    {
+        return $this->fetch();
+    }
+
+
     //修改设备信息
     public function updateDevice(Request $request)
     {
