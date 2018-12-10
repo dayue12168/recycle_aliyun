@@ -12,7 +12,6 @@ layui.use(['element','layer'], function(){
     function oScroll(a,b){
         
         sTop = $(window).scrollTop();
-        console.log(sTop)
         if(sTop > a-40){   //-100  防止抖动
           b.addClass("Top_0");
           $(".totop").show();
@@ -28,4 +27,13 @@ layui.use(['element','layer'], function(){
       oScroll(oTop2Top,oTop2);
     });
  
+  // $(document).ready(function(){
+  //   var index = layer.open({
+  //     title:"绑定信息确认",
+  //     content:'已选垃圾：<span class="trashnumber">123</span><br/>已选环卫：<span class="huanwei_er">AAAA</span>',
+  //     fixed:true,
+  //     btn:"确认绑定",
+      
+  //   })
+  // })
 })

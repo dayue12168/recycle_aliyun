@@ -32,10 +32,8 @@
             </div>
             <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
                 {include file='common/address'/}
-                <select name="" id="" lay-verify="required" >
-                    {foreach $groups as $val}
-                    <option value="{$val.area_id}">{$val.area_name}</option>
-                    {/foreach}
+                <select name="" id="" >
+                    <option value="0"></option>
                 </select>
             </div>
             <table class="layui-table">

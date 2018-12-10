@@ -22,7 +22,7 @@
         <a href="#">基本信息</a>
         <a href="#"> 垃圾桶-环卫工绑定</a>
     </span>
-    <div class="topLine">
+    <div class="topLine" style="height: 2000px">
         <div class="layui-form">
         	
         	
@@ -30,21 +30,22 @@
 	            <div style="min-width:400px;max-width: 550px;margin: 10px 30px;padding: 0">
 	                <table class="layui-table oTable1" >
 	                    <colgroup>
-	                        <col width="200">
+	                        <col width="130">
+	                        <col width="130">
+	                        <col width="130">
 	                    </colgroup>
 	                    <thead style="">
 	                        <tr style="min-width: 400px;max-width: 550px;">
-	                            <th class="flex-box flex-b flex-col-c " >
-	                                <span id="Jregion" value="">请选择地区</span>
-	                                <button class="layui-btn layui-btn-small layui-btn-normal layui-add1">新增街道</button>
-	                            </th>
+	                            <th>垃圾桶编号</th>
+	                            <th>设备IMEI号</th>
+	                            <th>已绑定数量</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody class="tbody1 ">
 	                        <tr>
-	                            {foreach $roads as $val}
-	                            <td class="flex-box flex-b" ><a  class="str_team"  value="{$val.area_id}">{$val.area_name}</a> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span></td>
-	                            {/foreach}
+	                            <td><a  class="str_team" >123123</a> </td>
+	                            <td>123123</td>
+	                            <td>1<button type="button" class="layui-btn  layui-btn-radius layui-btn-normal layui-btn-mini">查看</button></td>
 	                        </tr>
 	                    </tbody>
 	                </table>
@@ -54,21 +55,20 @@
 	                <table class="layui-table oTable2" style="">
 	                    <colgroup>
 	                        <!-- 此处 width 按比例分割 -->
-	                        <col width="200">
+	                        <col width="130">
+	                        <col width="130">
+	                        <col width="130">
 	                    </colgroup>
 	                    <thead>
 	                        <tr style="min-width: 400px;max-width: 550px;">
-	                        <th class="flex-box flex-b flex-col-c">
-	                            <span id="Jroad" value="">请选择街道</span>
-	                            <button class="layui-btn layui-btn-small layui-btn-normal layui-add2">新增班组</button>
-	                        </th>
+	                        	<th>环卫工姓名</th>
+	                        	<th>已绑定数量</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody class="tbody2">
 	                        <tr>
-	                            {foreach $groups as $val}
-	                            <td class="flex-box flex-b" Jdata=""><span value="{$val.area_id}">{$val.area_name}</span> <span><i class="layui-icon layui-icon-delete">&#xe640;</i><i class="layui-icon layui-edit">&#xe642;</i></span> </td>
-	                            {/foreach}
+	                            <td>AAAA</td>
+	                            <td>1<button type="button" class="layui-btn  layui-btn-radius layui-btn-normal layui-btn-mini">查看</button></td>
 	                        </tr>
 	                    </tbody>
 	                </table>
