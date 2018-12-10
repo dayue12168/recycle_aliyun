@@ -26,7 +26,7 @@ class Address
     public function getChildAddr(Request $request)
     {
         $addr=$request->param('addr');
-        $cat=$res=model('Address','service')->getChildAddr($addr);
+        $res=model('Address','service')->getChildAddr($addr);
         $list=array();
         if(key_exists(0,$res)){
             for($i=$res[0]['area_level'];$i<=3;$i++){

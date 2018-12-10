@@ -52,7 +52,7 @@
                           '<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
                       if(res[i].cap_status==0){
                           var status='解除绑定';
-                          str+= '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">'+status+'</button>';
+                          str+= '<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jjiebang">'+status+'</button>';
                       }else{
                           if(res[i].cap_status==1){
                               var status='启用';
@@ -128,7 +128,7 @@
               var SBinfo = $(this).html();
               _html.push(SBinfo);        
           });
-          console.log(_html);
+          // console.log(_html);
           var option = "<option value='0' selected>"+_html[3]+"</option>";
           $(".reset_type").prepend(option);
           form.render('select'); 
