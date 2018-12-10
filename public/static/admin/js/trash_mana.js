@@ -90,6 +90,9 @@ layui.use('element', function(){
               }
           })
       })
+
+
+
   })
   var len = $(".tbody>tr").length;     
   $(".len").html(len);

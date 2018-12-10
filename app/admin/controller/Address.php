@@ -39,7 +39,9 @@ class Address
                 if(!$temp && $i<3){
                     array_push($list,[['area_id'=>-1,'area_name'=>'请选择']]);
                 }else{
-                    if($res[0]['area_level']==2){
+                    /*if($res[0]['area_level']==1){
+                        array_unshift($list[$res[0]['area_level']],['area_id'=>-1,'area_parent_id'=>$res[0]['area_parent_id'],'area_name'=>'全部区域']);
+                    }else*/if($res[0]['area_level']==2){
                         array_unshift($list[$res[0]['area_level']],['area_id'=>-1,'area_parent_id'=>$res[0]['area_parent_id'],'area_name'=>'全部街道']);
                     }elseif($res[0]['area_level']==3){
                         array_unshift($list[$res[0]['area_level']],['area_id'=>-1,'area_parent_id'=>$res[0]['area_parent_id'],'area_name'=>'全部班组']);

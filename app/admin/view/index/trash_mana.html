@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="__LAYUICSS__/layui.css">
     <link rel="stylesheet" href="__ADMINCSS__/ssbase.css">
     <link rel="stylesheet" href="__ADMINCSS__/style.css">
-    <style>
-    
-    </style>
+
 </head>
 <body>
     <span class="layui-breadcrumb" lay-separator="/" >
@@ -21,14 +19,14 @@
         <div class="layui-form" action="">
             <div class="layui-input-block flex-box flex-b" style="margin: 0;padding: 0;">
                 <div>
-                    <input type="checkbox" name="sb" title="已绑定设备" lay-skin="primary">
-                    <input type="checkbox" name="sb" title="未绑定设备" lay-skin="primary"><br/>
-                    <input type="checkbox" name="sb" title="已绑定环卫工" lay-skin="primary">
-                    <input type="checkbox" name="sb" title="未绑定环卫工" lay-skin="primary">
+                    <input type="checkbox" name="sb" value="0" title="已绑定设备" lay-skin="primary">
+                    <input type="checkbox" name="sb" value="1" title="未绑定设备" lay-skin="primary"><br/>
+                    <input type="checkbox" name="sb" value="2" title="已绑定环卫工" lay-skin="primary">
+                    <input type="checkbox" name="sb" value="3" title="未绑定环卫工" lay-skin="primary">
                 </div>
                 <div style='margin-left: 330px' class="flex-box flex-2 flex-col-c">
                 
-                    <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small">查询垃圾桶列表</button>
+                    <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small query_trash">查询垃圾桶列表</button>
                     <button style="margin-top: 0;" class="layui-btn layui-btn-small add_trash">添加垃圾桶</button>
                 </div>
             </div>
