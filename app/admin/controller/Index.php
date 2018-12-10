@@ -79,6 +79,9 @@ class Index extends Base
         $roads=model('Address','service')->getChildAddr($region);
         $road=$roads[0]['area_id'];
         $groups=model('Address','service')->getChildAddr($road);
+        if(empty($groups)){
+            $groups[]=array('area_id'=>-1,'area_name'=>'请选择');
+        }
         $this->assign('citys',$citys);
         $this->assign('regions',$regions);
         $this->assign('roads',$roads);
@@ -100,6 +103,9 @@ class Index extends Base
         $roads=model('Address','service')->getChildAddr($region);
         $road=$roads[0]['area_id'];
         $groups=model('Address','service')->getChildAddr($road);
+        if(empty($groups)){
+            $groups[]=array('area_id'=>-1,'area_name'=>'请选择');
+        }
         $this->assign('citys',$citys);
         $this->assign('regions',$regions);
         $this->assign('roads',$roads);
