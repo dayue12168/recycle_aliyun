@@ -52,6 +52,9 @@ layui.use('element', function(){
       })
       // 修改
       $("button.reset_trash").click(function(){
+
+          url:"/admin/index/getTrash",
+          var id;
           layer.open({
               type:1,
               title:"设备信息修改",

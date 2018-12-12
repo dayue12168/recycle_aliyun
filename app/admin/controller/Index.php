@@ -252,6 +252,15 @@ class Index extends Base
         return json($data);
     }
 
+    //获取单个垃圾桶信息
+    public function getTrash(Request $request)
+    {
+        $id=$request->param('id');
+        $jhDustbinInfo=new JhDustbinInfo();
+        $res=$jhDustbinInfo->get($id);
+        return json($res);
+    }
+
 
 
 
