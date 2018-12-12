@@ -19,13 +19,12 @@
         <div class="layui-form" action="">
             <div class="layui-input-block flex-box flex-b" style="margin: 0;padding: 0;">
                 <div>
-                    <input type="checkbox" name="sb" value="0" title="已绑定设备" lay-skin="primary">
-                    <input type="checkbox" name="sb" value="1" title="未绑定设备" lay-skin="primary"><br/>
-                    <input type="checkbox" name="sb" value="2" title="已绑定环卫工" lay-skin="primary">
-                    <input type="checkbox" name="sb" value="3" title="未绑定环卫工" lay-skin="primary">
+                    <input type="checkbox" name="sb" value="1" title="已绑定设备" lay-skin="primary">
+                    <input type="checkbox" name="sb" value="2" title="未绑定设备" lay-skin="primary"><br/>
+                    <input type="checkbox" name="sb" value="3" title="已绑定环卫工" lay-skin="primary">
+                    <input type="checkbox" name="sb" value="4" title="未绑定环卫工" lay-skin="primary">
                 </div>
                 <div style='margin-left: 330px' class="flex-box flex-2 flex-col-c">
-                
                     <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small query_trash">查询垃圾桶列表</button>
                     <button style="margin-top: 0;" class="layui-btn layui-btn-small add_trash">添加垃圾桶</button>
                 </div>
@@ -76,13 +75,15 @@
                         <td>{$val.dust_length}*{$val.dust_width}*{$val.dust_height}</td>
                         <td>{$val.longitude},{$val.latitude}</td>
                         <td>{$val.cap_imei}</td>
-                        <td>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small">绑定</button>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑</button>
+                        <td>{if $val.cap_id}
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small Junbind">解绑</button>
+                            {else}
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small Jbind">绑定</button>
+                            {/if}
                         </td>
-                        <td class="flex-box flex-a flex-col-c">
-                            <span>4</span> 
-                            <button type="button" class="layui-btn layui-btn-normal layui-btn-small">管理</button>
+                        <td >
+                            <span>{$val.count}</span>
+                            <button type="button" class="layui-btn layui-btn-normal layui-btn-small  trashMana">管理</button>
                         </td>
                         <td>
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_trash">修改</button>

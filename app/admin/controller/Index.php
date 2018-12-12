@@ -87,7 +87,8 @@ class Index extends Base
         $this->assign('roads',$roads);
         $this->assign('groups',$groups);
         //垃圾桶信息
-        $info=model('Index','service')->getDustbinInfo();
+        $info=model('Index','service')->getDustbinInfo($road);
+//        return $info;
         $this->assign('info',$info);
         return $this->fetch();
     }
@@ -157,17 +158,23 @@ class Index extends Base
 
     }
 
-    //解绑设备
+    //设备解绑垃圾桶
     public function freeDevice(Request $request)
     {
         $id=$request->param('id');
         $res=model('Index','service')->freeDevice($id);
     }
 
+    //垃圾桶解绑设备
+    public function freeTrash(Request $request)
+    {
+        $id=$request->param('id');
+        $res=model('Index','service')->freeTrash($id);
+    }
+
     //添加垃圾桶
     public function addTrash(Request $request)
     {
-        return json($request->param());
         $data['area_id0']=$request->param('city_g');
         $data['area_id1']=$request->param('area_g');
         $data['area_id2']=$request->param('street_g');
@@ -205,6 +212,44 @@ class Index extends Base
         }
         $res=model('Index','service')->queryDevice($type,$status,$addr);
         return json($res);
+    }
+
+
+    //查询垃圾设备
+    public function queryTrash(Request $request)
+    {
+        $type=$request->param('type');
+        $addr=$request->param('addr');
+        $res=model('Index','service')->queryTrash($type,$addr);
+        return json($res);
+    }
+
+
+    //修改垃圾桶信息
+    public function updateTrash(Request $request)
+    {
+        $where['dustbin_id']=$request->param('id');
+        $data['area_id0']=$request->param('city_g');
+        $data['area_id1']=$request->param('area_g');
+        $data['area_id2']=$request->param('street_g');
+        $data['dust_serial']=$request->param('Jserial');
+        $data['dust_address']=$request->param('Jaddress');
+        $data['longitude']=$request->param('Jlongitude');
+        $data['latitude']=$request->param('Jlatitude');
+        $data['gps_gd']=$request->param('Jgps_gd');
+        $data['dust_length']=$request->param('Jlength');
+        $data['dust_width']=$request->param('Jwidth');
+        $data['dust_height']=$request->param('Jheight');
+        $data['install_height']=$request->param('install_height');
+        $data['union_serial']=$request->param('union_serial');
+        $jhDustbinInfo=new JhDustbinInfo();
+        $jhDustbinInfo->save($data,$where);
+        //查询出对应的市，区，街道
+        $jhArea=new JhArea();
+        $data['city']=$jhArea->where('area_id',$data['area_id0'])->value('area_name');
+        $data['area']=$jhArea->where('area_id',$data['area_id1'])->value('area_name');
+        $data['street']=$jhArea->where('area_id',$data['area_id2'])->value('area_name');
+        return json($data);
     }
 
 

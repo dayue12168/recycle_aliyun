@@ -15,7 +15,6 @@ layui.use('element', function(){
   })
   layui.use("form",function(){
       var form = layui.form();
-  
       // 添加垃圾桶
       $(".add_trash").click(function(){
           layer.open({
@@ -26,8 +25,7 @@ layui.use('element', function(){
               content:$("#addTrash"), 
               yes:function(index){
                   var data=$('#JaddTrash').serialize();
-                  console.log(data);
-                  // return false;
+                  // console.log(data);
                   $.ajax({
                       url:"/admin/index/addTrash",
                       type:"POST",
@@ -40,36 +38,20 @@ layui.use('element', function(){
                                 +'</td><td><span class="city">'+res.city+'</span>-<span class="area">'+res.area+'</span>-'
                                 +'<span class="street">'+res.street+'</span></td><td>'+res.dust_length+'*'+res.dust_width
                                 +'*'+res.dust_height+'</td><td>'+res.longitude+','+res.latitude+'</td><td></td>' +
-                                '<td><button type="button" class="layui-btn layui-btn-danger layui-btn-small">绑定</button>' +
-                                '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑</button></td><td></td>' +
+                                '<td><button type="button" class="layui-btn layui-btn-danger layui-btn-small Jbind">绑定</button>' +
+                                '</td><td><span>0</span><button type="button" class="layui-btn layui-btn-normal layui-btn-small  trashMana">管理</button></td>' +
                                 '<td><button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_trash">修改</button></td></tr>';
                             tbody.append(list);
                             layer.msg('垃圾桶'+res.dust_serial+'添加成功');
+                            form.render();
                       }
                   })
-  
                   layer.close(index);
               }
           })
       })
       // 修改
       $("button.reset_trash").click(function(){
-          // 向后台发送垃圾桶编号获取信息，渲染
-          /*$.ajax({
-              url:"",
-              type:"POST",
-              data:"",
-              cache:false,
-              success:function(res){
-  
-                  // 渲染表单
-                  // layui刷新表单
-                  form.render(); 
-              }
-          })*/
-          form.render();
-
-
           layer.open({
               type:1,
               title:"设备信息修改",
@@ -78,7 +60,7 @@ layui.use('element', function(){
               content:$("#resetTrash"),
               yes:function(index){
                   $.ajax({
-                      url:"",
+                      url:"/admin/index/updateTrash",
                       type:"POST",
                       data:"",
                       cache:false,
@@ -89,7 +71,82 @@ layui.use('element', function(){
                   layer.close(index);
               }
           })
+      });
+
+
+      //查询垃圾桶
+      $("button.query_trash").click(function(){
+          var checked=$("input[type='checkbox']:checked");
+          var str='';
+          $.each(checked,function(ele,index){
+              str+=','+index.value;
+          });
+          var type=str.substring(1);
+          var cityVal = $('select[name="city_g"] option:selected').val();
+          var areaVal = $('select[name="area_g"] option:selected').val();
+          var streetVal = $('select[name="street_g"] option:selected').val();
+          var groupVal = $('select[name="group_g"] option:selected').val();
+          var addr=cityVal+','+areaVal+','+streetVal+','+groupVal;
+          $.ajax({
+              url:"/admin/index/queryTrash",
+              type:"post",
+              data:{'type':type,'addr':addr},
+              cache:false,
+              success:function(res){
+                  // console.log(res);
+                  var tb=$("tbody.tbody");
+                  var str='';
+                  for(var i in res){
+                      if(res[i].cap_id){
+                          var td='<button type="button" class="layui-btn layui-btn-danger layui-btn-small Junbind">解绑</button>';
+                      }else{
+                          var td='<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jbind">绑定</button>';
+                      }
+                      str +='<tr><td style="display: none">'+res[i].dustbin_id+'</td> <td>'+res[i].dust_serial
+                          +'</td><td><span class="city">'+res[i].city+'</span>-<span class="area">'+res[i].area+'</span>-<span class="street">'
+                          +res[i].street+'</span>' +'</td><td>'+res[i].dust_length+'*'+res[i].dust_width+'*'+res[i].dust_height
+                          +'</td><td>'+res[i].longitude+','+res[i].latitude+'</td><td>'+res[i].cap_imei+'</td><td>'+td+'</td>' +
+                          '<td><span>'+res[i].count+'</span>' +
+                          '<button type="button" class="layui-btn layui-btn-normal layui-btn-small  trashMana">管理</button>' +
+                          '</td><td><button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_trash">修改</button>' +
+                          '</td></tr>';
+                  }
+                  // console.log(str);
+                  tb.html(str);
+                  form.render();
+              }
+          })
+      });
+
+      //解绑垃圾桶
+      $(".layui-table").on('click','.Junbind',function(){
+          var id=$(this).parent().prevAll().eq(5).text();
+          var that=$(this);
+          layer.open({
+              type:1,
+              title:"解绑设备",
+              btn:["确定","取消"],
+              yes:function(index){
+                  $.ajax({
+                      url:'/admin/index/freeTrash',
+                      type:'post',
+                      data:{'id':id},
+                      cache:false,
+                      success:function(){
+                          that.removeClass('Junbind').addClass("Jbind").text('绑定');
+                          that.parent().prev().text('');
+                          layer.msg('解绑成功');
+                      },
+                      error:function(){
+                          layer.msg('修改失败');
+                      }
+                  })
+                  layer.close(index);
+              }
+          })
+
       })
+
 
 
 
