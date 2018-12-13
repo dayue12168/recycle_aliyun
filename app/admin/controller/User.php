@@ -96,7 +96,8 @@ class User extends Base
         $name= $jhrObj::get(['role_name' => $role_name]);
         if(is_null($name)){
             $jhrObj->role_name=$role_name;
-            $res['state']=$jhrObj->save();
+            $jhrObj->save();
+            $res['state']=$jhrObj->role_id;
             if($res['state']){
                 $res['msg']='角色创建成功';
             };
@@ -111,6 +112,11 @@ class User extends Base
     public function delRole(Request $request)
     {
         $role_id=$request->param('id');
+        $jhUser=new JhUser();
+        $exit=$jhUser::where('role_id',$role_id)->value('user_id');
+        if($exit){
+            return false;
+        }
         $jhrObj=new JhUserRole();
         $jhrObj=$jhrObj::get($role_id);
         return $jhrObj->delete();
