@@ -34,7 +34,7 @@ layui.use('element', function(){
                       success:function(res){
                             // console.log(res);
                             var tbody=$('tbody.tbody');
-                            var list='<tr><td style="display: none">'+res.dustbinId+'</td><td>'+res.dust_serial
+                            var list='<tr><td class="bind_id" style="display: none">'+res.dustbinId+'</td><td>'+res.dust_serial
                                 +'</td><td><span class="city">'+res.city+'</span>-<span class="area">'+res.area+'</span>-'
                                 +'<span class="street">'+res.street+'</span></td><td>'+res.dust_length+'*'+res.dust_width
                                 +'*'+res.dust_height+'</td><td>'+res.longitude+','+res.latitude+'</td><td></td>' +
@@ -51,25 +51,35 @@ layui.use('element', function(){
           })
       })
       // 修改
-      $("button.reset_trash").click(function(){
-
-          layer.open({
-              type:1,
-              title:"设备信息修改",
-              btn:["确定","取消"],
-              area:["400px","450px"],
-              content:$("#resetTrash"),
-              yes:function(index){
-                  $.ajax({
-                      url:"/admin/index/updateTrash",
-                      type:"POST",
-                      data:"",
-                      cache:false,
-                      success:function(res){
-  
-                      }
-                  })
-                  layer.close(index);
+      $(".layui-table").on("click","button.reset_trash",function(){
+          var id = $(this).parent("td").siblings(".bind_id").text();
+          $.ajax({
+              url:"/admin/index/getTrash",
+              type:"POST",
+              data:{"id":id},
+              cache:false,
+              success:function(res){
+                console.log(res);
+                
+                        layer.open({
+                            type:1,
+                            title:"设备信息修改",
+                            btn:["确定","取消"],
+                            area:["400px","450px"],
+                            content:$("#resetTrash"),
+                            yes:function(index){
+                                // $.ajax({
+                                //     url:"/admin/index/updateTrash",
+                                //     type:"POST",
+                                //     data:"",
+                                //     cache:false,
+                                //     success:function(res){
+                
+                                //     }
+                                // })
+                                layer.close(index);
+                            }
+                        });
               }
           })
       });
@@ -103,7 +113,7 @@ layui.use('element', function(){
                       }else{
                           var td='<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jbind">绑定</button>';
                       }
-                      str +='<tr><td style="display: none">'+res[i].dustbin_id+'</td> <td>'+res[i].dust_serial
+                      str +='<tr><td class="bind_id" style="display: none">'+res[i].dustbin_id+'</td> <td>'+res[i].dust_serial
                           +'</td><td><span class="city">'+res[i].city+'</span>-<span class="area">'+res[i].area+'</span>-<span class="street">'
                           +res[i].street+'</span>' +'</td><td>'+res[i].dust_length+'*'+res[i].dust_width+'*'+res[i].dust_height
                           +'</td><td>'+res[i].longitude+','+res[i].latitude+'</td><td>'+res[i].cap_imei+'</td><td>'+td+'</td>' +
