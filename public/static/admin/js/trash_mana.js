@@ -53,7 +53,6 @@ layui.use('element', function(){
       // 修改
       $(".layui-table").on("click","button.reset_trash",function(){
           var id = $(this).parent("td").siblings(".bind_id").text();
-          
           $.ajax({
               url:"/admin/index/getTrash",
               type:"POST",
@@ -109,7 +108,6 @@ layui.use('element', function(){
                 });
               }
           })
-
       });
 
 
