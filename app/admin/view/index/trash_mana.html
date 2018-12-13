@@ -99,6 +99,41 @@
         </div>
     </div>   
 </body>
+<!-- 绑定 -->
+<div id="G_bind_sb" style="display: none;padding: 10px" >
+    <p class="flex-box flex-col-c">
+        设备IMEI号： <input type="text" name="sb_IMEI"><input type="button" class="layui-btn layui-btn-mini" value="查找">
+    </p>
+    <table class="layui-table">
+        <colgroup>
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>设备IMEI号</th>
+                <th>设备IMSI号</th>
+                <th>设备编号</th>
+                <th>设备类型</th>
+                <th>SIM卡编号</th>
+                <th>位置</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>IMEI111</td>
+                <td>IMSI111</td>
+                <td>SB111</td>
+                <td>TYPE111</td>
+                <td>SIM1111</td>
+                <td>123,456</td>
+                <td>
+                    <button type="button" class=" layui-btn layui-btn-danger layui-btn-mini bind_sb">绑定</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <!-- 添加设备 -->
 <div id="addTrash" style="display: none;">
     <form class="layui-form" id="JaddTrash" action="">
@@ -209,7 +244,7 @@
                 垃圾桶编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jserial" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jserial" class="layui-input Jserial2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -217,7 +252,7 @@
                 地址
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jaddress" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jaddress" class="layui-input Jaddress2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -225,7 +260,7 @@
                 经度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jlongitude" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlongitude" class="layui-input Jlongitude2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -233,7 +268,7 @@
                 维度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jlatitude" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlatitude" class="layui-input Jlatitude2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -241,7 +276,7 @@
                 高德坐标
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jgps_gd" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jgps_gd" class="layui-input Jgps_gd2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -249,7 +284,7 @@
                 长
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jlength" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jlength" class="layui-input Jlength2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -257,7 +292,7 @@
                 宽
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jwidth" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jwidth" class="layui-input Jwidth2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -265,7 +300,7 @@
                 高
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="Jheight" class="layui-input" required lay-verify="required">
+                <input type="index" name="Jheight" class="layui-input Jheight2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -273,7 +308,7 @@
                 设备安装高度
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="install_height" class="layui-input" required lay-verify="required">
+                <input type="index" name="install_height" class="layui-input install_height2" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item" style="margin-top: 20px;">
@@ -281,7 +316,7 @@
                 联通编号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="union_serial" class="layui-input" required lay-verify="required">
+                <input type="index" name="union_serial" class="layui-input union_serial2" required lay-verify="required">
             </div>
         </div>
     </form>

@@ -60,27 +60,53 @@ layui.use('element', function(){
               data:{"id":id},
               cache:false,
               success:function(res){
-                console.log(res);
+                // console.log(res);
                 
-                        layer.open({
-                            type:1,
-                            title:"设备信息修改",
-                            btn:["确定","取消"],
-                            area:["400px","450px"],
-                            content:$("#resetTrash"),
-                            yes:function(index){
-                                // $.ajax({
-                                //     url:"/admin/index/updateTrash",
-                                //     type:"POST",
-                                //     data:"",
-                                //     cache:false,
-                                //     success:function(res){
-                
-                                //     }
-                                // })
-                                layer.close(index);
+                // 垃圾桶编号
+                $("input[name='Jserial']").val(res.dust_serial);
+                // 地址
+                $("input[name='Jaddress']").val(res.dust_address);
+                // 经度
+                $("input[name='Jlongitude']").val(res.longitude);
+                // 维度
+                $("input[name='Jlatitude']").val(res.latitude);
+                // 高德坐标
+                $("input[name='Jgps_gd']").val(res.gps_gd);
+                // 长
+                $("input[name='Jlength']").val(res.dust_length);
+                // 宽
+                $("input[name='Jwidth']").val(res.dust_width);
+                // 高
+                $("input[name='Jheight']").val(res.dust_height);
+                // 设备安装高度install_height
+                $("input[name='install_height']").val(res.install_height);
+                // 联通编号
+                $("input[name='union_serial']").val(res.union_serial);
+                form.render()
+
+              },
+              complete:function(){
+                layer.open({
+                    type:1,
+                    title:"设备信息修改",
+                    btn:["确定","取消"],
+                    area:["400px","450px"],
+                    content:$("#resetTrash"),
+                    yes:function(index){
+                   // 区域   市  区街道 垃圾桶编号 地址 经度 维度 高德坐标 长 宽 高 设备安装高度 联通编号
+                      var serializeForm = $("#JresetTrash").serialize();
+                        $.ajax({
+                            url:"/admin/index/updateTrash",
+                            type:"POST",
+                            data:"",
+                            cache:false,
+                            success:function(res){
+        
                             }
-                        });
+                        })
+                        layer.close(index);
+                    }
+                });
               }
           })
 
@@ -160,8 +186,41 @@ layui.use('element', function(){
 
       })
 
-
-
+    // 设备操作 
+    // 弹出层 table列表
+    $(".layui-table").on('click','.Jbind',function(){
+      layer.open({
+        title:"垃圾桶-设备绑定->设备查找",
+        type: 1,
+        area: ['800px', '450px'],
+        fixed: false, //不固定
+        maxmin: true,
+        content: $("#G_bind_sb")
+      });
+    })
+    // 绑定
+   $(".layui-table").on('click','.bind_sb',function(){  
+    var _html = "<div style='padding:10px'><p>设备IMEI号&nbsp;&nbsp;&nbsp;&nbsp;<span>123456</span></p>"
+                +"<p>垃圾桶编号&nbsp;&nbsp;&nbsp;&nbsp;<span>123456</span></p>"
+                +"设备安装高度&nbsp;&nbsp;<input type='text' name='i_height'></div>";
+      layer.open({
+        title:"垃圾桶-设备绑定->确认绑定",
+        type: 1,
+        area: ['300px', '200px'], //宽高
+        content: _html,
+        btn:["确定"],
+        btnAlign:'c',
+        yes:function(index){
+          var iHeight = $("input[name='i_height']").val().trim();
+          // 设备安装高度必填
+            if(iHeight == 0){
+              layer.msg("设备安装高度请填写完整",{time:1500})
+            }else{
+              layer.close(index);
+            }
+        }
+      });
+   })
 
   })
   var len = $(".tbody>tr").length;     
