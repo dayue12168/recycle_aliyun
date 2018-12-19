@@ -198,6 +198,7 @@ layui.use('element', function(){
         $("input[name='hide_inp']").val(seri);
         var id=$(this).parent().siblings().eq(0).text();
         $("input[name='hide_trash']").val(id);
+        imeithat = $(this).parent().siblings().eq(5);
         layer.open({
         title:"垃圾桶-设备绑定->设备查找",
         type: 1,
@@ -213,7 +214,7 @@ layui.use('element', function(){
        var serial=$("input[name='hide_inp']").val();
        var id=$(this).parent().prevAll().eq(6).text();
        var trash=$("input[name='hide_trash']").val();
-       var that=$(this);
+
 
     var _html = "<div style='padding:10px'><p>设备IMEI号&nbsp;&nbsp;&nbsp;&nbsp;<span>"+imei+"</span></p>"
                 +"<p>垃圾桶编号&nbsp;&nbsp;&nbsp;&nbsp;<span>"+serial+"</span></p>"
@@ -237,9 +238,11 @@ layui.use('element', function(){
                   cache:false,
                   data:{'id':id,'trash':trash,'iHeight':iHeight},
                   success:function(res){
-                      layer.close(index);
+                      layer.closeAll(); //关闭所有层
                       layer.msg("绑定成功");
-                      that.remove();
+                      imeithat.text(imei);
+                      imeithat.next().find('button').removeClass('Jbind').addClass('Junbind').text('解绑');
+
                   }
               })
             }

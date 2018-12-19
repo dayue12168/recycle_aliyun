@@ -51,6 +51,7 @@
                             +res[i].cap_position+'</td><td>'+res[i].address+'</td><td>' +
                           '<button type="button" class="layui-btn layui-btn-normal layui-btn-small reSet">修改</button>';
                       if(res[i].cap_status==0){
+
                           var status='解除绑定';
                           str+= '<button type="button" class="layui-btn layui-btn-danger layui-btn-small Jjiebang">'+status+'</button>';
                       }else{

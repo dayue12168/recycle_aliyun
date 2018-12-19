@@ -278,6 +278,7 @@ class Index extends Base
         $jhCap=$jhCap::get($data['cap_id']);
         $jhCap->cap_status=0;
         $jhCap->save();
+//        return $jhCap::where('cap_id',$data['cap_id'])->value('cap_imei');
         return true;
     }
 
