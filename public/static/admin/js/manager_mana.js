@@ -37,7 +37,7 @@ layui.use('element', function(){
                           str+=res.last_login_time+'</td><td>'+res.wx_band+'<td>';
                           str+='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_manager">修改</button>';
                           str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑微信</button>';
-                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>';
+                          str+='<button type="button" class="layui-btn layui-btn-danger layui-btn-small reset_forbid">禁用</button>';
                           str+='</td><td><button type="button" class="layui-btn layui-btn-normal layui-btn-small">环卫工列表</button>';
                           str+='</td></tr>';
                           tbody.append(str);
@@ -52,7 +52,7 @@ layui.use('element', function(){
           })
       });
       // 修改管理员信息
-      $("button.reset_manager").click(function(){
+      $(".tbody").on('click','.reset_manager',function(){
           form.render('select');
           //直接赋值
           var name=$(this).parent().prevAll().eq(7).text();
@@ -94,7 +94,7 @@ layui.use('element', function(){
       });
 
       //禁用/启用管理员
-      $("button.reset_forbid").click(function(){
+      $(".tbody").on('click','.reset_forbid',function(){
               var temp=$(this).text();
               var forbid="禁用";
               var use='启用';
@@ -121,6 +121,45 @@ layui.use('element', function(){
                   }
               });
           });
+
+      //查询管理员
+      $("button.query_manager").click(function(){
+          var types=$("input[type='checkbox']:checked");
+          var str='';
+          $.each(types,function(ele,index){
+              str+=','+index.value;
+          });
+          if(types.length){
+              str=str.substring(1);
+          }
+          var cityVal = $('select[name="city_g"] option:selected').val();
+          var areaVal = $('select[name="area_g"] option:selected').val();
+          var streetVal = $('select[name="street_g"] option:selected').val();
+          var addr=cityVal+','+areaVal+','+streetVal;
+          $.ajax({
+             url:"/admin/user/getAdmin",
+              type:"post",
+              cache:false,
+              data:{'type':str,"addr":addr},
+              success:function(res){
+                 var str='';
+                 for(var i in res){
+                     var type=res[i].user_type==0?'系统管理员':'商户管理员';
+                     var forbid=res[i].state==0?'禁用':'启用';
+                     str+='<tr><td style="display: none">'+res[i].user_id+'</td><td>'+res[i].user_name+'</td>' +
+                         '<td>'+res[i].tel+'</td><td>'+type+'</td><td>'+res[i].city+'-'+res[i].area+
+                         '-'+res[i].street+'-'+res[i].group+'</td><td>'+res[i].role_name+'</td>' +
+                         '<td>'+res[i].last_login_time+'</td><td>'+res[i].wx_band+'</td>' +
+                         '<td><button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_manager">修改</button>' +
+                         '<button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑微信</button>' +
+                         '<button type="button" class="layui-btn layui-btn-danger layui-btn-small reset_forbid">'+forbid+'</button>' +
+                         '</td><td><button type="button" class="layui-btn layui-btn-normal layui-btn-small check_huan">环卫工列表</button>' +
+                         '</td></tr>';
+                 }
+                 $("tbody.tbody").html(str);
+              }
+          });
+      });
 
   });
   var len = $(".tbody>tr").length;     

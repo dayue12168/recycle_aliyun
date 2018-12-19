@@ -61,7 +61,8 @@ class User extends Base
         $this->assign('groups',$groups);
 
         //查询出所有系统管理员信息
-        $users=model('User','service')->getAdmin();
+        $users=model('User','service')->getAdmin($road);
+//        return $users;
         $this->assign('users',$users);
         //查询出所有非超级管理员角色
         $roles=model('User','service')->allRoles();
@@ -210,6 +211,16 @@ class User extends Base
         return true;
 //        $data['user_id']=$where['user_id'];
 //        return json($data);
+    }
+
+
+    //查询管理员
+    public function getAdmin(Request $request)
+    {
+        $type=$request->param('type');
+        $addr=$request->param('addr');
+        $res=model('User','service')->getAdmin($addr,$type);
+        return json($res);
     }
 
     public function test()

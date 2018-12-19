@@ -88,8 +88,12 @@ class Index extends Base
         $this->assign('groups',$groups);
         //垃圾桶信息
         $info=model('Index','service')->getDustbinInfo($road);
-//        return $info;
         $this->assign('info',$info);
+
+        //获取未绑定的设备
+        $jhCap=new JhCap();
+        $device=$jhCap::all(['cap_status'=>2]);
+        $this->assign('device',$device);
         return $this->fetch();
     }
 
@@ -228,6 +232,7 @@ class Index extends Base
     //修改垃圾桶信息
     public function updateTrash(Request $request)
     {
+//        return $request->param();
         $where['dustbin_id']=$request->param('id');
         $data['area_id0']=$request->param('city_g');
         $data['area_id1']=$request->param('area_g');
@@ -259,6 +264,31 @@ class Index extends Base
         $jhDustbinInfo=new JhDustbinInfo();
         $res=$jhDustbinInfo->get($id);
         return json($res);
+    }
+
+    //垃圾桶--设备绑定
+    public function trashDevice(Request $request)
+    {
+        $where['dustbin_id']=$request->param('trash');
+        $data['cap_id']=$request->param('id');
+        $data['install_height']=$request->param('iHeight');
+        $jhDustbinInfo=new JhDustbinInfo();
+        $jhDustbinInfo->save($data,$where);
+        $jhCap=new JhCap();
+        $jhCap=$jhCap::get($data['cap_id']);
+        $jhCap->cap_status=0;
+        $jhCap->save();
+        return true;
+    }
+
+
+    //用imei号查询设备
+    public function getCapById(Request $request)
+    {
+        $imei=$request->param('id');
+        $jhCap=new JhCap();
+        $jhCap=$jhCap::getByCapImei($imei);
+        return $jhCap;
     }
 
 

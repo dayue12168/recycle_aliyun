@@ -131,6 +131,7 @@ class Index
 
         }
         $sql=substr($sql,0,-2).')) jiang group by dustbin_id';
+//        die($sql);
         $res=Db::query($sql);
         return $res;
     }

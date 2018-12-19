@@ -102,8 +102,10 @@
 <!-- 绑定 -->
 <div id="G_bind_sb" style="display: none;padding: 10px" >
     <p class="flex-box flex-col-c">
-        设备IMEI号： <input type="text" name="sb_IMEI"><input type="button" class="layui-btn layui-btn-mini" value="查找">
+        设备IMEI号： <input type="text" name="sb_IMEI"><input type="button" class="layui-btn layui-btn-mini" id="JqueryDevice" value="查找">
     </p>
+    <input type="hidden" value="" name="hide_inp">
+    <input type="hidden" value="" name="hide_trash">
     <table class="layui-table">
         <colgroup>
             <col>
@@ -119,18 +121,21 @@
                 <th>操作</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="Jcap">
+        {foreach $device as $val}
             <tr>
-                <td>IMEI111</td>
-                <td>IMSI111</td>
-                <td>SB111</td>
-                <td>TYPE111</td>
-                <td>SIM1111</td>
-                <td>123,456</td>
+                <td style="display:none;">{$val.cap_id}</td>
+                <td>{$val.cap_imei}</td>
+                <td>{$val.cap_imsi}</td>
+                <td>{$val.cap_serial}</td>
+                <td>{$val.cap_type}</td>
+                <td>{$val.cap_sim}</td>
+                <td>{$val.cap_position}</td>
                 <td>
                     <button type="button" class=" layui-btn layui-btn-danger layui-btn-mini bind_sb">绑定</button>
                 </td>
             </tr>
+        {/foreach}
         </tbody>
     </table>
 </div>

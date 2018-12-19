@@ -53,6 +53,7 @@ layui.use('element', function(){
       // 修改
       $(".layui-table").on("click","button.reset_trash",function(){
           var id = $(this).parent("td").siblings(".bind_id").text();
+          var that=$(this);
           $.ajax({
               url:"/admin/index/getTrash",
               type:"POST",
@@ -60,9 +61,10 @@ layui.use('element', function(){
               cache:false,
               success:function(res){
                 // console.log(res);
-                
-                // 垃圾桶编号
+                //垃圾桶id
                 $("input[name='Jserial']").val(res.dust_serial);
+                // 垃圾桶编号
+                $("input[name='id']").val(id);
                 // 地址
                 $("input[name='Jaddress']").val(res.dust_address);
                 // 经度
@@ -81,8 +83,7 @@ layui.use('element', function(){
                 $("input[name='install_height']").val(res.install_height);
                 // 联通编号
                 $("input[name='union_serial']").val(res.union_serial);
-                form.render()
-
+                form.render();
               },
               complete:function(){
                 layer.open({
@@ -97,10 +98,15 @@ layui.use('element', function(){
                         $.ajax({
                             url:"/admin/index/updateTrash",
                             type:"POST",
-                            data:"",
+                            data:serializeForm,
                             cache:false,
                             success:function(res){
-        
+                                console.log(res);
+                                that.parent().prevAll().eq(6).text(res.dust_serial);
+                                that.parent().prevAll().eq(5).text(res.city+'-'+res.area+'-'+res.street);
+                                that.parent().prevAll().eq(4).text(res.dust_length+'*'+res.dust_width+'*'+res.dust_height);
+                                that.parent().prevAll().eq(3).text(res.longitude+','+res.latitude);
+                                layer.msg('信息修改成功');
                             }
                         })
                         layer.close(index);
@@ -124,6 +130,7 @@ layui.use('element', function(){
           var streetVal = $('select[name="street_g"] option:selected').val();
           var groupVal = $('select[name="group_g"] option:selected').val();
           var addr=cityVal+','+areaVal+','+streetVal+','+groupVal;
+          // console.log(addr+'---'+type);
           $.ajax({
               url:"/admin/index/queryTrash",
               type:"post",
@@ -187,7 +194,11 @@ layui.use('element', function(){
     // 设备操作 
     // 弹出层 table列表
     $(".layui-table").on('click','.Jbind',function(){
-      layer.open({
+        var seri=$(this).parent().siblings().eq(1).text();
+        $("input[name='hide_inp']").val(seri);
+        var id=$(this).parent().siblings().eq(0).text();
+        $("input[name='hide_trash']").val(id);
+        layer.open({
         title:"垃圾桶-设备绑定->设备查找",
         type: 1,
         area: ['800px', '450px'],
@@ -197,9 +208,15 @@ layui.use('element', function(){
       });
     })
     // 绑定
-   $(".layui-table").on('click','.bind_sb',function(){  
-    var _html = "<div style='padding:10px'><p>设备IMEI号&nbsp;&nbsp;&nbsp;&nbsp;<span>123456</span></p>"
-                +"<p>垃圾桶编号&nbsp;&nbsp;&nbsp;&nbsp;<span>123456</span></p>"
+   $(".layui-table").on('click','.bind_sb',function(){
+       var imei=$(this).parent().prevAll().eq(5).text();
+       var serial=$("input[name='hide_inp']").val();
+       var id=$(this).parent().prevAll().eq(6).text();
+       var trash=$("input[name='hide_trash']").val();
+       var that=$(this);
+
+    var _html = "<div style='padding:10px'><p>设备IMEI号&nbsp;&nbsp;&nbsp;&nbsp;<span>"+imei+"</span></p>"
+                +"<p>垃圾桶编号&nbsp;&nbsp;&nbsp;&nbsp;<span>"+serial+"</span></p>"
                 +"设备安装高度&nbsp;&nbsp;<input type='text' name='i_height'></div>";
       layer.open({
         title:"垃圾桶-设备绑定->确认绑定",
@@ -214,11 +231,47 @@ layui.use('element', function(){
             if(iHeight == 0){
               layer.msg("设备安装高度请填写完整",{time:1500})
             }else{
-              layer.close(index);
+              $.ajax({
+                  url:"/admin/index/trashDevice",
+                  type:"post",
+                  cache:false,
+                  data:{'id':id,'trash':trash,'iHeight':iHeight},
+                  success:function(res){
+                      layer.close(index);
+                      layer.msg("绑定成功");
+                      that.remove();
+                  }
+              })
             }
         }
       });
-   })
+   });
+
+      //查找设备
+      $('#JqueryDevice').click(function(){
+        var val=$('input[name="sb_IMEI"]').val();
+        if(!val){
+            layer.msg('请输入设备IMEI号码');
+            return false;
+        }
+        $.ajax({
+           url:"/admin/index/getCapById",
+            type:'post',
+            cache:'false',
+            data:{'id':val},
+            success:function(res){
+                var tbody=$('.Jcap');
+                var str='<tr><td style="display:none;">'+res.cap_id+'</td>' +
+                    '<td>'+res.cap_imei+'</td><td>'+res.cap_imsi+'</td>' +
+                    '<td>'+res.cap_serial+'</td><td>'+res.cap_type+'</td>' +
+                    '<td>'+res.cap_sim+'</td><td>'+res.cap_position+'</td>' +
+                    '<td><button type="button" class=" layui-btn layui-btn-danger layui-btn-mini bind_sb">绑定</button>' +
+                    '</td></tr>';
+                tbody.html(str);
+            }
+
+        });
+      });
 
   })
   var len = $(".tbody>tr").length;     
