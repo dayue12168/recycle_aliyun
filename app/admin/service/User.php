@@ -9,6 +9,8 @@
 namespace app\admin\service;
 
 use think\Db;
+use think\Request;
+
 class User
 {
     //获取其角色名以及权限列表
@@ -122,6 +124,40 @@ class User
                 $res[$k]['group']='全班组';
             }
         }
+        return $res;
+    }
+
+
+    //查询环卫工
+    public function getWorks($road)
+    {
+        if(is_int($road)){
+            $where='jwi.area_id2='.$road;
+        }elseif(is_string($road)){
+            $addr=explode(',',$road);
+            if($addr[2]<0){//所有街道
+                $where='jwi.area_id1='.$addr[1];
+            }else{
+                $where='jwi.area_id2='.$addr[2];
+            }
+        }
+
+        $res=$this->getWorkSql($where);
+        return $res;
+
+    }
+
+    public function getWorkSql($where)
+    {
+        $sql='select case when isnull(dustbin_id) then	0 else count(*) end count,jiang.* ';
+        $sql.='from (select jwi.worker_id,jwi.tel,jwi.worker_name,jwi.wx_bind,ja1.area_name city,';
+        $sql.='ja2.area_name area,ja3.area_name street,ja4.area_name `group`,ju.user_name,';
+        $sql.='jb.dustbin_id from jh_work_info jwi join jh_area ja1 on jwi.area_id0=ja1.area_id ';
+        $sql.='join jh_area ja2 on jwi.area_id1=ja2.area_id join jh_area ja3 on ';
+        $sql.='jwi.area_id2=ja3.area_id join jh_area ja4 on jwi.area_id3=ja4.area_id ';
+        $sql.='left join jh_bind jb on jwi.worker_id=jb.worker_id left join jh_user ';
+        $sql.='ju on jwi.belong_user_id=ju.user_id where '.$where.') jiang group by jiang.worker_id';
+        $res=Db::query($sql);
         return $res;
     }
 

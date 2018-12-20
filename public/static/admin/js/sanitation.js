@@ -14,33 +14,71 @@ layui.use('element', function(){
   })
   layui.use("form",function(){
       var form = layui.form();
-      // 添加设备
-      $(".add_manager").click(function(){
+      // 添加环卫工
+      $(".add_trash").click(function(){
           layer.open({
               type:1,
-              title:"添加管理员",
+              title:"添加环卫工",
               btn:["确定","取消"],
               area:["600px","450px"],
               content:$("#addManager_sa"), 
               yes:function(index){
-                  // $.ajax({
-                  //     url:"",
-                  //     type:"POST",
-                  //     data:"",
-                  //     cache:false,
-                  //     success:function(res){
-  
-                  //     }
-                  // })
+                  var streetVal = $('select[name="street_g"] option:selected').val();
+                  var groupVal = $('select[name="group_g"] option:selected').val();
+                  if(streetVal<0||groupVal<0){
+                      layer.msg('请确定地址完整');
+                      return false;
+                  }
+                  var data=$("#addForm_sa").serialize();
+                  $.ajax({
+                      url:"/admin/user/addWorker",
+                      type:"POST",
+                      data:data,
+                      cache:false,
+                      success:function(res){
+                          console.log(res);
+                          layer.msg('用户添加成功');
+                          var str='';
+                          var tb=$("tbody.tbody");
+                          for(var i in res){
+                              if(res[i].wx_bind){
+                                  var wx='√';
+                                  var button='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_sani">修改</button>' +
+                                      '<button type="button" class="layui-btn layui-btn-danger layui-btn-small wx_unbind">解绑微信</button>' +
+                                      '<button type="button" class="layui-btn layui-btn-danger layui-btn-small trash_bind">垃圾桶绑定</button>' +
+                                      '<button type="button" class="layui-btn layui-btn-danger layui-btn-small worker_for">禁用</button>';
+                              }else{
+                                  var wx='?';
+                                  var button='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_sani">修改</button>' +
+                                      '<button type="button" class="layui-btn layui-btn-danger layui-btn-small trash_bind">垃圾桶绑定</button>' +
+                                      '<button type="button" class="layui-btn layui-btn-danger layui-btn-small worker_for">禁用</button>';
+                              }
+                              str+='<tr> <td style="display: none">'+res[i].worker_id+'</td><td>'+res[i].worker_name+'</td>' +
+                                  '<td>'+res[i].tel+'</td><td>'+res[i].area+'-'+res[i].street+'-'+res[i].group+'</td>' +
+                                  '<td>'+wx+'</td><td>'+res[i].user_name+'</td><td>'+res[i].count+'</td>' +
+                                  '<td>'+button +'</td></tr>';
+                          }
+
+                          tb.append(str);
+
+                      }
+                  })
   
                   layer.close(index);
               }
           })
-      })
+      });
       // 修改
-      $(".reset_manager").click(function(){
-          form.render('select'); 
-  
+      $("tbody.tbody").on('click','.reset_sani',function(){
+          form.render('select');
+          var id=$(this).parent().siblings('td').eq(0).text();
+          var name=$(this).parent().siblings('td').eq(1).text();
+          var tel=$(this).parent().siblings('td').eq(2).text();
+          $("input[name='id']").attr('value',id);
+          $("input[name='name']").attr('value',name);
+          $("input[name='tel']").attr('value',tel);
+          // return false;
+          var that=$(this);
           layer.open({
               type:1,
               title:"管理员信息修改",
@@ -48,19 +86,69 @@ layui.use('element', function(){
               area:["600px","450px"],
               content:$("#resetManager_sa"),
               yes:function(index){
+                  var streetVal = $('select[name="street_g"] option:selected').val();
+                  var groupVal = $('select[name="group_g"] option:selected').val();
+                  console.log(streetVal);
+                  console.log(groupVal);
+                  if(streetVal<0||groupVal<0){
+                      layer.msg('请确定地址完整');
+                      return false;
+                  }
+                  var data=$("#addForm_reset").serialize();
                   $.ajax({
-                      url:"",
+                      url:"/admin/user/updateWorker",
                       type:"POST",
-                      data:"",
+                      data:data,
                       cache:false,
-                      success:function(res){
-  
+                      success:function(res) {
+                          // console.log(res);
+                          that.parent().siblings().eq(1).text(res.worker_name);
+                          that.parent().siblings().eq(2).text(res.tel);
+                          that.parent().siblings().eq(4).text(res.area_id1 + '-' + res.area_id2 + '-' + res.area_id3);
+                          layer.msg('信息修改成功');
                       }
                   })
                   layer.close(index);
               }
           })
-      })
+      });
+
+      //查询管理员
+      $(".query_trash").click(function(){
+          var cityVal = $('select[name="city_g"] option:selected').val();
+          var areaVal = $('select[name="area_g"] option:selected').val();
+          var streetVal = $('select[name="street_g"] option:selected').val();
+          var addr=cityVal+','+areaVal+','+streetVal;
+          $.ajax({
+             url:"/admin/user/getWorks",
+              type:"post",
+              cache:false,
+              data:{'addr':addr},
+              success:function (res) {
+                 var str='';
+                 var tb=$("tbody.tbody");
+                 for(var i in res){
+                     if(res[i].wx_bind){
+                         var wx='√';
+                         var button='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_sani">修改</button>' +
+                             '<button type="button" class="layui-btn layui-btn-danger layui-btn-small wx_unbind">解绑微信</button>' +
+                             '<button type="button" class="layui-btn layui-btn-danger layui-btn-small trash_bind">垃圾桶绑定</button>' +
+                             '<button type="button" class="layui-btn layui-btn-danger layui-btn-small worker_for">禁用</button>';
+                     }else{
+                         var wx='?';
+                         var button='<button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_sani">修改</button>' +
+                             '<button type="button" class="layui-btn layui-btn-danger layui-btn-small trash_bind">垃圾桶绑定</button>' +
+                             '<button type="button" class="layui-btn layui-btn-danger layui-btn-small worker_for">禁用</button>';
+                     }
+                     str+='<tr> <td style="display: none">'+res[i].worker_id+'</td><td>'+res[i].worker_name+'</td>' +
+                         '<td>'+res[i].tel+'</td><td>'+res[i].area+'-'+res[i].street+'-'+res[i].group+'</td>' +
+                         '<td>'+wx+'</td><td>'+res[i].user_name+'</td><td>'+res[i].count+'</td>' +
+                         '<td>'+button +'</td></tr>';
+                 }
+                  tb.html(str);
+              }
+          });
+      });
   })
   var len = $(".tbody>tr").length;     
   $(".len").html(len);

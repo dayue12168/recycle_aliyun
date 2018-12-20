@@ -12,6 +12,7 @@
             // layer.msg(JSON.stringify(data.field));
             //这里可以发起ajax请求进行登录验证
             // layer.msg("{:url('Login/loginIn')}");
+
             $.ajax({
                 url:"/admin/Login/loginIn",
                 type:"POST",

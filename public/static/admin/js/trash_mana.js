@@ -101,7 +101,7 @@ layui.use('element', function(){
                             data:serializeForm,
                             cache:false,
                             success:function(res){
-                                console.log(res);
+                                // console.log(res);
                                 that.parent().prevAll().eq(6).text(res.dust_serial);
                                 that.parent().prevAll().eq(5).text(res.city+'-'+res.area+'-'+res.street);
                                 that.parent().prevAll().eq(4).text(res.dust_length+'*'+res.dust_width+'*'+res.dust_height);
@@ -242,7 +242,6 @@ layui.use('element', function(){
                       layer.msg("绑定成功");
                       imeithat.text(imei);
                       imeithat.next().find('button').removeClass('Jbind').addClass('Junbind').text('解绑');
-
                   }
               })
             }

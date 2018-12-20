@@ -14,6 +14,7 @@ use think\response\Json;
 use app\admin\model\JhUser;
 use app\admin\model\JhUserRole;
 use app\admin\model\JhArea;
+use app\admin\model\JhWorkInfo;
 
 class User extends Base
 {
@@ -85,6 +86,9 @@ class User extends Base
         $this->assign('regions',$regions);
         $this->assign('roads',$roads);
         $this->assign('groups',$groups);
+
+        $works=model('User','service')->getWorks($road);
+        $this->assign('works',$works);
         return $this->fetch();
     }
 
@@ -222,6 +226,63 @@ class User extends Base
         $res=model('User','service')->getAdmin($addr,$type);
         return json($res);
     }
+
+    //查询环卫工
+    public function getWorks(Request $request)
+    {
+        $addr=$request->param('addr');
+        $res=model('User','service')->getWorks($addr);
+        return json($res);
+    }
+
+    //新增环卫工
+    public function addWorker(Request $request)
+    {
+        $data['worker_name']=$request->param('name');
+        $data['tel']=$request->param('tel');
+        $data['psw']=$this->signPwd($request->param('pwd'));
+        $data['area_id0']=$request->param('city_g');
+        $data['area_id1']=$request->param('area_g');
+        $data['area_id2']=$request->param('street_g');
+        $data['area_id3']=$request->param('group_g');
+        $jhWorkInfo=new JhWorkInfo();
+        $jhWorkInfo->save($data);
+        $id=$jhWorkInfo->worker_id;
+        $where='jwi.worker_id='.$id;
+        $res=model('User','service')->getWorkSql($where);
+        return json($res);
+    }
+
+    //修改环卫工信息
+    public function updateWorker(Request $request)
+    {
+        $where['worker_id']=$request->param('id');
+        $data['worker_name']=$request->param('name');
+        $data['tel']=$request->param('tel');
+        $pwd=$request->param('pwd');
+        if($pwd){
+            $data['psw']=$this->signPwd($pwd);
+        }
+        $data['area_id0']=$request->param('city_g');
+        $data['area_id1']=$request->param('area_g');
+        $data['area_id2']=$request->param('street_g');
+        $data['area_id3']=$request->param('group_g');
+        $jhWorkInfo=new JhWorkInfo();
+        $jhWorkInfo->save($data,$where);
+        $jhArea=new JhArea();
+        $data['area_id0']=$jhArea->where('area_id',$data['area_id0'])->value('area_name');
+        $data['area_id1']=$jhArea->where('area_id',$data['area_id1'])->value('area_name');
+        $data['area_id2']=$jhArea->where('area_id',$data['area_id2'])->value('area_name');
+        $data['area_id3']=$jhArea->where('area_id',$data['area_id3'])->value('area_name');
+        return json($data);
+    }
+
+    //环卫工密码加密
+    protected function signPwd($pwd)
+    {
+        return md5($pwd);
+    }
+
 
     public function test()
     {

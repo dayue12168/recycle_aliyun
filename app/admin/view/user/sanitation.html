@@ -22,8 +22,8 @@
             环卫工列表
             <div class="layui-input-block flex-box flex-3" style="margin:10px 0;padding: 0;">
                 {include file='common/address'/}
-                <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small">查询环卫工</button>
-                <button style="margin-top: 0;" class="layui-btn layui-btn-small add_manager">新增环卫工</button>
+                <button style="margin-top: 0;margin-left: 20px" class="layui-btn layui-btn-small query_trash">查询环卫工</button>
+                <button style="margin-top: 0;" class="layui-btn layui-btn-small add_trash">新增环卫工</button>
             </div>
             <table class="layui-table">
                 <colgroup>
@@ -48,21 +48,23 @@
                     </tr> 
                 </thead>
                 <tbody class="tbody">
+                    {foreach $works as $val}
                     <tr>
-                        <td>管子见</td>
-                        <td>13813131311</td>
-                        <td>徐汇区-龙华街道-班组1</td>
-                        <td>√</td>
-                        <td>ASDER</td>
-                        <td>3</td>
+                        <td style="display: none">{$val.worker_id}</td>
+                        <td>{$val.worker_name}</td>
+                        <td>{$val.tel}</td>
+                        <td>{$val.area}-{$val.street}-{$val.group}</td>
+                        <td>{if $val.wx_bind}√{else}?{/if}</td>
+                        <td>{$val.user_name}</td>
+                        <td>{$val.count}</td>
                         <td>
                             <button type="button" class="layui-btn layui-btn-normal layui-btn-small reset_sani">修改</button>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small">解绑微信</button>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small">垃圾桶绑定</button>
-                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small">禁用</button>
+                            {if $val.wx_bind}<button type="button" class="layui-btn layui-btn-danger layui-btn-small wx_unbind">解绑微信</button>{/if}
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small trash_bind">垃圾桶绑定</button>
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-small worker_for">禁用</button>
                         </td>
-                        
                     </tr>
+                    {/foreach}
                    
                 </tbody>
             </table> 
@@ -75,13 +77,13 @@
 </body>
 <!-- 添加设备 -->
 <div id="addManager_sa" style="display: none;">
-    <form class="layui-form" id="addForm_sa" action=""> 
+    <form class="layui-form" id="addForm_sa">
         <div class="layui-form-item">
             <label class="layui-form-label">
                 姓名
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="name" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
@@ -89,7 +91,7 @@
                 手机号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="tel" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
@@ -97,16 +99,7 @@
                 初始密码
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                人员类别
-            </label>
-            <div class="flex-box flex-2">
-                <input type="radio" name="manager" value="nan" title="系统管理员">
-                <input type="radio" name="manager" value="nv" title="商户管理员" checked>
+                <input type="index" name="pwd" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
@@ -114,73 +107,28 @@
                 区域
             </label>
             <div class="flex-box flex-4">
-                <select name="" id="" >
-                    <option value="">选择市</option>
-                    <option value="0">上海市</option>
-                    <option value="1">天津市</option>
-                    <option value="2">重庆市</option>
+                {include file='common/address'/}
+                <select name="group_g">
+                    {foreach $groups as $val}
+                    <option value="{$val.area_id}">{$val.area_name}</option>
+                    {/foreach}
                 </select>
-                <select name="" id="" >
-                    <option value="">选择区</option>
-                    <option value="0">徐汇区</option>
-                    <option value="1">嘉定区</option>
-                    <option value="2">普陀区</option>
-                </select>
-                <select name="" id="" >
-                    <option value="">选择街道</option>
-                    <option value="0">龙华街道</option>
-                    <option value="1">龙华街道</option>
-                    <option value="2">龙华街道</option>
-                </select>
-                <select name="" id="" >
-                    <option value="">选择班组</option>
-                    <option value="0">班组1</option>
-                    <option value="1">班组1</option>
-                    <option value="2">班组1</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item" >
-            <label class="layui-form-label">
-                角色
-            </label>
-            <div>
-                <input type="checkbox" name="" title="角色1" lay-skin="primary">
-                <input type="checkbox" name="" title="角色2" lay-skin="primary">
-                <input type="checkbox" name="" title="角色3" lay-skin="primary">
-                <input type="checkbox" name="" title="角色4" lay-skin="primary">
-                <input type="checkbox" name="" title="角色5" lay-skin="primary">
-                <input type="checkbox" name="" title="角色6" lay-skin="primary">
-                <input type="checkbox" name="" title="角色7" lay-skin="primary">
-                <input type="checkbox" name="" title="角色8" lay-skin="primary">
-            </div>
-        </div>
-        <div class="layui-form-item" >
-            <label class="layui-form-label" style="visibility: hidden;">
-                角色
-            </label>
-            <div>
-                <input type="checkbox" name="" title="角色1" lay-skin="primary">
-                <input type="checkbox" name="" title="角色2" lay-skin="primary">
-                <input type="checkbox" name="" title="角色3" lay-skin="primary">
-                <input type="checkbox" name="" title="角色4" lay-skin="primary">
-                <input type="checkbox" name="" title="角色5" lay-skin="primary">
-                <input type="checkbox" name="" title="角色6" lay-skin="primary">
-                <input type="checkbox" name="" title="角色7" lay-skin="primary">
-                <input type="checkbox" name="" title="角色8" lay-skin="primary">
             </div>
         </div>
     </form>
 </div>
 <!-- 管理员信息修改 -->
 <div id="resetManager_sa" style="display: none;">
-    <form class="layui-form" id="addForm_sa" action=""> 
+    <form class="layui-form" id="addForm_reset" action="">
+        <div style="display: none">
+            <input type="index" name="id" value="">
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">
                 姓名
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="name" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
@@ -188,7 +136,7 @@
                 手机号
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="tel" class="layui-input" required lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
@@ -196,77 +144,21 @@
                 初始密码
             </label>
             <div class="layui-input-inline">
-                <input type="index" name="" class="layui-input" required lay-verify="required">
+                <input type="index" name="pwd" class="layui-input" required lay-verify="required">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                人员类别
-            </label>
-            <div class="flex-box flex-2">
-                <input type="radio" name="manager" value="nan" title="系统管理员">
-                <input type="radio" name="manager" value="nv" title="商户管理员" checked>
-            </div>
-        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">
                 区域
             </label>
             <div class="flex-box flex-4">
-                <select name="" id="" >
-                    <option value="">选择市</option>
-                    <option value="0">上海市</option>
-                    <option value="1">天津市</option>
-                    <option value="2">重庆市</option>
+                {include file='common/address'/}
+                <select name="group_g">
+                    {foreach $groups as $val}
+                    <option value="{$val.area_id}">{$val.area_name}</option>
+                    {/foreach}
                 </select>
-                <select name="" id="" >
-                    <option value="">选择区</option>
-                    <option value="0">徐汇区</option>
-                    <option value="1">嘉定区</option>
-                    <option value="2">普陀区</option>
-                </select>
-                <select name="" id="" >
-                    <option value="">选择街道</option>
-                    <option value="0">龙华街道</option>
-                    <option value="1">龙华街道</option>
-                    <option value="2">龙华街道</option>
-                </select>
-                <select name="" id="" >
-                    <option value="">选择班组</option>
-                    <option value="0">班组1</option>
-                    <option value="1">班组1</option>
-                    <option value="2">班组1</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item" >
-            <label class="layui-form-label">
-                角色
-            </label>
-            <div>
-                <input type="checkbox" name="" title="角色1" lay-skin="primary">
-                <input type="checkbox" name="" title="角色2" lay-skin="primary">
-                <input type="checkbox" name="" title="角色3" lay-skin="primary">
-                <input type="checkbox" name="" title="角色4" lay-skin="primary">
-                <input type="checkbox" name="" title="角色5" lay-skin="primary">
-                <input type="checkbox" name="" title="角色6" lay-skin="primary">
-                <input type="checkbox" name="" title="角色7" lay-skin="primary">
-                <input type="checkbox" name="" title="角色8" lay-skin="primary">
-            </div>
-        </div>
-        <div class="layui-form-item" >
-            <label class="layui-form-label" style="visibility: hidden;">
-                角色
-            </label>
-            <div>
-                <input type="checkbox" name="" title="角色1" lay-skin="primary">
-                <input type="checkbox" name="" title="角色2" lay-skin="primary">
-                <input type="checkbox" name="" title="角色3" lay-skin="primary">
-                <input type="checkbox" name="" title="角色4" lay-skin="primary">
-                <input type="checkbox" name="" title="角色5" lay-skin="primary">
-                <input type="checkbox" name="" title="角色6" lay-skin="primary">
-                <input type="checkbox" name="" title="角色7" lay-skin="primary">
-                <input type="checkbox" name="" title="角色8" lay-skin="primary">
             </div>
         </div>
     </form>
