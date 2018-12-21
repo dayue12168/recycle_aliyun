@@ -22,6 +22,12 @@ layui.use('element', function(){
               area:["600px","450px"],
               content:$("#addManager"), 
               yes:function(index){
+                  var streetVal = $('#addManager select[name="street_g"] option:selected').val();
+                  var groupVal = $('#addManager select[name="group_g"] option:selected').val();
+                  if(streetVal<0||groupVal<0){
+                      layer.msg('请确定地址完整');
+                      return false;
+                  }
                   var data=$("#ManaForm").serialize();
                   $.ajax({
                       url:"/admin/user/addAdmin",
@@ -29,7 +35,6 @@ layui.use('element', function(){
                       data:data,
                       cache:false,
                       success:function(res){
-                          // console.log(res);
                           var tbody=$('.tbody');
                           var str='<td style="display: none">'+res.user_id+'</td><td>'+res.user_name+'</td><td>' + res.tel+'</td><td>';
                           str+=res.user_type+'</td><td>'+res.area_id0+'-'+res.area_id1;
@@ -44,7 +49,7 @@ layui.use('element', function(){
                           layer.msg('添加管理'+res.user_name+'成功');
                       },
                       error:function(){
-                          layer.msg('请检查您的信息是否完整、电话号码'+res.tel+'是否已注册');
+                          layer.msg('请检查您的信息是否完整、电话号码是否已注册');
                       }
                   })
                   layer.close(index);
@@ -55,12 +60,12 @@ layui.use('element', function(){
       $(".tbody").on('click','.reset_manager',function(){
           form.render('select');
           //直接赋值
-          var name=$(this).parent().prevAll().eq(7).text();
-          $("[name='Jid']").attr('value',name);
+          var id=$(this).parent().prevAll().eq(7).text();
+          $("[name='Jid']").attr('value',id);
           var name=$(this).parent().prevAll().eq(6).text();
           $("[name='Jname']").attr('value',name);
-          var name=$(this).parent().prevAll().eq(5).text();
-          $("[name='Jtel']").attr('value',name);
+          var tel=$(this).parent().prevAll().eq(5).text();
+          $("[name='Jtel']").attr('value',tel);
           var that=$(this);
           layer.open({
               type:1,
@@ -69,6 +74,12 @@ layui.use('element', function(){
               area:["600px","450px"],
               content:$("#resetManager"),
               yes:function(index){
+                  var streetVal = $('#resetManager select[name="street_g"] option:selected').val();
+                  var groupVal = $('#resetManager select[name="group_g"] option:selected').val();
+                  if(streetVal<0||groupVal<0){
+                      layer.msg('请确定地址完整');
+                      return false;
+                  }
                   var data=$("#re_manaForm").serialize();
                   $.ajax({
                       url:"/admin/user/updateAdmin",
@@ -85,7 +96,7 @@ layui.use('element', function(){
                           layer.msg('修改管理'+res.user_name+'成功');
                       },
                       error:function(){
-                          layer.msg('请检查您的信息是否完整、电话号码'+res.tel+'是否已注册');
+                          layer.msg('请检查您的信息是否完整、电话号码'+tel+'是否已注册');
                       }
                   });
                   layer.close(index);

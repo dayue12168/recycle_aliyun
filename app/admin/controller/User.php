@@ -150,6 +150,7 @@ class User extends Base
     //添加管理员
     public function addAdmin(Request $request)
     {
+//        return json($request->param());
         $param['tel']=$request->param('tel');
         $param['user_name']=$request->param('name');
         $pwd=$request->param('pwd');
@@ -176,7 +177,6 @@ class User extends Base
         $param['role_id']=$jhUserRole->where('role_id',$param['role_id'])->value('role_name');
         unset($param['psw']);
         return json($param);
-
     }
 
     //修改管理员信息

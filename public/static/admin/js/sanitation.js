@@ -23,8 +23,8 @@ layui.use('element', function(){
               area:["600px","450px"],
               content:$("#addManager_sa"), 
               yes:function(index){
-                  var streetVal = $('select[name="street_g"] option:selected').val();
-                  var groupVal = $('select[name="group_g"] option:selected').val();
+                  var streetVal = $('#addManager_sa select[name="street_g"] option:selected').val();
+                  var groupVal = $('#addManager_sa select[name="group_g"] option:selected').val();
                   if(streetVal<0||groupVal<0){
                       layer.msg('请确定地址完整');
                       return false;
@@ -36,8 +36,8 @@ layui.use('element', function(){
                       data:data,
                       cache:false,
                       success:function(res){
-                          console.log(res);
-                          layer.msg('用户添加成功');
+                          // console.log(res);
+
                           var str='';
                           var tb=$("tbody.tbody");
                           for(var i in res){
@@ -58,8 +58,8 @@ layui.use('element', function(){
                                   '<td>'+wx+'</td><td>'+res[i].user_name+'</td><td>'+res[i].count+'</td>' +
                                   '<td>'+button +'</td></tr>';
                           }
-
                           tb.append(str);
+                          layer.msg('用户添加成功');
 
                       }
                   })
@@ -70,7 +70,6 @@ layui.use('element', function(){
       });
       // 修改
       $("tbody.tbody").on('click','.reset_sani',function(){
-          form.render('select');
           var id=$(this).parent().siblings('td').eq(0).text();
           var name=$(this).parent().siblings('td').eq(1).text();
           var tel=$(this).parent().siblings('td').eq(2).text();
@@ -86,10 +85,9 @@ layui.use('element', function(){
               area:["600px","450px"],
               content:$("#resetManager_sa"),
               yes:function(index){
-                  var streetVal = $('select[name="street_g"] option:selected').val();
-                  var groupVal = $('select[name="group_g"] option:selected').val();
-                  console.log(streetVal);
-                  console.log(groupVal);
+                  form.render();
+                  var streetVal = $('#addForm_reset select[name="street_g"] option:selected').val();
+                  var groupVal = $('#addForm_reset select[name="group_g"] option:selected').val();
                   if(streetVal<0||groupVal<0){
                       layer.msg('请确定地址完整');
                       return false;
@@ -104,7 +102,7 @@ layui.use('element', function(){
                           // console.log(res);
                           that.parent().siblings().eq(1).text(res.worker_name);
                           that.parent().siblings().eq(2).text(res.tel);
-                          that.parent().siblings().eq(4).text(res.area_id1 + '-' + res.area_id2 + '-' + res.area_id3);
+                          that.parent().siblings().eq(3).text(res.area_id1 + '-' + res.area_id2 + '-' + res.area_id3);
                           layer.msg('信息修改成功');
                       }
                   })
