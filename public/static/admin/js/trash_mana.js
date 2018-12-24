@@ -95,6 +95,11 @@ layui.use('element', function(){
                     yes:function(index){
                    // 区域   市  区街道 垃圾桶编号 地址 经度 维度 高德坐标 长 宽 高 设备安装高度 联通编号
                       var serializeForm = $("#JresetTrash").serialize();
+                        var streetVal = $('#JresetTrash select[name="street_g"] option:selected').val();
+                        if(streetVal<0){
+                            layer.msg('请确定地址完整');
+                            return false;
+                        }
                         $.ajax({
                             url:"/admin/index/updateTrash",
                             type:"POST",
