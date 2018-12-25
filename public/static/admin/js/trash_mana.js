@@ -143,6 +143,7 @@ layui.use('element', function(){
               cache:false,
               success:function(res){
                   // console.log(res);
+                  // return false;
                   var tb=$("tbody.tbody");
                   var str='';
                   for(var i in res){

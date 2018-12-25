@@ -35,6 +35,7 @@ class Index
         $sql.='on jdi.area_id1 = ja2.area_id left join jh_area ja3 on jdi.area_id2 = ja3.area_id ';
         $sql.='left join jh_cap jc on jdi.cap_id = jc.cap_id left join jh_bind jb on jdi.dustbin_id = jb.dustbin_id where area_id2='.$road.') jiang ';
         $sql.='group by	dustbin_id';
+//        die($sql);
 //        return $sql;
         $res=Db::query($sql);
         return $res;
@@ -123,8 +124,12 @@ class Index
                     $typeWhere=' jb.worker_id<>0 or';
                     $sql.=$typeWhere;
                     break;
-                default:
+                case 4:
                     $typeWhere=' jb.worker_id is null or';
+                    $sql.=$typeWhere;
+                    break;
+                default:
+                    $typeWhere=' 1 or';
                     $sql.=$typeWhere;
                     break;
             }

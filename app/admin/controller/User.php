@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 use app\admin\controller\Base;
+use app\admin\model\JhLog;
 use think\Request;
 use think\response\Json;
 use app\admin\model\JhUser;
@@ -286,13 +287,11 @@ class User extends Base
 
     public function test()
     {
-        $jhUserRole=new JhUserRole();
-//        $param=$jhUserRole->get(3);
-        $param['role_name']=$jhUserRole->where('role_id',3)
-        ->value('role_name');
-//        echo $param->role_name;
-
-        echo $param['role_name'];
+        $jhLog=new JhLog();
+        $jhLog->save([
+            'log_type'=>2,
+            'log_info'=>'aaaaaa'
+        ]);
     }
 
 }
