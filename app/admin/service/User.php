@@ -141,7 +141,18 @@ class User
     //查询环卫工
     public function getWorks($road)
     {
-        if(is_int($road)){
+        $isPos=strpos($road,',');
+        if(!$isPos){
+            $where='jwi.area_id2='.$road;
+        }else{
+            $addr=explode(',',$road);
+            if($addr[2]<0){//所有街道
+                $where='jwi.area_id1='.$addr[1];
+            }else{
+                $where='jwi.area_id2='.$addr[2];
+            }
+        }
+        /*if(is_int($road)){
             $where='jwi.area_id2='.$road;
         }elseif(is_string($road)){
             $addr=explode(',',$road);
@@ -150,7 +161,7 @@ class User
             }else{
                 $where='jwi.area_id2='.$addr[2];
             }
-        }
+        }*/
 
         $res=$this->getWorkSql($where);
         return $res;
