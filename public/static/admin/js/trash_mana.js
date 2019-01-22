@@ -168,6 +168,15 @@ layui.use('element', function(){
           })
       });
 
+      //管理垃圾桶
+      $(".layui-table").on('click','.trashMana',function(){
+          var id=$(this).parent().prevAll().eq(6).text();
+          window.open('trash_huanwei.html');
+
+          // window.location.href = "trash_huanwei.html?id="+id;
+      });
+
+
       //解绑垃圾桶
       $(".layui-table").on('click','.Junbind',function(){
           var id=$(this).parent().prevAll().eq(5).text();

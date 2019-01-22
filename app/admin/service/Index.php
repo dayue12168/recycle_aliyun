@@ -95,7 +95,7 @@ class Index
         foreach ($addr as $key=>$val){
             switch($val){
                 case -1:
-                    continue;
+//                    continue;
                 break;
                 default:
                     if($key==0){
