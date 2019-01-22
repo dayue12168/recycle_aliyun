@@ -90,9 +90,18 @@ class User
         $sql.='jh_area ja1 on ju.area_id0 = ja1.area_id left join jh_area ';
         $sql.='ja2 on ju.area_id1 = ja2.area_id left join jh_area ja3 ';
         $sql.='on ju.area_id2 = ja3.area_id left join jh_area ja4 on ju.area_id3 = ja4.area_id where jur.role_name<>"超级管理员" and ';
-        var_dump($addr);
-        die('===');
-        if(is_int($addr)){
+        $isPos=strpos($addr,',');
+        if(!$isPos){
+            $sql.='ju.area_id2='.$addr;
+        }else{
+            $addr=explode(',',$addr);
+            if($addr[2]<0){//所有街道
+                $sql.='ju.area_id1='.$addr[1];
+            }else{
+                $sql.='ju.area_id2='.$addr[2];
+            }
+        }
+        /*if(is_int($addr)){
             $sql.='ju.area_id2='.$addr;
         }elseif(is_string($addr)){
             $addr=explode(',',$addr);
@@ -101,7 +110,7 @@ class User
             }else{
                 $sql.='ju.area_id2='.$addr[2];
             }
-        }
+        }*/
         $sql.=' and ';
         if(is_null($type)){
             $sql.='1';
