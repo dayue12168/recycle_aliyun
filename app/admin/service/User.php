@@ -90,7 +90,8 @@ class User
         $sql.='jh_area ja1 on ju.area_id0 = ja1.area_id left join jh_area ';
         $sql.='ja2 on ju.area_id1 = ja2.area_id left join jh_area ja3 ';
         $sql.='on ju.area_id2 = ja3.area_id left join jh_area ja4 on ju.area_id3 = ja4.area_id where jur.role_name<>"超级管理员" and ';
-
+        var_dump($addr);
+        die('===');
         if(is_int($addr)){
             $sql.='ju.area_id2='.$addr;
         }elseif(is_string($addr)){
