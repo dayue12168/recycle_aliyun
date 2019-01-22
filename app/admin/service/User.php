@@ -95,9 +95,7 @@ class User
             $sql.='ju.area_id2='.$addr;
         }elseif(is_string($addr)){
             $addr=explode(',',$addr);
-            print_r($addr);
-            die('===');
-            if($addr[2]<0){//所有街道
+            if(count($addr)>3 && $addr[2]<0){//所有街道
                 $sql.='ju.area_id1='.$addr[1];
             }else{
                 $sql.='ju.area_id2='.$addr[2];
