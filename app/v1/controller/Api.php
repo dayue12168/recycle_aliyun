@@ -27,7 +27,7 @@ class Api
     	  
         $sql='select dust_serial,max(longitude) as longitude,max(latitude) as latitude from jh_dustbin_info where dustbin_state=0';
         $res=Db::query($sql);
-        print_r($res); 
+        print_r($res);  
         //return json_encode($res);
     }
 }
