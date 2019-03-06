@@ -19,6 +19,7 @@ class Api
     {
         $sql='select * from jh_dustbin_info';
         $res=Db::query($sql);
-        return json_encode($res);
+  //      return json_encode($res);
+        die('===);
     }
 }
