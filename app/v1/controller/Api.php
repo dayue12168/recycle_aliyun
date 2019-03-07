@@ -64,7 +64,7 @@ class Api
         //满溢垃圾桶位置清单
          $sql='select dust_serial,max(longitude) as longitude,max(latitude) as latitude from jh_dustbin_info ';
         $sql.='where dustbin_state=0 and dustbin_overflow=1 group by dust_serial';
-        $res=Db::query($sql);
+        $res=Db::query($sql); 
         
         //
         //return json_encode($res);
