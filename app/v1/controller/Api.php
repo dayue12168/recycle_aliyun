@@ -31,13 +31,14 @@ class Api
 {
     public function bigScreen()
     {
-    		call $this->bigScreenTemp();
+    		//call $this->bigScreenTemp();
         $res='{"success":"1","message":"接口调用成功","sign":"jiuhai","result":{"dustbintotal":"100","binlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"captotal":"50","caponline":"48","capoffline":"2","offlinelist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"dust1":"10000","dust7":"70000","overflownum":"2","overflowlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}]}}';
         return $res;
     }
 
     public function bigScreenTemp()
     {
+    	/*
     	  //垃圾桶位置清单
         $sql='select dust_serial,max(longitude) as longitude,max(latitude) as latitude from jh_dustbin_info ';
         $sql.='where dustbin_state=0 group by dust_serial';
@@ -66,7 +67,7 @@ class Api
         $sql.='where dustbin_state=0 and dustbin_overflow=1 group by dust_serial';
         $res=Db::query($sql); 
         
-        //
         //return json_encode($res);
+        */
     }
 }
