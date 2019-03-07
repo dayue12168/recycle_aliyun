@@ -31,53 +31,56 @@ class Api
 {
     public function bigScreen()
     {
-<<<<<<< HEAD
-    		//call $this->bigScreenTemp();
-        $res='{"success":"1","message":"接口调用成功","sign":"jiuhai","result":{"dustbintotal":"100","binlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"captotal":"50","caponline":"48","capoffline":"2","offlinelist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"dust1":"10000","dust7":"70000","overflownum":"2","overflowlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}]}}';
-        return $res;
-=======
-    	$res = $this->bigScreenTemp();
+    	  $result = $this->bigScreenTemp();
+    	  $res['success']=1;
+    	  $res['message']='成功';
+    	  $res['sign']='jiuhai';
+    	  $res['result'] =$result;
         // $res='{"success":"1","message":"接口调用成功","sign":"jiuhai","result":{"dustbintotal":"100","binlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"captotal":"50","caponline":"48","capoffline":"2","offlinelist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"dust1":"10000","dust7":"70000","overflownum":"2","overflowlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}]}}';
-        return json($res);
->>>>>>> 5da6fa1f8aab5890f12ca5871527153111632130
+        echo json_encode($res); 
     }
 
     public function bigScreenTemp()
     {
-    	/*
     	  //垃圾桶位置清单
-        $sql='select dust_serial,max(longitude) as longitude,max(latitude) as latitude from jh_dustbin_info ';
+        $sql='select max(longitude) as longitude,max(latitude) as latitude from jh_dustbin_info ';
         $sql.='where dustbin_state=0 group by dust_serial';
         $res=Db::query($sql);
-        // print_r($res);
-        //离线设备清单
-        $sql='select distinct jdi.longitude,jdi.latitude from jh_dustbin_info jdi join jh_cap jc on jc.cap_id=jdi.cap_id';
-        $sql.=' where jdi.dustbin_state=0 and jc.cap_status=0 and jc.cap_isonlilne=1';
-        $res=Db::query($sql);
+        $result['dustbintotal']=count($res);
+        $result['binlist']=$res;
+        
         //设备总数，在线设备数，离线设备数
         $sql='select count(*) totalcap,sum(case when cap_isonline=0 then 1 else 0 end) as online,';
         $sql.='sum(case when cap_isonline=1 then 1 else 0 end) as offline from jh_cap where cap_status=0';
-
+				$res=Db::query($sql);
+				$result['captotal']=$res[0]['totalcap'];
+				$result['caponline']=$res[0]['online'];
+				$result['capoffline']=$res[0]['offline'];
+				
+				//离线设备清单
+        $sql='select distinct jdi.longitude,jdi.latitude from jh_dustbin_info jdi join jh_cap jc on jc.cap_id=jdi.cap_id';
+        $sql.=' where jdi.dustbin_state=0 and jc.cap_status=0 and jc.cap_isonline=1';
+        $res=Db::query($sql);
+        $result['offlinelist']=$res;
+				
         //最近1天，7天垃圾数量
         $enddate=date("Y-m-d",strtotime("now"));
         $startdate1=date("Y-m-d",strtotime("-1 day",strtotime("now")));
         $startdate7=date("Y-m-d",strtotime("-7 day",strtotime("now")));
-        $sql="select sum(dust_num) as dustnum1 from jh_rubbish_record where dust_date>='".$startdate1."' and dust_date<'".$enddate."'";
+        $sql="select ifnull(sum(dust_num),0) as dustnum1 from jh_rubbish_record where dust_date>='".$startdate1."' and dust_date<'".$enddate."'";
         $res=Db::query($sql);
-        $sql="select sum(dust_num) as dustnum7 from jh_rubbish_record where dust_date>='".$startdate7."' and dust_date<'".$enddate."'";
+        $result['dust1']=$res[0]['dustnum1'];
+        $sql="select ifnull(sum(dust_num),0) as dustnum7 from jh_rubbish_record where dust_date>='".$startdate7."' and dust_date<'".$enddate."'";
         $res=Db::query($sql);
-        //满溢垃圾桶位置清单
-        $sql='select dust_serial,max(longitude) as longitude,max(latitude) as latitude from jh_dustbin_info ';
-        $sql.='where dustbin_state=0 and dustbin_overflow=1 group by dust_serial';
-<<<<<<< HEAD
-        $res=Db::query($sql); 
+        $result['dust7']=$res[0]['dustnum7'];
         
-        //return json_encode($res);
-        */
-=======
+        //满溢垃圾桶位置清单
+        $sql='select max(longitude) as longitude,max(latitude) as latitude from jh_dustbin_info ';
+        $sql.='where dustbin_state=0 and dustbin_overflow=1 group by dust_serial';
         $res=Db::query($sql);
+        $result['overflownum']=count($res);
+        $result['overflowlist']=$res;
 
-        return $res;
->>>>>>> 5da6fa1f8aab5890f12ca5871527153111632130
+        return $result;
     }
 }
