@@ -31,6 +31,9 @@ class HttpClient
 	
 	public static function execute($request)
 	{
+        // echo '<pre/>';
+        // print_r($request);
+        // die('123');
 		return HttpUtil::send($request, self::$readTimeout, self::$connectTimeout);
 	}
 }
