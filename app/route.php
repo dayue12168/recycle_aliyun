@@ -12,5 +12,6 @@
 use think\Route;
 
     Route::group('api', function(){
-        Route::get('/big_screen', 'v1/Api/bigScreen');
+        // Route::get('/big_screen', 'v1/Api/bigScreen');
+        Route::get('/big_screen1', 'v1/Api/bigScreenTemp');
     });
