@@ -15,3 +15,6 @@ use think\Route;
         // Route::get('/big_screen', 'v1/Api/bigScreen');
         Route::get('/big_screen1', 'v1/Api/bigScreenTemp');
     });
+
+Route::get('/get_api', 'v1/Api/getApi');
+Route::get('/get_app_thing', 'v1/Api/getAppThing');

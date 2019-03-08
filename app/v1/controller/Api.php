@@ -25,19 +25,71 @@ dust7:最近7天垃圾总
 overflownum:满溢垃圾桶总数
 overflowlist:满溢垃圾桶位置清单
  */
+
 namespace app\v1\controller;
+
+use lib\aliyun\Demo;
 use think\Db;
+
 class Api
 {
+    private $appKey = "25264176";
+    private $appSecret = "c4204a1608924786b6e1ce58ec6d813f";
+    //协议(http或https)://域名:端口，注意必须有http://或https://
+    // private static $host = "http://api.st-saas.com/api/api.ashx";
+    private $host = "https://api.st-saas.com/API/api.ashx";
+
     public function bigScreen()
     {
-    	  $result = $this->bigScreenTemp();
-    	  $res['success']=1;
-    	  $res['message']='成功';
-    	  $res['sign']='jiuhai';
-    	  $res['result'] =$result;
+        $result = $this->bigScreenTemp();
+        $res['success'] = 1;
+        $res['message'] = '成功';
+        $res['sign'] = 'jiuhai';
+        $res['result'] = $result;
         // $res='{"success":"1","message":"接口调用成功","sign":"jiuhai","result":{"dustbintotal":"100","binlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"captotal":"50","caponline":"48","capoffline":"2","offlinelist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}],"dust1":"10000","dust7":"70000","overflownum":"2","overflowlist":[{"longitude":"123.12","latitude":"456.45"},{"longitude":"321.32","latitude":"654.65"}]}}';
         echo json_encode($res);
+    }
+
+    public function getApi()
+    {
+        $path = "/setGarbageAlert";
+        $params = '{
+                            "id": "bded4128dc454a03b3d10c45de17b863",
+                            "version": "1.0",
+                            "tenantId": 2,
+                            "apiName": "setGarbageAlert",
+                            "request": {
+                            "apiVer": "1.0.0"
+                            },
+                            "params": {
+                            "message": "报警内容",
+                            "source": "报警来源"
+                            }
+                        }';
+        $demo = new Demo($this->appKey, $this->appSecret, $this->host);
+        $res = $demo->doPostString($path, $params);
+
+        return $res;
+    }
+
+    public function getAppThing()
+    {
+        $host = 'https://api.link.aliyun.com';
+        $path = "/app/thing/info/get";
+        $params = '{
+                            "id": "bded4128dc454a03b3d10c45de17b863",
+                            "version": "1.0",
+                            "request": {
+                                "apiVer": "1.0.0"
+                            },
+                            "params": {
+                                "iotId": "D95D242941CE821ECCE4F31A2697"
+                            }
+                        }';
+        $demo = new Demo($this->appKey, $this->appSecret, $host);;
+        $res = $demo->doPostString($path, $params);
+
+        return $res;
     }
 
     public function bigScreenTemp()
