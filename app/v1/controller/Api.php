@@ -41,7 +41,9 @@ class Api
 
     public function bigScreen()
     {
-        $result = $this->bigScreenTemp();
+        $result = json_encode($this->bigScreenTemp());
+        echo $result;
+        die('');
         $res['success'] = 1;
         $res['message'] = '成功';
         $res['sign'] = 'jiuhai';
@@ -134,5 +136,78 @@ class Api
         $result['overflowlist']=$res;
 
         return $result;
+    }
+
+    public function getApiCron(){
+        $result = '['.json_encode($this->bigScreenTemp()).']';
+        //echo $result;
+        //$result='[{"dustbintotal":6,"binlist":[],"captotal":"18","caponline":"18","capoffline":"0","dust1":"0.00","dust7":"0.00","overflownum":0}]';
+				//$result='[{"dustbintotal":6,"binlist":[{"longitude":"1234567","latitude":"12345"},{"longitude":"1234567","latitude":"12345123"},{"longitude":"1112","latitude":"1112"},{"longitude":"111","latitude":"1112"},{"longitude":"1112","latitude":"1112"},{"longitude":"1112","latitude":"1112"}],"captotal":"18","caponline":"18","capoffline":"0","offlinelist":[],"dust1":"0.00","dust7":"0.00","overflownum":0,"overflowlist":[]}]';
+        //初始化
+        $curl = curl_init();
+        //curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        //设置抓取的url
+        curl_setopt($curl, CURLOPT_URL, 'http://106.14.198.243:8060/karteMarkieren-api-1.0-SNAPSHOT/data/upload');
+        //设置头文件的信息作为数据流输出
+        //curl_setopt($curl, CURLOPT_HEADER, 0);
+        //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        //设置post方式提交
+        curl_setopt($curl, CURLOPT_POST, 1);
+        //设置post数据
+        //$post_data = array(
+        //    "appkey" => 3,
+        //    "detail" => urlencode($result)
+        //    );
+        //$post_data['appkey']=3;
+        //$post_data['detail']=urlencode($result);
+        $post_data="appkey=3&detail=".urlencode($result);
+         //echo $post_data;
+         //die();
+
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+        //执行命令
+        $data = curl_exec($curl);
+
+        //关闭URL请求
+        curl_close($curl);
+        //显示获得的数据
+        print_r($data);
+    }
+
+    // 生产租户URI
+    public function create(){
+
+        $result =  array(
+            'code' => '200',
+            'message' => 'success',
+            'userId' => 'D95D242941CE821ECCE4F31A2697'
+        );
+
+        return json_encode($result);
+    }
+
+    //注销租户URI
+    public function delete(){
+
+        $result =  array(
+            'code' => '200',
+            'message' => 'success'
+        );
+
+        return json_encode($result);
+    }
+
+    // 免密登录URI
+    public function getSSOUrl(){
+
+        $result =  array(
+            'code' => '200',
+            'message' => 'success',
+            'ssoUrl' => 'https://www.test123.com/login.html?ssoToken=xdasfdasdfasfdasfda
+f&checkToken=ddddddd'
+        );
+
+        return json_encode($result);
     }
 }
