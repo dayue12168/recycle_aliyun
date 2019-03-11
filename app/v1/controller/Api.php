@@ -179,7 +179,7 @@ class Api
     public function create(){
 
         $result =  array(
-            'code' => '200',
+            'code' => 200,
             'message' => 'success',
             'userId' => 'D95D242941CE821ECCE4F31A2697'
         );
@@ -191,7 +191,7 @@ class Api
     public function delete(){
 
         $result =  array(
-            'code' => '200',
+            'code' => 200,
             'message' => 'success'
         );
 
@@ -202,7 +202,7 @@ class Api
     public function getSSOUrl(){
 
         $result =  array(
-            'code' => '200',
+            'code' => 200,
             'message' => 'success',
             'ssoUrl' => 'https://www.test123.com/login.html?ssoToken=xdasfdasdfasfdasfda
 f&checkToken=ddddddd'
