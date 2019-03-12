@@ -17,11 +17,11 @@ use think\Route;
         // Route::get('/big_screen1', 'v1/Api/bigScreenTemp');
     });
 
-    Route::group('iot', function(){
-        Route::get('/create', 'v1/Api/create');
-        Route::get('/delete', 'v1/Api/delete');
-        Route::get('/getSSOUrl', 'v1/Api/getSSOUrl');
-    });
+    // Route::group('iot', function(){
+    //     Route::get('/create', 'v1/Api/create');
+    //     Route::get('/delete', 'v1/Api/delete');
+    //     Route::get('/getSSOUrl', 'v1/Api/getSSOUrl');
+    // });
 //调用警报api
 Route::get('/get_garbage_alert', 'v1/Api/getGarbageAlert');
 Route::get('/get_app_thing', 'v1/Api/getAppThing');
