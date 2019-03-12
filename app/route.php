@@ -22,6 +22,6 @@ use think\Route;
         Route::get('/delete', 'v1/Api/delete');
         Route::get('/getSSOUrl', 'v1/Api/getSSOUrl');
     });
-
-Route::get('/set_garbage_alert', 'v1/Api/setGarbageAlert');
+//调用警报api
+Route::get('/get_garbage_alert', 'v1/Api/getGarbageAlert');
 Route::get('/get_app_thing', 'v1/Api/getAppThing');

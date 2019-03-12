@@ -52,7 +52,7 @@ class Api
         echo json_encode($res);
     }
 
-    public function setGarbageAlert()
+    public function getGarbageAlert()
     {
         $path = "/setGarbageAlert";
         $params = '{
