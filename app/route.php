@@ -23,5 +23,5 @@ use think\Route;
         Route::get('/getSSOUrl', 'v1/Api/getSSOUrl');
     });
 
-Route::get('/get_api', 'v1/Api/getApi');
+Route::get('/set_garbage_alert', 'v1/Api/setGarbageAlert');
 Route::get('/get_app_thing', 'v1/Api/getAppThing');
