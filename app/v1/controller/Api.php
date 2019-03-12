@@ -56,18 +56,18 @@ class Api
     {
         $path = "/setGarbageAlert";
         $params = '{
-                            "id": "bded4128dc454a03b3d10c45de17b863",
-                            "version": "1.0",
-                            "tenantId": 2,
-                            "apiName": "setGarbageAlert",
-                            "request": {
-                            "apiVer": "1.0.0"
-                            },
-                            "params": {
-                            "message": "报警内容",
-                            "source": "报警来源"
-                            }
-                        }';
+                        "id": "bded4128dc454a03b3d10c45de17b863",
+                        "version": "1.0",
+                        "tenantId": 2,
+                        "apiName": "setGarbageAlert",
+                        "request": {
+                        "apiVer": "1.0.0"
+                        },
+                        "params": {
+                        "message": "报警内容",
+                        "source": "报警来源"
+                        }
+                    }';
         $demo = new Demo($this->appKey, $this->appSecret, $this->host);
         $res = $demo->doPostString($path, $params);
 
@@ -76,19 +76,23 @@ class Api
 
     public function getAppThing()
     {
+        $appKey = '25825645';
+        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/info/get";
         $params = '{
-                            "id": "bded4128dc454a03b3d10c45de17b863",
-                            "version": "1.0",
-                            "request": {
-                                "apiVer": "1.0.0"
-                            },
-                            "params": {
-                                "iotId": "D95D242941CE821ECCE4F31A2697"
-                            }
-                        }';
-        $demo = new Demo($this->appKey, $this->appSecret, $host);;
+                        "id": "bded4128dc454a03b3d10c45de17b863",
+                        "version": "1.0",
+                        "request": {
+                            "apiVer": "1.0.0"
+                        },
+                        "params": {
+                            "productKey": "a1FMKlSx1Zj",
+                            "deviceName": "0A17100617103047"
+                        }
+                    }';
+        $demo = new Demo($appKey, $appSecret, $host);;
         $res = $demo->doPostString($path, $params);
 
         return $res;
