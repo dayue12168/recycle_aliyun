@@ -208,10 +208,7 @@ class Api
         $result =  array(
             'code' => 200,
             'message' => 'success',
-            'ssoUrl' => 'https://www.test123.com/login.html?ssoToken=xdasfdasdfasfdasfda
-f&checkToken=ddddddd'
-        );
-
-        return json_encode($result);
+            'ssoUrl' => 'http://lg.nineseatech.com/admin/Login/index.html'
+        );return json_encode($result);
     }
 }
