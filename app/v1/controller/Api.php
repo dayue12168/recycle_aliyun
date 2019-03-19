@@ -74,10 +74,13 @@ class Api
         return $res;
     }
 
+// 调用该接口获取物（设备）的基本信息。
     public function getAppThing()
     {
         $appKey = '25825645';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+        $productKey = 'a1FMKlSx1Zj';
+        $deviceName = '0A17100617103047';
 
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/info/get";
@@ -88,11 +91,38 @@ class Api
                             "apiVer": "1.0.0"
                         },
                         "params": {
-                            "productKey": "a1FMKlSx1Zj",
-                            "deviceName": "0A17100617103047"
+                            "productKey": "'.$productKey.'",
+                            "deviceName": "'.$deviceName.'"
                         }
                     }';
-        $demo = new Demo($appKey, $appSecret, $host);;
+        $demo = new Demo($appKey, $appSecret, $host);
+        $res = $demo->doPostString($path, $params);
+
+        return $res;
+    }
+
+//调用该接口获取物（设备）的连接状态。
+    public function getAppThingStatus()
+    {
+        $appKey = '25825645';
+        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+        $productKey = 'a1FMKlSx1Zj';
+        $deviceName = '0A17100617103047';
+
+        $host = 'https://api.link.aliyun.com';
+        $path = "/app/thing/status/get";
+        $params = '{
+                        "id": "bded4128dc454a03b3d10c45de17b863",
+                        "version": "1.0",
+                        "request": {
+                            "apiVer": "1.0.0"
+                        },
+                        "params": {
+                            "productKey": "'.$productKey.'",
+                            "deviceName": "'.$deviceName.'"
+                        }
+                    }';
+        $demo = new Demo($appKey, $appSecret, $host);
         $res = $demo->doPostString($path, $params);
 
         return $res;
@@ -266,4 +296,9 @@ class Api
         return $res;
     }
 
+    // 调用阿里云应用托管api
+    public function getApiThing(){
+        $res = $this->getAppThingStatus();
+        return $res;
+    }
 }

@@ -25,3 +25,7 @@ use think\Route;
 //调用警报api
 Route::get('/get_garbage_alert', 'v1/Api/getGarbageAlert');
 Route::get('/get_app_thing', 'v1/Api/getAppThing');
+Route::get('/get_app_thing_status', 'v1/Api/getAppThingStatus');
+
+// 调用阿里云应用托管api
+Route::get('/get_api_thing', 'v1/Api/getApiThing');
