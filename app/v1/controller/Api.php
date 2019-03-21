@@ -37,7 +37,8 @@ class Api
     private $appSecret = "c4204a1608924786b6e1ce58ec6d813f";
     //协议(http或https)://域名:端口，注意必须有http://或https://
     // private static $host = "http://api.st-saas.com/api/api.ashx";
-    private $host = "https://api.st-saas.com/API/api.ashx";
+    // private $host = "https://api.st-saas.com/API/api.ashx";
+    private $host = "https://api.st-saas.com";
 
     public function bigScreen()
     {
@@ -54,7 +55,8 @@ class Api
 
     public function getGarbageAlert()
     {
-        $path = "/setGarbageAlert";
+        // $path = "/setGarbageAlert";
+        $path = "/API/api.ashx";
         $params = '{
                         "id": "bded4128dc454a03b3d10c45de17b863",
                         "version": "1.0",
