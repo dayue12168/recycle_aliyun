@@ -29,3 +29,8 @@ Route::get('/get_app_thing_status', 'v1/Api/getAppThingStatus');
 
 // 调用阿里云应用托管api
 Route::get('/get_api_thing', 'v1/Api/getApiThing');
+
+
+
+Route::get('authorize', 'v1/OAuth/authorize');
+Route::post('authorize', 'v1/OAuth/authorize');
