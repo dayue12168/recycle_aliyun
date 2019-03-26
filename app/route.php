@@ -34,3 +34,5 @@ Route::get('/get_api_thing', 'v1/Api/getApiThing');
 
 Route::get('authorize', 'v1/OAuth/authorize');
 Route::post('authorize', 'v1/OAuth/authorize');
+Route::get('token', 'v1/OAuth/token');
+Route::get('cb', 'v1/OAuth/cb');
