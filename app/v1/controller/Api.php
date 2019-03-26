@@ -82,7 +82,7 @@ class Api
         $appKey = '25825645';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
         $productKey = 'a1FMKlSx1Zj';
-        $deviceName = '0A17100617103047';
+        $deviceName = '0A17100617109259';
 
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/info/get";
@@ -109,7 +109,7 @@ class Api
         $appKey = '25825645';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
         $productKey = 'a1FMKlSx1Zj';
-        $deviceName = '0A17100617103047';
+        $deviceName = '0A17100617109259';
 
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/status/get";
@@ -259,10 +259,11 @@ class Api
                         },
                         "params": {
                             "productKey": "a1FMKlSx1Zj",
-                            "deviceName": "0A17100617103047"
+                            "deviceName": "0A17100617109259"
                         }
                     }';
-        $demo = new Demo($appKey, $appSecret, $host);;
+        $demo = new Demo($appKey, $appSecret, $host);
+//        return $params;
         $res = $demo->doPostString($path, $params);
 
         return $res;
@@ -275,6 +276,7 @@ class Api
 
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/event/timeline/get";
+//        /app/thing/properties/get
         $params = '{
                         "id": "bded4128dc454a03b3d10c45de17b863",
                         "version": "1.0",
@@ -283,16 +285,47 @@ class Api
                         },
                         "params": {
                             "productKey": "a1FMKlSx1Zj",
-                            "deviceName": "0A17100617103047",
-                            "identifier":"",
-                            "eventType":"",
-                            "start":1552432752
+                            "deviceName": "0A17100617109259",
+                            "identifier":"xxx",
+                            "eventType":"info",
+                            "start":1550290332,
                             "end":1552442752,
-                            "pageSize":100
+                            "pageSize":100,
                             "ordered":true
                         }
                     }';
         $demo = new Demo($appKey, $appSecret, $host);;
+        $res = $demo->doPostString($path, $params);
+
+        return $res;
+    }
+
+    public function getAppThingPropertyTimeline()
+    {
+        $appKey = '25825645';
+        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+
+        $host = 'https://api.link.aliyun.com';
+        $path = "/app/thing/property/timeline/get";
+        $params = '{
+                        "id": "bded4128dc454a03b3d10c45de17b863",
+                        "version": "1.0",
+                        "request": {
+                            "apiVer": "1.0.0"
+                        },
+                        "params": {
+                            "productKey": "a1FMKlSx1Zj",
+                            "deviceName": "0A17100617109259",
+                            "identifier":"",
+                            "start":1550290332,
+                            "end":1552442752,
+                            "pageSize":100,
+                            "ordered":true
+                        }
+                    }';
+        $demo = new Demo($appKey, $appSecret, $host);
+//        echo '<pre/>';
+//        return $params;
         $res = $demo->doPostString($path, $params);
 
         return $res;
