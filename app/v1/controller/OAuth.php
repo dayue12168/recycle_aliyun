@@ -10,6 +10,7 @@ namespace app\v1\controller;
 
 use OAuth2\Autoloader;
 use think\Controller;
+use think\Db;
 
 class OAuth extends Controller
 {
@@ -34,6 +35,7 @@ class OAuth extends Controller
 
         return $server;
     }
+
     public function authorize()
     {
         // global $server;
@@ -57,7 +59,7 @@ class OAuth extends Controller
         if (empty($_POST)) {
             exit('
         <form method="post">
-          <label>Do You Authorize TestClient?</label><br />
+          <label>Do You Authorize Client?</label><br />
           <input type="submit" name="authorized" value="yes">
           <input type="submit" name="authorized" value="no">
         </form>');
@@ -65,6 +67,9 @@ class OAuth extends Controller
 
         // print the authorization code if the user has authorized your client
         $is_authorized = ($_POST['authorized'] === 'yes');
+        // echo "<pre/>";
+        // print_r($_GET);
+        // die();
         $server->handleAuthorizeRequest($request, $response, $is_authorized);
         if ($is_authorized) {
             // this is only here so that you get to see your code in the cURL request. Otherwise, we'd redirect back to the client
@@ -89,24 +94,95 @@ class OAuth extends Controller
     public function cb()
     {
         $request = \OAuth2\Request::createFromGlobals();
-        $url = "http://localhost/token";
+        $url = "http://101.132.132.197/token";
         $data = [
             'grant_type' => 'authorization_code',
             'code' => $request->query('code'),
-            'client_id' => 'testclient',
-            'client_secret' => '123456',
-            'redirect_uri' => 'http://localhost/cb'
+            'client_id' => 'jiuhai',
+            'client_secret' => 'Wkcxa2NsSlhWakphV0VKM1VXNWtSR1ZzUWtsalp6MDk',
+            'redirect_uri' => 'http://101.132.132.197/cb/'
         ];
 
         //todo 自定义的处理判断
         $state = $request->query('state');
-        echo '<pre/>';
-        var_dump($data);die('---');
-        $response = Curl::ihttp_post($url, $data);
-        if (is_error($response)) {
-            var_dump($response);
+        // echo '<pre/>';
+        // var_dump($data);die('---');
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // post数据
+        curl_setopt($ch, CURLOPT_POST, 1);
+        // post的变量
+        curl_setopt($ch, CURLOPT_POSTFIELDS,$data);
+        //执行请求
+        $output = curl_exec($ch);
+        //打印获得的数据
+        $output = json_decode($output,true);
+        // print_r($output['access_token']);die();
+
+        // 获取user_id,
+        if(is_array($output)){
+            $access_token = $output['access_token'];
+        }else{
+            echo "FAILED! Authorization Code";exit;
+        }
+        $db_access_token = Db::table('oauth_access_tokens')->where('client_id',$data['client_id'])->column('access_token');
+        // print_r($db_access_token);die();
+        if(in_array($access_token, $db_access_token)){
+            // 免密登录
+            $user_id = Db::table('oauth_clients')->where('client_id',$data['client_id'])->value('user_id');
+            $data = Db::table('jh_user')->field('tel,psw,user_name')->where('user_id',$user_id)->find();
+            session('adminUser',$data['tel']);
+            // print_r(session('adminUser'));die();
+            return redirect('http://101.132.132.197/admin/Index/index');
+        }else{
+        echo "FAILED! Authorization Code";exit;
         }
 
-        var_dump($response['content']);
+        // $response = Curl::ihttp_post($url, $data);
+        // if (is_error($response)) {
+        //     var_dump($response);
+        // }
+
+        // var_dump($response['content']);
+    }
+
+
+
+    // client
+    public function getAuthorize(){
+        return redirect('/authorize?response_type=code&client_id=jiuhai&redirect_uri=http://101.132.132.197/cb/&state=123456&response_type=code');
+    }
+
+
+    // 测试资源
+    public function res1()
+    {
+        $server = $this->server();
+        // Handle a request to a resource and authenticate the access token
+        if (!$server->verifyResourceRequest(\OAuth2\Request::createFromGlobals())) {
+            $server->getResponse()->send();
+            die;
+        }
+
+        $token = $server->getAccessTokenData(\OAuth2\Request::createFromGlobals());
+print_r($token);
+        $scopes = explode(" ", $token['scope']);
+
+        // todo 这里你可以写成自己规则的scope验证
+        if (!$this->checkScope('basic', $scopes)) {
+            return json_encode(['success' => false, 'message' => '你没有获取该接口的scope']);
+        }
+
+        return json_encode(['success' => true, 'message' => '你成功获取该接口信息', 'token'=>$token]);
+    }
+
+    // 用于演示检测scope的方法
+    private function checkScope($myScope, $scopes)
+    {
+        return in_array($myScope, $scopes);
     }
 }
