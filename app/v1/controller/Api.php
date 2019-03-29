@@ -79,7 +79,7 @@ class Api
 // 调用该接口获取物（设备）的基本信息。
     public function getAppThing()
     {
-        $appKey = '25825645';
+        $appKey = '25934813';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
         $productKey = 'a1FMKlSx1Zj';
         $deviceName = '0A17100617109259';
@@ -106,7 +106,7 @@ class Api
 //调用该接口获取物（设备）的连接状态。
     public function getAppThingStatus()
     {
-        $appKey = '25825645';
+        $appKey = '25934813';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
         $productKey = 'a1FMKlSx1Zj';
         $deviceName = '0A17100617109259';
@@ -246,7 +246,7 @@ class Api
 
     public function getAppThingProperties()
     {
-        $appKey = '25825645';
+        $appKey = '25934813';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
 
         $host = 'https://api.link.aliyun.com';
@@ -271,7 +271,7 @@ class Api
 
     public function getAppThingEventTimeline()
     {
-        $appKey = '25825645';
+        $appKey = '25934813';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
 
         $host = 'https://api.link.aliyun.com';
@@ -302,7 +302,7 @@ class Api
 
     public function getAppThingPropertyTimeline()
     {
-        $appKey = '25825645';
+        $appKey = '25934813';
         $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
 
         $host = 'https://api.link.aliyun.com';
