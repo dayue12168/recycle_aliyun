@@ -240,7 +240,7 @@ class Api
         $result =  array(
             'code' => 200,
             'message' => 'success',
-            'ssoUrl' => 'http://lg.nineseatech.com/admin/Login/index.html'
+            'ssoUrl' => 'https://lg.nineseatech.com/admin/Login/index.html'
         );return json_encode($result);
     }
 
