@@ -47,14 +47,13 @@ class OAuth extends Controller
         $server = $this->server();
         $request = \OAuth2\Request::createFromGlobals();
         $response = new \OAuth2\Response();
-        // echo '<pre/>';
-        // var_dump($response);die('aaa');
+        #echo '<pre/>';
+        #var_dump($response);die('aaa');
         // validate the authorize request
         if (!$server->validateAuthorizeRequest($request, $response)) {
             $response->send();
             die;
         }
-
         // display an authorization form
         if (empty($_POST)) {
             exit('
@@ -105,8 +104,8 @@ class OAuth extends Controller
 
         //todo 自定义的处理判断
         $state = $request->query('state');
-        // echo '<pre/>';
-        // var_dump($data);die('---');
+        # echo '<pre/>';
+        # var_dump($data);die('---');
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
