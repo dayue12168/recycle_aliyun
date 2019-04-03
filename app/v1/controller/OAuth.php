@@ -94,13 +94,13 @@ class OAuth extends Controller
     public function cb()
     {
         $request = \OAuth2\Request::createFromGlobals();
-        $url = "http://101.132.132.197/token";
+        $url = "https://lg.nineseatech.com/token";
         $data = [
             'grant_type' => 'authorization_code',
             'code' => $request->query('code'),
             'client_id' => 'jiuhai',
             'client_secret' => 'Wkcxa2NsSlhWakphV0VKM1VXNWtSR1ZzUWtsalp6MDk',
-            'redirect_uri' => 'http://101.132.132.197/cb/'
+            'redirect_uri' => 'https://lg.nineseatech.com/cb/'
         ];
 
         //todo 自定义的处理判断
@@ -137,7 +137,7 @@ class OAuth extends Controller
             $data = Db::table('jh_user')->field('tel,psw,user_name')->where('user_id',$user_id)->find();
             session('adminUser',$data['tel']);
             // print_r(session('adminUser'));die();
-            return redirect('http://101.132.132.197/admin/Index/index');
+            return redirect('https://lg.nineseatech.com/admin/Index/index');
         }else{
         echo "FAILED! Authorization Code";exit;
         }
@@ -154,7 +154,7 @@ class OAuth extends Controller
 
     // client
     public function getAuthorize(){
-        return redirect('/authorize?response_type=code&client_id=jiuhai&redirect_uri=http://101.132.132.197/cb/&state=123456&response_type=code');
+        return redirect('/authorize?response_type=code&client_id=jiuhai&redirect_uri=https://lg.nineseatech.com/cb/&state=123456&response_type=code');
     }
 
 
