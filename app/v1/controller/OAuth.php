@@ -55,17 +55,18 @@ class OAuth extends Controller
             die;
         }
         // display an authorization form
-        if (empty($_POST)) {
-            exit('
-        <form method="post">
-          <label>Do You Authorize Client?</label><br />
-          <input type="submit" name="authorized" value="yes">
-          <input type="submit" name="authorized" value="no">
-        </form>');
-        }
+        #if (empty($_POST)) {
+        #    exit('
+        #<form method="post">
+        #  <label>Do You Authorize Client?</label><br />
+        #  <input type="submit" name="authorized" value="yes">
+        #  <input type="submit" name="authorized" value="no">
+        #</form>');
+        #}
 
         // print the authorization code if the user has authorized your client
-        $is_authorized = ($_POST['authorized'] === 'yes');
+	#$is_authorized = ($_POST['authorized'] === 'yes');
+	$is_authorized = true;
         // echo "<pre/>";
         // print_r($_GET);
         // die();
