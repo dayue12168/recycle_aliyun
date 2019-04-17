@@ -246,12 +246,12 @@ class Api
         $tenantId = Db::table('jh_user')->where('tenantId',$data['tenantId'])->find();
 
         $userId = Db::table('jh_user')->where('userId',$data['userId'])->find();
-        if(empty($tenantId) || empty($userId)){
-            $result =  array(
-                'code' => 203,
-                'message' => 'tenantId或者userId传入有误！'
-            );
-        }else{
+        // if(empty($tenantId) || empty($userId)){
+        //     $result =  array(
+        //         'code' => 203,
+        //         'message' => 'tenantId或者userId传入有误！'
+        //     );
+        // }else{
             // token更新进jh_user表中
             $token_update = Db::table('jh_user');
             Db::table('jh_user')->where('userId', $data['userId'])->update(['token' => $token]);
@@ -260,7 +260,7 @@ class Api
                 'message' => 'success',
                 'ssoUrl' => 'https://lg.nineseatech.com/sso?userId='.$userId.'&ssoToken='.$token
             );
-        }
+        // }
 
         return json_encode($result);
     }
