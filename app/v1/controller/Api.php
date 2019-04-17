@@ -238,29 +238,30 @@ class Api
     // 免密登录URI
     public function getSSOUrl(Request $request){
         // 接收参数
-        $data = $request->param();
+	    $data = $request->param();
+	   # var_dump($data);die('--');
         //为用户生成临时token
         $token = genToken();
-        // return $data;
+        #var_dump($token);
         // 验证参数
-        $tenantId = Db::table('jh_user')->where('tenantId',$data['tenantId'])->find();
+        $tenantId = Db::table('jh_user')->where('tenantId',$data['tenantId'])->value('tenantId');
 
-        $userId = Db::table('jh_user')->where('userId',$data['userId'])->find();
-        // if(empty($tenantId) || empty($userId)){
-        //     $result =  array(
-        //         'code' => 203,
-        //         'message' => 'tenantId或者userId传入有误！'
-        //     );
-        // }else{
+        $userId = Db::table('jh_user')->where('userId',$data['userId'])->value('userId');
+         if(empty($tenantId) || empty($userId)){
+             $result =  array(
+                 'code' => 203,
+                 'message' => 'tenantId或者userId传入有误！'
+             );
+         }else{
             // token更新进jh_user表中
             $token_update = Db::table('jh_user');
-            Db::table('jh_user')->where('userId', $data['userId'])->update(['token' => $token]);
+	    Db::table('jh_user')->where('userId', $data['userId'])->update(['token' => $token]);
             $result = array(
                 'code' => 200,
                 'message' => 'success',
-                'ssoUrl' => 'https://lg.nineseatech.com/sso?userId='.$userId.'&ssoToken='.$token
+                'ssoUrl' => "https://lg.nineseatech.com/sso?userId=".$userId."&ssoToken=".$token.""
             );
-        // }
+        }
 
         return json_encode($result);
     }
