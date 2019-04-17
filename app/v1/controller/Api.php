@@ -238,8 +238,9 @@ class Api
     // 免密登录URI
     public function getSSOUrl(Request $request){
         // 接收参数
-	    $data = $request->param();
-	   # var_dump($data);die('--');
+
+        $data = $request->param();
+
         //为用户生成临时token
         $token = genToken();
         #var_dump($token);
@@ -253,6 +254,7 @@ class Api
                  'message' => 'tenantId或者userId传入有误！'
              );
          }else{
+
             // token更新进jh_user表中
             $token_update = Db::table('jh_user');
 	    Db::table('jh_user')->where('userId', $data['userId'])->update(['token' => $token]);
