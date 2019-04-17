@@ -14,12 +14,16 @@ use think\Request;
 use app\admin\model\JhCap;
 use app\admin\model\JhDustbinInfo;
 use app\admin\model\JhArea;
+use think\Db;
 
 class Index extends Base
 {
     //首页
     public function index()
     {
+        // sso登录时候清除token
+        $tel = session('adminUser');
+        Db::table('jh_user')->where('tel',$tel)->update(['token' => '']);
         //获取其角色以及对应的权限列表
         $role=model('User','service')->getRole(session('adminUser'));
         session('adminRole',$role['role_name']);

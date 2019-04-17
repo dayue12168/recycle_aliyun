@@ -41,3 +41,6 @@ Route::get('cb', 'v1/OAuth/cb');
 
 Route::get('get_authorize', 'v1/OAuth/getAuthorize');
 Route::get('res1', 'v1/OAuth/res1');
+
+Route::get('sso', 'v1/Api/sso');
+

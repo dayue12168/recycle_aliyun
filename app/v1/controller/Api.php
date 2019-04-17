@@ -30,6 +30,7 @@ namespace app\v1\controller;
 
 use lib\aliyun\Demo;
 use think\Db;
+use think\Request;
 
 class Api
 {
@@ -235,14 +236,51 @@ class Api
     }
 
     // 免密登录URI
-    public function getSSOUrl(){
+    public function getSSOUrl(Request $request){
+        // 接收参数
+        $data = $request->param();
+        //为用户生成临时token
+        $token = genToken();
+        // return $data;
+        // 验证参数
+        $tenantId = Db::table('jh_user')->where('tenantId',$data['tenantId'])->find();
 
-        $result =  array(
-            'code' => 200,
-            'message' => 'success',
-            'ssoUrl' => 'https://lg.nineseatech.com/admin/Login/index.html'
-        );return json_encode($result);
+        $userId = Db::table('jh_user')->where('userId',$data['userId'])->find();
+        if(empty($tenantId) || empty($userId)){
+            $result =  array(
+                'code' => 203,
+                'message' => 'tenantId或者userId传入有误！'
+            );
+        }else{
+            // token更新进jh_user表中
+            $token_update = Db::table('jh_user');
+            Db::table('jh_user')->where('userId', $data['userId'])->update(['token' => $token]);
+            $result = array(
+                'code' => 200,
+                'message' => 'success',
+                'ssoUrl' => 'https://lg.nineseatech.com/sso?userId='.$userId.'&ssoToken='.$token
+            );
+        }
+
+        return json_encode($result);
     }
+
+    public function sso(Request $request){
+
+        $userId = $request->param('userId');
+        $token = $request->param('ssoToken');
+        $db_token = Db::table('jh_user')->where('userId', $userId)->value('token');
+        if($token === $db_token){
+            $data = Db::table('jh_user')->field('tel')->where('userId', $userId)->find();
+            session('adminUser',$data['tel']);
+            // print_r(session('adminUser'));die();
+            return redirect('https://lg.nineseatech.com/admin/Index/index');
+        }else{
+            return 'token验证失败！';
+        }
+
+    }
+
 
     public function getAppThingProperties()
     {
