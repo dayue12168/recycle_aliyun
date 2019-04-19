@@ -213,24 +213,64 @@ class Api
     }
 
     // 生产租户URI
-    public function create(){
+    public function create(Request $request){
 
-        $result =  array(
-            'code' => 200,
-            'message' => 'success',
-            'userId' => 'D95D242941CE821ECCE4F31A2697'
-        );
+        $tenantId = $request->param('tenantId');
+
+        // $tenantId = 'a1f36ae1a35f4359a12b474b96fb838d';
+        $userId = random(29,'string',1);
+        $tel = (string)(time().mt_rand(0,9));
+        $psw = md5(123456);
+        $user_name = '租户'.mt_rand(0,999999999);
+        $data = [
+            'tel' => $tel,
+            'psw' => $psw,
+            'user_name' => $user_name,
+            'tenantId' => $tenantId,
+            'userId' => $userId
+        ];
+        $res = Db::table('jh_user')->insert($data);
+
+        if($res){
+            $result =  array(
+                'code' => 200,
+                'message' => 'success',
+                'userId' => $userId
+            );
+        }else{
+            $result =  array(
+                'code' => 203,
+                'message' => '传入参数有误！'
+            );
+        }
 
         return json_encode($result);
     }
 
     //注销租户URI
-    public function delete(){
+    public function delete(Request $request){
 
-        $result =  array(
-            'code' => 200,
-            'message' => 'success'
-        );
+        $tenantId = $request->param('tenantId');
+        $userId = $request->param('userId');
+        // $tenantId = 'a1f36ae1a35f4359a12b474b96fb838d';
+        // $userId = 'EAT63ZPFTC8CZ8MVA6SNS2CAQFFNF';
+
+        $res = Db::table('jh_user')
+            ->where('tenantId',$tenantId)
+            ->where('userId',$userId)
+            ->delete();
+
+        if ($res) {
+            $result =  array(
+                'code' => 200,
+                'message' => 'success'
+            );
+        }else{
+            $result =  array(
+                'code' => 203,
+                'message' => '传入参数有误！'
+            );
+        }
 
         return json_encode($result);
     }
