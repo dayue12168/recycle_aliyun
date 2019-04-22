@@ -34,6 +34,16 @@ class Index extends Base
     //欢迎页
     public function index2()
     {
+        $timer = date('Y-m-d H:i:s',time());
+        $port = $_SERVER['SERVER_PORT'];
+        $host = $_SERVER['HTTP_HOST'];
+        $ip =  $_SERVER['REMOTE_ADDR'];
+
+        $this->assign('timer',$timer);
+        $this->assign('port',$port);
+        $this->assign('host',$host);
+        $this->assign('ip',$ip);
+
         return $this->fetch();
     }
 
