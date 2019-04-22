@@ -214,8 +214,8 @@ class Api
 
     // 生产租户URI
     public function create(Request $request){
-        $signHeaders = Request::instance()->header('X-Ca-Signature-Headers');
-        var_dump($signHeaders);die('---');
+        // $signHeaders = Request::instance()->header('X-Ca-Signature-Headers');
+        // var_dump($signHeaders);die('---');
         $tenantId = $request->param('tenantId');
 
         // $tenantId = 'a1f36ae1a35f4359a12b474b96fb838d';
