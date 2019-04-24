@@ -217,6 +217,9 @@ class Api
         // $signHeaders = Request::instance()->header('X-Ca-Signature-Headers');
         // var_dump($signHeaders);die('---');
         $tenantId = $request->param('tenantId');
+        $data = $request->param();
+        $fileName = 'createLog.txt';
+        $this->logWrite($fileName, $data);
 
         // $tenantId = 'a1f36ae1a35f4359a12b474b96fb838d';
         $userId = random(29,'string',1);
@@ -250,7 +253,9 @@ class Api
 
     //注销租户URI
     public function delete(Request $request){
-
+        $data = $request->param();
+        $fileName = 'deleteLog.txt';
+        $this->logWrite($fileName, $data);
         $tenantId = $request->param('tenantId');
         $userId = $request->param('userId');
         // $tenantId = 'a1f36ae1a35f4359a12b474b96fb838d';
@@ -281,7 +286,8 @@ class Api
         // 接收参数
 
         $data = $request->param();
-
+        $fileName = 'getSSOUrLog.txt';
+        $this->logWrite($fileName, $data);
         //为用户生成临时token
         $token = genToken();
         #var_dump($token);
@@ -418,4 +424,22 @@ class Api
         $res = $this->getAppThingStatus();
         return $res;
     }
+
+    //记录日志
+    public function logWrite($fileName, $content){
+        // die('123');
+        $logDir = '../runtime/log';
+        $now = date('Y-m-d');
+        $nowDir = $logDir.'/'.$now;
+        if(!is_dir($nowDir)){mkdir($nowDir, 0777, true);
+        }
+        $fileDir = $nowDir.'/'.$fileName;
+        if(is_array($content)){
+            $content = json_encode($content);
+        }
+        $fileContent = '在'.date('Y-m-d H:i:s').'时操作，内容为：'.$content;
+        file_put_contents($fileDir, $fileContent."\n====================\n", FILE_APPEND);
+    }
+
+
 }
