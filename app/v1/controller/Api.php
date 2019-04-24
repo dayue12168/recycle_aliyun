@@ -81,7 +81,7 @@ class Api
     public function getAppThing()
     {
         $appKey = '25934813';
-        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+        $appSecret = 'baf0238c94ed4111c1f2b9f102ed75ca';
         $productKey = 'a1FMKlSx1Zj';
         $deviceName = '0A17100617109259';
 
@@ -108,7 +108,7 @@ class Api
     public function getAppThingStatus()
     {
         $appKey = '25934813';
-        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+        $appSecret = 'baf0238c94ed4111c1f2b9f102ed75ca';
         $productKey = 'a1FMKlSx1Zj';
         $deviceName = '0A17100617109259';
 
@@ -335,7 +335,7 @@ class Api
     public function getAppThingProperties()
     {
         $appKey = '25934813';
-        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+        $appSecret = 'baf0238c94ed4111c1f2b9f102ed75ca';
 
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/properties/get";
@@ -347,7 +347,7 @@ class Api
                         },
                         "params": {
                             "productKey": "a1FMKlSx1Zj",
-                            "deviceName": "0A17100617109259"
+                            "deviceName": "0A17100617109219"
                         }
                     }';
         $demo = new Demo($appKey, $appSecret, $host);
@@ -360,7 +360,7 @@ class Api
     public function getAppThingEventTimeline()
     {
         $appKey = '25934813';
-        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+        $appSecret = 'baf0238c94ed4111c1f2b9f102ed75ca';
 
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/event/timeline/get";
@@ -391,7 +391,7 @@ class Api
     public function getAppThingPropertyTimeline()
     {
         $appKey = '25934813';
-        $appSecret = 'ecafbb9be1d35ce402c91cabab77be60';
+        $appSecret = 'baf0238c94ed4111c1f2b9f102ed75ca';
 
         $host = 'https://api.link.aliyun.com';
         $path = "/app/thing/property/timeline/get";
