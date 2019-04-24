@@ -237,6 +237,7 @@ class Api
             'tel' => $tel,
             'psw' => $psw,
             'user_name' => $user_name,
+            'role_id' => 2,
             'tenantId' => $tenantId,
             'userId' => $userId
         ];
