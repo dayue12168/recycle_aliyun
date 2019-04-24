@@ -22,53 +22,17 @@
                                 <thead>
                                     <tr>
                                         <th>统计</th>
-                                        <th>资讯库</th>
-                                        <th>图片库</th>
-                                        <th>产品库</th>
-                                        <th>用户</th>
-                                        <th>管理员</th>
+                                        <th>垃圾桶数</th>
+                                        <th>溢出垃圾桶数</th>
+                                        <th>24小时垃圾数</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>总数</td>
-                                        <td>92</td>
-                                        <td>9</td>
-                                        <td>0</td>
-                                        <td>8</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>今日</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>昨日</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>本周</td>
-                                        <td>2</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>本月</td>
-                                        <td>2</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
+                                        <td>{$trash}</td>
+                                        <td>{$dust}</td>
+                                        <td>{$total}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -81,15 +45,15 @@
                                 <tbody>
                                     <tr>
                                         <th>服务器IP地址</th>
-                                        <td>{$ip}</td>
+                                        <td>{$Think.server.server_addr}</td>
                                     </tr>
                                     <tr>
                                         <td>服务器域名</td>
-                                        <td>{$host}</td>
+                                        <td>{$Think.server.http_host}</td>
                                     </tr>
                                     <tr>
                                         <td>服务器端口 </td>
-                                        <td>{$port}</td>
+                                        <td>{$Think.server.server_port}</td>
                                     </tr>
                                     <tr>
                                         <td>登录时间 </td>

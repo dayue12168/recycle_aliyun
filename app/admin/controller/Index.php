@@ -34,16 +34,25 @@ class Index extends Base
     //欢迎页
     public function index2()
     {
+
+        //垃圾桶数
+        $trash=JhDustbinInfo::where('dustbin_state','=',0)->count();
+
+        //溢出垃圾桶数
+        $dust=JhDustbinInfo::where('dustbin_state','=',0)
+            ->where('dustbin_overflow','=',1)->count();
+
+        //24小时垃圾数
+        $startTime=date('Y-m-d',strtotime('-1 day'));
+        $total=Db::table('jh_rubbish_record')->whereTime('dust_date','between',[$startTime,$startTime])->value('dust_num');
+        $total=$total?$total:0;
+
         $timer = date('Y-m-d H:i:s',time());
-        $port = $_SERVER['SERVER_PORT'];
-        $host = $_SERVER['HTTP_HOST'];
-        $ip =  $_SERVER['REMOTE_ADDR'];
 
+        $this->assign('trash',$trash);
+        $this->assign('dust',$dust);
+        $this->assign('total',$total);
         $this->assign('timer',$timer);
-        $this->assign('port',$port);
-        $this->assign('host',$host);
-        $this->assign('ip',$ip);
-
         return $this->fetch();
     }
 
