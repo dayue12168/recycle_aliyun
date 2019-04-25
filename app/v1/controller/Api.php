@@ -217,6 +217,13 @@ class Api
         // $signHeaders = Request::instance()->header('X-Ca-Signature-Headers');
         // var_dump($signHeaders);die('---');
         $tenantId = $request->param('tenantId');
+        if(!isset($tenantId)){
+            $result =  array(
+                'code' => 203,
+                'message' => '传入参数有误！'
+            );
+            return json_encode($result);
+        }
         $data = $request->param();
         $fileName = 'createLog.txt';
         $this->logWrite($fileName, $data);
@@ -230,6 +237,7 @@ class Api
             'tel' => $tel,
             'psw' => $psw,
             'user_name' => $user_name,
+            'role_id' => 2,
             'tenantId' => $tenantId,
             'userId' => $userId
         ];
@@ -258,6 +266,13 @@ class Api
         $this->logWrite($fileName, $data);
         $tenantId = $request->param('tenantId');
         $userId = $request->param('userId');
+        if(!isset($tenantId) || !isset($userId)){
+            $result =  array(
+                'code' => 203,
+                'message' => '传入参数有误！'
+            );
+            return json_encode($result);
+        }
         // $tenantId = 'a1f36ae1a35f4359a12b474b96fb838d';
         // $userId = 'EAT63ZPFTC8CZ8MVA6SNS2CAQFFNF';
 
@@ -286,6 +301,13 @@ class Api
         // 接收参数
 
         $data = $request->param();
+        if(empty($data)){
+            $result =  array(
+                'code' => 203,
+                'message' => '传入参数有误！'
+            );
+            return json_encode($result);
+        }
         $fileName = 'getSSOUrLog.txt';
         $this->logWrite($fileName, $data);
         //为用户生成临时token
