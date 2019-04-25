@@ -165,7 +165,7 @@ class Index extends Base
         $param['cap_position']=$request->param('position');
         $param['cap_serial']=$request->param('serial');
         $param['cap_sim']=$request->param('sim');
-        $param['cap_type']=intval($request->param('type'));
+        $param['cap_type']=($request->param('type'));
 //        return json($param);
         $jhCap=new JhCap($param);
         $jhCap->save();
@@ -309,15 +309,16 @@ class Index extends Base
     //用imei号查询设备
     public function getCapById(Request $request)
     {
-        $imei=$request->param('id');
         $jhCap=new JhCap();
-        $jhCap=$jhCap::getByCapImei($imei);
-        return $jhCap;
+        $imei=$request->param('id');
+        if(!empty($imei)){
+            $res[]=$jhCap::getByCapImei($imei);
+            if(empty($res[0])){
+                $res=[];
+            }
+        }else{
+            $res=$jhCap::all();
+        }
+        return $res;
     }
-
-
-
-
-
-
 }
