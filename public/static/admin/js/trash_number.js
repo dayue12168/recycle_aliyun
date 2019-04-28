@@ -42,6 +42,11 @@ layui.use('element', function(){
   function oClick(obj){
       obj.css({"background":"#1AA194","color":"#fff"}).siblings().prop("disabled",true);
   }
+
+
+  $(".excel").click(function(){
+     alert('bbbb');
+  });
   
   
   // <!-- tabnav切换 -->
