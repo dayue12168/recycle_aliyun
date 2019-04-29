@@ -45,7 +45,7 @@ layui.use('element', function(){
 
 
   $(".excel").click(function(){
-     alert('bbbb');
+      window.location.href='/admin/count/number_excel';
   });
   
   

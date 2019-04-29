@@ -7,6 +7,8 @@ layui.use('element', function(){
   layui.use(["layer",'laypage'],function(){
       var layer = layui.layer,
           laypage = layui.laypage;
+
+
           laypage({
               cont: 'demo9'
               ,pages: 100 //总页数

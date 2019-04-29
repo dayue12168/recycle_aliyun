@@ -88,6 +88,8 @@ class Index extends Base
         $types=model('Index','service')->getTypes();
         $this->assign('types',$types);
         $caps=model('Index','service')->device_mana($road);
+//        dump($caps);
+
         $this->assign('caps',$caps);
         return $this->fetch();
     }
