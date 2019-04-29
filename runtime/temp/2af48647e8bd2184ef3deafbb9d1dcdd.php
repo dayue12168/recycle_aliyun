@@ -1,10 +1,28 @@
-{extend name="layoutextend"}
-{block name="title"}首页{/block}
-{block name="css"}
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:58:"/project/recycle/public/../app/index/view/index/index.html";i:1556524808;s:49:"/project/recycle/app/index/view/layoutextend.html";i:1556503668;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no /">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="/static/common/css/ssbase.css">
+    <link rel="stylesheet" href="/static/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/common/css/font-awesome.min.css">
+    
 <link rel="stylesheet" href="/static/index/css/style.css">
 <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-{/block}
-{block name="main"}
+
+</head>
+<body>
+<header>
+    <div class='head flex-box flex-b flex-col-c'>
+        <a href="<?php echo url('Index/index'); ?>">公司名称</a>
+        <span>消息<p>(1)</p> </span>
+    </div>
+</header>
+
+
 <div id="headbar"></div>
 <div id="con">
     <div id='container'></div>
@@ -14,8 +32,18 @@
     <button type="button" class="btn  btn-xs roadline">规划路线</button>
 </div>
 <div id="footbar"></div>
-{/block}
-{block name="js"}
+
+<footer>
+    <div class='foot flex-box flex-a flex-col-c'>
+        <a href="<?php echo url('Index/index'); ?>" class="flex-col flex-col-c flex-wrap flex-a"><img src="/static/index/images/lj_1.png" data-src="../images/lj_11.png" alt=""><span>首页</span></a>
+        <a href="<?php echo url('Index/reportForm'); ?>" class="flex-col flex-col-c flex-wrap flex-a"><img src="/static/index/images/table_1.png" data-src="../images/table_11.png" alt=""><span>报表查看</span></a>
+        <a href="#" class="flex-col flex-col-c flex-wrap flex-a"><img src="/static/index/images/user_1.png" data-src="../images/user_11.png" alt=""><span>个人中心</span></a>
+    </div>
+</footer>
+<script src="/static/common/js/jquery-2.1.4.min.js"></script>
+<script src="/static/common/js/bootstrap.min.js"></script>
+<script src="/static/common/layer/layer.js"></script>
+
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=6c2cfa8103979289249bd9a725514ab2"></script>
 <!-- add -->
 <script src="https://webapi.amap.com/maps?v=1.4.10&key=6c2cfa8103979289249bd9a725514ab2&plugin=AMap.Driving"></script>
@@ -229,4 +257,14 @@ function parseRouteToPath(route) {
 
 </script>
 
-{/block}
+
+<script>
+    $(function(){
+        $(".foot>a").click(function(){
+            $(this).css("color","#1296db").siblings().css("color","#333");
+        })
+
+    })
+</script>
+</body>
+</html>

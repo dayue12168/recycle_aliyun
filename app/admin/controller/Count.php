@@ -77,10 +77,10 @@ class Count extends Base
         $PHPSheet->setCellValue("C3","1000KG")->setCellValue("D3","10KG");//表格数据
         $PHPSheet->setCellValue("E3","100KG")->setCellValue("F3","500KG");//表格数据
         $PHPSheet->setCellValue("G3","1000KG");//表格数据
-        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel2007");//创建生成的格式
-        header('Content-Disposition: attachment;filename="垃圾数量统计.xlsx"');//下载下来的表格名
+        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel5");//创建生成的格式
+        header('Content-Disposition: attachment;filename="垃圾数量统计.xls"');//下载下来的表格名
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        $PHPWriter->save("php://output"); //表示在$path路径下面生成demo.xlsx文件
+        $PHPWriter->save("php://output"); //表示在$path路径下面生成demo.xls文件
     }
 
     public function overflow_excel(Request $request)
@@ -102,9 +102,9 @@ class Count extends Base
         $PHPSheet->setCellValue("A3","上海市-浦东新区-测试街道")->setCellValue("B3","200");//表格数据
         $PHPSheet->setCellValue("C3","1000KG")->setCellValue("D3","10KG");//表格数据
         $PHPSheet->setCellValue("E3","100KG");//表格数据
-        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel2007");//创建生成的格式
-        header('Content-Disposition: attachment;filename="垃圾溢出统计.xlsx"');//下载下来的表格名
+        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel5");//创建生成的格式
+        header('Content-Disposition: attachment;filename="垃圾溢出统计.xls"');//下载下来的表格名
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        $PHPWriter->save("php://output"); //表示在$path路径下面生成demo.xlsx文件
+        $PHPWriter->save("php://output"); //表示在$path路径下面生成demo.xls文件
     }
 }
