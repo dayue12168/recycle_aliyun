@@ -14,8 +14,7 @@
     </style>
 <body>
     <div id='container'></div>
-
-    <!-- 欢迎您：<span>{$Think.session.adminRole}({$Think.session.adminUser})</span> -->
+    <button type="button" class="btn  btn-xs roadline">规划路线</button>
 
 </body>
 <script src="/static/common/js/jquery-2.1.4.min.js"></script>
@@ -40,10 +39,8 @@ AMap.plugin('AMap.Geolocation', function() {
     map.addControl(geolocation);
     geolocation.getCurrentPosition(function(status,result){
         if(status=='complete'){
-            alert('1');
             onComplete(result)
         }else{
-            alert('2');
             onError(result)
         }
     });
@@ -68,7 +65,7 @@ function onComplete(data) {
 }
 // 解析定位错误信息
 function onError(data) {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     layer.open({
         content: '定位失败，请设置定位权限'
         ,btn: '我知道了'
