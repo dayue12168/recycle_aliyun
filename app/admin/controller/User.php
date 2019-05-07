@@ -16,6 +16,7 @@ use app\admin\model\JhUser;
 use app\admin\model\JhUserRole;
 use app\admin\model\JhArea;
 use app\admin\model\JhWorkInfo;
+use app\admin\model\JhWaring;
 
 class User extends Base
 {
@@ -287,6 +288,11 @@ class User extends Base
 
     public function waring()
     {
+        $waring=new JhWaring();
+        $res=$waring::all();
+        $levels=[1=>'普通级','2'=>'紧急级'];
+        $this->assign('res',$res);
+        $this->assign('levels',$levels);
         return $this->fetch();
     }
 

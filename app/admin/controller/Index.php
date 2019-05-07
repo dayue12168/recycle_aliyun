@@ -124,8 +124,10 @@ class Index extends Base
 
 
     //垃圾桶-环卫工绑定
-    public function trash_huanwei()
+    public function trash_huanwei(Request $request)
     {
+        $dustbin=$request->param('id');
+        $worker=$request->param('usr');
         $citys=model('Address','service')->getCitys();
         $city=$citys[0]['area_id'];
         $regions=model('Address','service')->getChildAddr($city);
@@ -140,6 +142,14 @@ class Index extends Base
         $this->assign('regions',$regions);
         $this->assign('roads',$roads);
         $this->assign('groups',$groups);
+        if(!is_null($dustbin)){
+
+        }elseif(!is_null($worker)){
+
+        }else{
+
+        }
+
         return $this->fetch();
     }
 

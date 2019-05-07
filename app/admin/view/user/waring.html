@@ -17,16 +17,26 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td style="display: none">1</td>
-        <td>啊啊啊</td>
-        <td>巴巴爸爸</td>
-        <td>春春春春错</td>
-        <td>的点点滴滴</td>
-        <td><button id="upt">修改</button>
-            <button id="del">删除</button>
-        </td>
-    </tr>
+    <form>
+        <tr>
+            {volist name='res' id='vo'}
+            <td style="display: none">{$vo.id}</td>
+            <td><input type="text" value="{$vo.name}"></td>
+            <td><input type="text" value="{$vo.phone}"></td>
+            <td>
+                <select>
+                    {foreach $levels as $val}
+                    <option {if $vo.level eq $val} selected {/if}>{$val}</option>
+                    {/foreach}
+                </select>
+            </td>
+            <td>{$vo.time}</td>
+            <td><button id="upt">修改</button>
+                <button id="del">删除</button>
+            </td>
+            {/volist}
+        </tr>
+    </form>
     </tbody>
 </table>
 </body>

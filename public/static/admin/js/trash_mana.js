@@ -144,7 +144,7 @@ layui.use('element', function(){
               data:{'type':type,'addr':addr},
               cache:false,
               success:function(res){
-                  // console.log(res);
+                  console.log(res);
                   // return false;
                   var tb=$("tbody.tbody");
                   var str='';
@@ -173,7 +173,7 @@ layui.use('element', function(){
       //管理垃圾桶
       $(".layui-table").on('click','.trashMana',function(){
           var id=$(this).parent().prevAll().eq(6).text();
-          window.open('trash_huanwei.html');
+          window.open('trash_huanwei.php?id='+id);
 
           // window.location.href = "trash_huanwei.html?id="+id;
       });

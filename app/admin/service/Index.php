@@ -118,7 +118,7 @@ class Index
             }
         }
         $addrWhere=$addrWhere[0];
-        $sql='select case when isnull(worker_id) then	0 else count(*) end count, jiang.* from (select jdi.*, jc.cap_imei,ja1.area_name city,	ja2.area_name area,ja3.area_name street,jb.worker_id from jh_dustbin_info jdi left join jh_area ja1 on jdi.area_id0 = ja1.area_id left join jh_area ja2 on jdi.area_id1 = ja2.area_id left join jh_area ja3 on jdi.area_id2 = ja3.area_id left join jh_cap jc on jdi.cap_id = jc.cap_id left join jh_bind jb on jdi.dustbin_id = jb.dustbin_id left join jh_work_info jwi on jwi.worker_id=jb.worker_id where '.$addrWhere.' and (';
+        $sql='select case when isnull(worker_id) then	0 else count(*) end count, jiang.* from (select jdi.*, case when isnull(jc.cap_imei) then "" else jc.cap_imei end cap_imei,ja1.area_name city,ja2.area_name area,ja3.area_name street,jb.worker_id from jh_dustbin_info jdi left join jh_area ja1 on jdi.area_id0 = ja1.area_id left join jh_area ja2 on jdi.area_id1 = ja2.area_id left join jh_area ja3 on jdi.area_id2 = ja3.area_id left join jh_cap jc on jdi.cap_id = jc.cap_id left join jh_bind jb on jdi.dustbin_id = jb.dustbin_id left join jh_work_info jwi on jwi.worker_id=jb.worker_id where '.$addrWhere.' and (';
         foreach($type as $val){
             switch ($val){
                 case 1:
