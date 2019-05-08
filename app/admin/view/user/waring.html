@@ -111,9 +111,21 @@
                     layer.msg('取消')
                 }
             });
-        })
+        });
 
 //        修改
+        $('.edit').on('click', function () {
+            var id = $(this).attr("data-id");
+            layer.open({
+                type: 2,
+                title: '修改',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['893px', '600px'],
+                content: "/admin/user/editWaring&id="+id+""
+            });
+        });
     });
 </script>
 </html>

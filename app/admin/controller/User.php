@@ -349,4 +349,40 @@ class User extends Base
         }
     }
 
+    public function editWaring(Request $request)
+    {
+        $id = $request->param('id');
+        $res = Db::table('jh_waring')->where('id', $id)->find();
+        $this->assign('res', $res);
+        return $this->fetch();
+    }
+
+    public function saveEditWaring(Request $request)
+    {
+        if (Request::instance()->isAjax()) {
+            $data = $request->param();
+            $res = Db::table('jh_waring')
+                ->where('id', $data['id'])
+                ->update([
+                    'name' => $data['name'],
+                    'phone' => $data['phone'],
+                    'level' => $data['level']
+                ]);
+            if ($res > 0) {
+                $result = [
+                    'status' => 'success',
+                    'msg' => '更新成功！',
+                    'code' => 200
+                ];
+            } else {
+                $result = [
+                    'status' => 'error',
+                    'msg' => '更新失败！',
+                    'code' => 400
+                ];
+            }
+            return json_encode($result);
+        }
+    }
+
 }
