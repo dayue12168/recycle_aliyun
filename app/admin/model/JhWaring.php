@@ -11,9 +11,5 @@ namespace app\admin\model;
 use think\Model;
 class JhWaring extends Model
 {
-    public function getLevelAttr($val)
-    {
-        $status=[1=>'普通级',2=>'紧急级'];
-        return $status[$val];
-    }
+    protected $table='jh_waring';
 }

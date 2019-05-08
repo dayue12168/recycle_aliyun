@@ -4,40 +4,116 @@
     <meta charset="UTF-8">
     <title>报警管理</title>
     <link rel="stylesheet" href="__LAYUICSS__/layui.css">
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
 </head>
 <body>
-<table class="layui-table" lay-even="">
-    <thead>
-    <tr>
-        <th>报警接收人</th>
-        <th>报警接收手机号</th>
-        <th>报警人级别</th>
-        <th>最近一次报警时间</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    <form>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>垃圾预警设置</legend>
+</fieldset>
+
+<div class="layui-form">
+    <div class="layui-table-tool">
+        <div class="layui-table-tool-temp">
+            <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-primary" href="javascript:;" id="add"><i class="layui-icon"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <table class="layui-table" lay-even="" id="test">
+        <thead>
         <tr>
-            {volist name='res' id='vo'}
+            <th>报警接收人</th>
+            <th>报警接收手机号</th>
+            <th>报警人级别</th>
+            <th>最近一次报警时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='res' id='vo'}
+        </tbody>
+        <tr>
             <td style="display: none">{$vo.id}</td>
-            <td><input type="text" value="{$vo.name}"></td>
-            <td><input type="text" value="{$vo.phone}"></td>
+            <td>{$vo.name}</td>
+            <td>{$vo.phone}</td>
             <td>
-                <select>
-                    {foreach $levels as $val}
-                    <option {if $vo.level eq $val} selected {/if}>{$val}</option>
-                    {/foreach}
-                </select>
+                {if condition="$vo.level eq 1"}普通级
+                {else /}紧急级
+                {/if}
             </td>
             <td>{$vo.time}</td>
-            <td><button id="upt">修改</button>
-                <button id="del">删除</button>
+            <td>
+                <div class="layui-btn-group">
+                    <a class="layui-btn layui-btn-primary edit" data-id="{$vo.id}"><i class="layui-icon"></i></a>
+                    <a class="layui-btn layui-btn-primary delete" data-id="{$vo.id}"><i
+                            class="layui-icon"></i></a>
+                </div>
             </td>
             {/volist}
         </tr>
-    </form>
-    </tbody>
-</table>
+    </table>
+</div>
 </body>
+<script src="__COMMONJS__/jquery-2.1.4.min.js"></script>
+<!-- layui 1.0.9版本 -->
+<script type="text/javascript" src="/static/admin/layui/lay/dest/layui.all.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer;
+
+//        添加
+        $('#add').on('click', function () {
+            layer.open({
+                type: 2,
+                title: '添加',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['893px', '600px'],
+                content: '/admin/user/addWaring'
+            });
+        });
+
+//        删除
+        $(".delete").click(function () {
+            var id = $(this).attr("data-id");
+            layer.alert('您确定要删除操作吗?', {
+                skin: 'layui-layer-molv' //样式类名 自定义样式
+                , closeBtn: 1 // 是否显示关闭按钮
+                , anim: 1 //动画类型
+                , btn: ['确定', '取消'] //按钮
+                , icon: 6 // icon
+                , yes: function () {
+//layer.msg('确定')
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/user/delete",
+                        data: {id: id},
+                        success: function (data) {
+                            data = JSON.parse(data);
+                            if (data.status == "success") {
+                                location.reload();
+                            }
+                            else {
+                                layer.msg(data.msg)
+                            }
+                        },
+                        error: function () {
+                            alert("出现错误");
+                            return false;
+                        }
+                    }) //ajax结束
+                }
+                , btn2: function () {
+                    layer.msg('取消')
+                }
+            });
+        })
+
+//        修改
+    });
+</script>
 </html>
