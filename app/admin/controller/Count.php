@@ -76,6 +76,8 @@ class Count extends Base
         $this->assign('roads',$roads);
         $this->assign('groups',$groups);
         $this->assign('res',$res);
+        $this->assign('ctime',$ctime);
+        $this->assign('etime',$etime);
         return $this->fetch();
     }
 
